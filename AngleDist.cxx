@@ -1,5 +1,10 @@
 void AngleDist(){
-  
+	//canvas
+	
+	
+    TCanvas *c1=new TCanvas("c1","Angular Distribution",900,900);
+    c1->Divide(2,1);
+
   //initializing values and arrays
   int NEvents = 10000;
   int NBins = 1000;
@@ -21,5 +26,10 @@ void AngleDist(){
     h1->Fill(theta,phi);
   }
   
+  //Draw
+  c1->cd(1);
   h1->Draw();
+
+  c1->cd(2);
+  h1->Draw("LEGO1");
 }

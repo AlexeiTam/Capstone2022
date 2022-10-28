@@ -22,7 +22,7 @@ void AngleDist(){
   
   for(int i = 0; i < NEvents; i++){
    theta =  pi*(gRandom->Rndm());
-   phi = 2.0*pi*(gRandom->Rndm());
+   phi = 2.0*pi*(gRandom->Rndm()) + pi;
     h1->Fill(theta,phi);
   }
   

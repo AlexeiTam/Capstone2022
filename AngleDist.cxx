@@ -7,7 +7,7 @@ void AngleDist(){
 
   //initializing values and arrays
   int NEvents = 10000;
-  int NBins = 1000;
+  int NBins = 100;
   
   float theta;
   float phi;

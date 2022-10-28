@@ -1,4 +1,4 @@
-void AngleDist(){
+void AngleDist(int NEvents = 10000){
 	//canvas
 	
 	
@@ -6,7 +6,6 @@ void AngleDist(){
     c1->Divide(2,1);
 
   //initializing values and arrays
-  int NEvents = 10000;
   int NBins = 100;
   
   float theta;

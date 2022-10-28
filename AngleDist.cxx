@@ -16,12 +16,12 @@ void AngleDist(){
   
   //histogram,
   //x-axis is phi, y-axis is theta
-    TH2D *h1 = new TH2D("h1", "Uniform Distribution", NBins, -0.1, 2.0*pi + 0.1, NBins, -1.0*pi - 0.1, pi + 0.1);
+    TH2D *h1 = new TH2D("h1", "Uniform Distribution", NBins, -0.1, 2.0*pi + 0.1, NBins, - 0.1, pi + 0.1);
     h1->GetXaxis()->SetTitle("#phi");
     h1->GetYaxis()->SetTitle("#theta");
   
   for(int i = 0; i < NEvents; i++){
-   theta =  2.0*pi*(gRandom->Rndm()) - pi;
+   theta =  pi*(gRandom->Rndm());
    phi = 2.0*pi*(gRandom->Rndm());
     h1->Fill(theta,phi);
   }

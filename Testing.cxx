@@ -6,7 +6,7 @@ void Testing(float xmin = 0.5, float xmax = 0.8) {
 
 		x[i] = gRandom->Rndm();
 		std::cout << "x[" << i << "]:" << x[i] << std::endl;
-		if( x > xmin && x < xmax){
+		if( x[i] > xmin && x[i] < xmax){
 			std::cout << "Mark!" << std::endl;	
 		}
 	}

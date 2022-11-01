@@ -66,7 +66,7 @@ void LinBiasDist(){
 
 		for(int j = 0; j < NBins; j++) {	//bin scan
 			
-			if( x < x[j+1]  && x[j] < x ){
+			if( x < xb[j+1]  && xb[j] < x ){
 
 				if(chance < RejectChance[j]){
 				h1->Fill(x);
@@ -79,7 +79,10 @@ void LinBiasDist(){
 		}
 	}
 
-
+	//visualization
+	h1->SetLineColors(0);
+	h1->SetFillColor(1);
+	h1->Draw();
 
 
 }

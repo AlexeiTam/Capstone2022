@@ -1,6 +1,8 @@
 void AngleDist(int NEvents = 10000){
-	//canvas
 	
+	//GOAL: make a distribution uniform in solid angle
+
+	//canvas
 	
     TCanvas *c1=new TCanvas("c1","Angular Distribution",900,900);
     c1->Divide(2,1);

@@ -1,5 +1,7 @@
 void NormDist(float scale = 2.0, float shift = 1.0) {
-
+	
+	//GOAL: make a normal distribution
+	
 	//initializing values
 	int NBins = 100;
 	int NEvents = 1000;

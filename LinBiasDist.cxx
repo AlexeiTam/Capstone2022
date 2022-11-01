@@ -27,4 +27,17 @@ void LinBiasDist(){
 		xRight[i] = (i+1)*((xmax - xmin)/(NBins));
 		std::cout << xRight[i] << std::endl;
 	}
+
+	float x;	//variable to fill histogram
+
+	for(int i = 0; i < NEvents; i++) {
+
+		x = gRandom->Rndm();
+		
+		for(int j = 0; j < NBins; j++) {
+			
+
+		}
+	}
+
 }

@@ -17,7 +17,7 @@ void LinBiasDist(){
 	f1->SetParameters(m,b);
 
 	//histogram
-	TH1D h1 = new TH1D("h1","", NBins, xmin, xmax);
+	TH1D* h1 = new TH1D("h1","", NBins, xmin, xmax);
 
 	float xRight[NBins];
 

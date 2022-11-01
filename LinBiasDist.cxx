@@ -25,6 +25,9 @@ void LinBiasDist(){
 	float X[NBins];	//midpoints of bins
 	float fX[NBins]; //value of func. at midpt. of bin
 
+	float RejectChance[NBins];	//if chance < RejectChance, reject
+					//else, accept
+	
 	//filling xb
 	for(int i = 0; i < NBins+1; i++){
 	
@@ -32,26 +35,39 @@ void LinBiasDist(){
 		std::cout << xb[i] << std::endl;
 	}
 
-	//filling X, fX
+	//filling X, fX, RejectChance
 	
 	for(int i = 0; i < NBins; i++) {
 
 		X[i] = xb[i] + (0.5)*(dx);
 
 		fX[i] = f1->Eval(X[i]);
+
 	}
 
+	for(int i = 0; i < NBins; i++) {
+
+		RejectChance[i] = (fX[NBins - 1] - fX[i])/(fX[NBins - 1]);
+
+	}
+
+
+
 	float x;	//variable to fill histogram
-	float RejectChance;	//
+	float fx;	//function value at x
+	float chance;	//random number assigned to each (x,fx)
 
 
 	for(int i = 0; i < NEvents; i++) {
 
 		x = gRandom->Rndm();
+		fx = f1->Eval(x);
 		
 		for(int j = 0; j < NBins; j++) {
 			
-			if( <  && < ){
+			if( x < x[j+1]  && x[j] < x ){
+
+			RejectChance = (fX[NBins - 1] - fX[j])/(NBins);
 			
 			}	
 			else continue;

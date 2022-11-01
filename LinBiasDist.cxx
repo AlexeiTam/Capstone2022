@@ -19,16 +19,31 @@ void LinBiasDist(){
 	//histogram
 	TH1D* h1 = new TH1D("h1","", NBins, xmin, xmax);
 
-	float xRight[NBins];
+	float xb[NBins+1];	//boundaries of bins
+	float dx = (xmax - xmin)/(NBins);	//width of bins
 
-	//finding right edges of bins
-	for(int i = 0; i < NBins; i++){
+	float X[NBins];	//midpoints of bins
+	float fX[NBins]; //value of func. at midpt. of bin
+
+	//filling xb
+	for(int i = 0; i < NBins+1; i++){
 	
-		xRight[i] = (i+1)*((xmax - xmin)/(NBins));
-		std::cout << xRight[i] << std::endl;
+		xb[i] = i*dx;
+		std::cout << xb[i] << std::endl;
+	}
+
+	//filling X, fX
+	
+	for(int i = 0; i < NBins; i++) {
+
+		X[i] = xb[i] + (0.5)*(dx);
+
+		fX[i] = f1->Eval(X[i]);
 	}
 
 	float x;	//variable to fill histogram
+	float RejectChance;	//
+
 
 	for(int i = 0; i < NEvents; i++) {
 
@@ -36,6 +51,10 @@ void LinBiasDist(){
 		
 		for(int j = 0; j < NBins; j++) {
 			
+			if( <  && < ){
+			
+			}	
+			else continue;
 
 		}
 	}

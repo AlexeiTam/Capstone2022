@@ -54,25 +54,32 @@ void LinBiasDist(){
 
 
 	float x;	//variable to fill histogram
-	float fx;	//function value at x
+	//float fx;	//function value at x
 	float chance;	//random number assigned to each (x,fx)
 
 
 	for(int i = 0; i < NEvents; i++) {
 
 		x = gRandom->Rndm();
-		fx = f1->Eval(x);
-		
-		for(int j = 0; j < NBins; j++) {
+		//fx = f1->Eval(x);
+		chance = gRandom->Rndm();
+
+		for(int j = 0; j < NBins; j++) {	//bin scan
 			
 			if( x < x[j+1]  && x[j] < x ){
 
-			RejectChance = (fX[NBins - 1] - fX[j])/(NBins);
+				if(chance < RejectChance[j]){
+				h1->Fill(x);
+				}
+				else continue;	
 			
 			}	
 			else continue;
 
 		}
 	}
+
+
+
 
 }

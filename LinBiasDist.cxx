@@ -80,7 +80,7 @@ void LinBiasDist(){
 	}
 
 	//visualization
-	h1->SetLineColors(0);
+	h1->SetLineColor(0);
 	h1->SetFillColor(1);
 	h1->Draw();
 

@@ -49,7 +49,11 @@ void LinBiasDist(){
 
 		RejectChance[i] = (fX[NBins - 1] - fX[i])/(fX[NBins - 1]);
 
+		//test
+		std::cout << "X[" << i << "]:" << X[i] <<"..." << "RejectChance[" << i << "]:" << RejectChance[i] << std::endl;
 	}
+
+
 
 
 
@@ -60,21 +64,24 @@ void LinBiasDist(){
 
 	for(int i = 0; i < NEvents; i++) {
 
-		x = gRandom->Rndm();
+		x = xmax*(gRandom->Rndm());
 		//fx = f1->Eval(x);
-		chance = gRandom->Rndm();
 
 		for(int j = 0; j < NBins; j++) {	//bin scan
 			
 			if( x < xb[j+1]  && xb[j] < x ){
+				
+				chance = 1.0*(gRandom->Rndm());
 
-				if(chance < RejectChance[j]){
-				h1->Fill(x);
-				}
-				else continue;	
+				if(chance > RejectChance[j]){
+				
+					h1->Fill(x);
+				
+				} else continue;
+				
 			
-			}	
-			else continue;
+			} else continue;	
+			
 
 		}
 	}

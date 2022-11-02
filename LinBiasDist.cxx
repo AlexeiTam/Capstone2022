@@ -8,7 +8,9 @@ void LinBiasDist(int NEvents = 1000){
 	float xmin = 0.0;	//give range of x
 	float xmax = 10.0;
 
-	float m = 1.0;	//linear slope
+	float m = (NEvents)/(xmax - xmin);	//linear slope
+	//test
+	std::cout << "m=" << m << std::endl;
 	float b = 0.0;	//y-intercept
 	
 	//linear function

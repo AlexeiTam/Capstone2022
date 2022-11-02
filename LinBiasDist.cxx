@@ -31,7 +31,8 @@ void LinBiasDist(int NEvents = 1000){
 	for(int i = 0; i < NBins+1; i++){
 	
 		xb[i] = i*dx;
-		std::cout << xb[i] << std::endl;
+		//test
+		//std::cout << xb[i] << std::endl;
 	}
 
 	//filling X, fX, RejectChance
@@ -86,9 +87,12 @@ void LinBiasDist(int NEvents = 1000){
 	}
 
 	//visualization
-	h1->SetLineColor(0);
-	h1->SetFillColor(1);
+	h1->SetLineColor(1);
+	h1->SetFillColor(5);
+	
+	h1->GetXaxis()->SetTitle("x");
+	h1->GetYaxis()->SetTitle("Counts");
 	h1->Draw();
-
+	
 
 }

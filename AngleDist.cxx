@@ -1,4 +1,4 @@
-void AngleDist(int NEvents = 10000){
+void AngleDist(int NEvents = 100000){
 	
 	//GOAL: make a distribution uniform in solid angle
 

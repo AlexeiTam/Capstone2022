@@ -19,6 +19,7 @@ void GausDist(int NEvents = 100, float mean = 0.0, float sigma = 1.0, float scal
 	}
 
 	//drawing hist
+	h1->SetFillColor(4);
 	h1->Draw();
 
 	}

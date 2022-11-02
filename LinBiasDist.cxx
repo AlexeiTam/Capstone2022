@@ -1,9 +1,8 @@
-void LinBiasDist(){
+void LinBiasDist(int NEvents = 1000){
 
 	//GOAL:bias a uniform distribution to make a linear-looking function
 
 	//initializing variables, constants
-	int NEvents = 1000;
 	int NBins = 100;
 
 	float xmin = 0.0;	//give range of x
@@ -50,7 +49,7 @@ void LinBiasDist(){
 		RejectChance[i] = (fX[NBins - 1] - fX[i])/(fX[NBins - 1]);
 
 		//test
-		std::cout << "X[" << i << "]:" << X[i] <<"..." << "RejectChance[" << i << "]:" << RejectChance[i] << std::endl;
+		//std::cout << "X[" << i << "]:" << X[i] <<"..." << "RejectChance[" << i << "]:" << RejectChance[i] << std::endl;
 	}
 
 

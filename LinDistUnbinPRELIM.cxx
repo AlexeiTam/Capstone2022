@@ -10,7 +10,11 @@ void LinDistUnbinPRELIM(){
 	float xmax = 10.0;
 
 
+	std::vector<float> vx;
+
 	TF1* f1 = new TF1("f1","[0]*x + [1]", xmin, xmax);
+
+
 
 
 }

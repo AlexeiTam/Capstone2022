@@ -1,16 +1,17 @@
-void LorentzBoostBASIC(float beta = 0.5, float px = 2.0, float py = 1.0, float pz = 1.0, float E = 1.0) {
+void LorentzBoostBASIC(float beta = 0.9, float px = 0.5, float py = 1.0, float pz = 1.0, float E = 5.0) {
 
 	//beta - v/c
 	std::cout << "INPUT: Beta, Px, Py, Pz, E" << std::endl;
-	
+
 	std::vector<float> v1;
 	std::vector<float> v2;
 
 	float L[4][4];	//4x4 lorentz Boost in X direction
 			//L[row][column]
 	
-	float gamma = sqrt((1.0)/(1.0 - (beta)*(beta)));
 
+	
+	float gamma = sqrt((1.0)/(1.0 - (beta)*(beta)));
 	std::cout << "gamma:" << gamma << std::endl;
 
 	std::cout << "beta:" << beta << std::endl;

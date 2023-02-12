@@ -7,6 +7,7 @@ void LorentzianDist(int NEvents = 100, float a = 0.0, float b = 1.0, float scale
 	float xmin = scale*(-6.1);
 	float xmax = scale*(6.1);
 	float x;
+	float y;
 
 	//histogram
 	TH1D *h1 = new TH1D("h1","Lorentzian Distribution", NBins, xmin, xmax);
@@ -14,8 +15,9 @@ void LorentzianDist(int NEvents = 100, float a = 0.0, float b = 1.0, float scale
 	//filling histogram, generating distribution
 	for(int i = 0; i < NEvents; i++) {
 	
-	x = scale*(gRandom->CauchyDist(mean,sigma)) + shift;
-	h1->Fill(x);		
+	x = 6.14*(gRandom->Rndm()) - 3.07;
+	y = scale*(TMath::CauchyDist(x,a,b)) + shift;
+	h1->Fill(y);		
 	}
 
 	//drawing hist

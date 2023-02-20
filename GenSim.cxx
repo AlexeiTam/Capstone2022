@@ -135,15 +135,70 @@ void GenSim(){
 	
 	//BOOKMARK: perform boost on PC	
 
-	//fill ECnew, generate mCnew: from ECnew^2 = EC^2 = mCnew*c^2
-	
-	float ECnew[i];
-	float mCnew[i];
+	float PC[i][4];	//4-vector of C1 in RF(P)
+	float PCNew[i][4];	//4-vector of C1 in RF(C1)
+
+	for(int i = 0; i < NEvents; i++) {
+
+		PC[i][0] = EC1[i];
+		PC[i][1] = pC1x[i];
+		PC[i][2] = pC1y[i];
+		PC[i][3] = pC1z[i];
+		
+	}
 
 	for(int i = 0; i < NEvents; i++) {
 
 
+		for(int j = 0; j < 4; j++) {
+
+			PCNew[i][j] = 0.0;
+		}
 	}
+
+
+	for(int i = 0; i < NEvents; i++) {
+		
+		for(int j = 0; j < 4; j++) {
+
+			for(int k = 0; k < 4; k++) {
+
+				PCNew[i][j] = PCNew[i][j] + (L[i][j][k])*PC[k]; 
+			}
+		}
+
+	}
+
+	//fill ECnew, generate mCnew: from ECnew^2 = EC^2 = mCnew*c^2
+	
+	float ECNew[i];
+	float mCNew[i];
+
+	float pCNewx[i];
+	float pCNewy[i];
+	float pCNewz[i];
+
+	float pNew[i];
+
+	for(int i = 0; i < NEvents; i++) {
+
+		PCNew[i][0] = ECNew[i];
+		PCNew[i][1] = pCNewx[i];
+		PCNew[i][2] = pCNewy[i];
+		PCNew[i][3] = pCNewz[i];
+
+		pNew[i] = sqrt((pCNewx[i]*pCNewx[i])+(pCNewy[i]*pCNewy[i])+(pCNewz[i]*pCNewz[i]));	
+	}
+
+	//find mCNew: mC in RF(C1)
+	//E^2 = p^2c^2 + m^2c^4 --> m = sqrt((E^2/c^4) + (p^2/c^2);
+	for(int i = 0 ; i < NEvents; i++) {
+		
+		mCNew[i] = sqrt(((ECNew[i]*ECNew[i])/(c*c*c*c))+((pNew[i]*pNew[i])/(c*c)));
+
+	}
+
+
 
 
 }

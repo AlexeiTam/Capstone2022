@@ -61,16 +61,16 @@ void GenSim(){
 	//??p-->beta?
 	//
 
-	float beta[i];
-	float gamma[i];	//related to pC in RF(P)
+	float beta[NEvents];
+	float gamma[NEvents];	//related to pC in RF(P)
 
-	float pC1x[i];
-	float pC1y[i];
-	float pC1z[i];
+	float pC1x[NEvents];
+	float pC1y[NEvents];
+	float pC1z[NEvents];
 
-	float pC2x[i];
-	float pC2y[i];
-	float pC2z[i];
+	float pC2x[NEvents];
+	float pC2y[NEvents];
+	float pC2z[NEvents];
 
 	float chance; 	//flip a coin; add chance that pC1 can be negative
 
@@ -82,7 +82,7 @@ void GenSim(){
 		if(chance < 0.5) pC1x[i] = 1.0*pC1x[i];
 
 		pC2x[i] = -1.0*pC1x[i];
-	
+
 		pC1y[i] = 0.0;
 		pC1z[i] = 0.0;
 		pC2y[i] = 0.0;
@@ -135,8 +135,8 @@ void GenSim(){
 	
 	//BOOKMARK: perform boost on PC	
 
-	float PC[i][4];	//4-vector of C1 in RF(P)
-	float PCNew[i][4];	//4-vector of C1 in RF(C1)
+	float PC[NEvents][4];	//4-vector of C1 in RF(P)
+	float PCNew[NEvents][4];	//4-vector of C1 in RF(C1)
 
 	for(int i = 0; i < NEvents; i++) {
 
@@ -163,7 +163,7 @@ void GenSim(){
 
 			for(int k = 0; k < 4; k++) {
 
-				PCNew[i][j] = PCNew[i][j] + (L[i][j][k])*PC[k]; 
+				PCNew[i][j] = PCNew[i][j] + (L[i][j][k])*(PC[i][k]); 
 			}
 		}
 
@@ -171,14 +171,14 @@ void GenSim(){
 
 	//fill ECnew, generate mCnew: from ECnew^2 = EC^2 = mCnew*c^2
 	
-	float ECNew[i];
-	float mCNew[i];
+	float ECNew[NEvents];
+	float mCNew[NEvents];
 
-	float pCNewx[i];
-	float pCNewy[i];
-	float pCNewz[i];
+	float pCNewx[NEvents];
+	float pCNewy[NEvents];
+	float pCNewz[NEvents];
 
-	float pNew[i];
+	float pNew[NEvents];
 
 	for(int i = 0; i < NEvents; i++) {
 
@@ -187,18 +187,46 @@ void GenSim(){
 		PCNew[i][2] = pCNewy[i];
 		PCNew[i][3] = pCNewz[i];
 
-		pNew[i] = sqrt((pCNewx[i]*pCNewx[i])+(pCNewy[i]*pCNewy[i])+(pCNewz[i]*pCNewz[i]));	
+		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
 	}
 
 	//find mCNew: mC in RF(C1)
 	//E^2 = p^2c^2 + m^2c^4 --> m = sqrt((E^2/c^4) + (p^2/c^2);
 	for(int i = 0 ; i < NEvents; i++) {
 		
-		mCNew[i] = sqrt(((ECNew[i]*ECNew[i])/(c*c*c*c))+((pNew[i]*pNew[i])/(c*c)));
+		mCNew[i] = sqrt((((ECNew[i])*(ECNew[i]))/(c*c*c*c))+(((pNew[i])*(pNew[i]))/(c*c)));
 
 	}
 
+//old testing
+//cout << "pC1x:" << pC1x[0] << "..." << "pCNewx:" << pCNewx[0] << endl;
+//cout << "pC1y:" << pC1y[0] << "..." << "pCNewy:" << pCNewy[0] << endl;
+//cout << "pC1z:" << pC1z[0] << "..." << "pCNewz:" << pCNewz[0] << endl;
 
+	//generate mG
+	//mG = mG11 = mG12
+	
+		//first, determine avg, width of mCNew
+		float mCNewMean;
+		float mCNewSigma;
+
+		for(int i = 0; i < NEvents; i++) {
+
+			mCNewMean = (mCNew[i])/NEvents;
+		}
+
+		for(int i = 0; i < NEvents; i++) {
+
+			mCNewSigma = ((mCNew[i] - mCNewMean)*(mCNew[i] - mCNewMean))/(NEvents - 1);
+		}
+
+		mCNewSigma = sqrt(mCNewSigma);
+	float mG[NEvents];
+
+	for(int i = 0; i < NEvents; i++) {
+
+		mG[i] = gRandom->Gaus	
+	}
 
 
 }

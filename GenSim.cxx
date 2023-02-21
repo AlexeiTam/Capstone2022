@@ -363,6 +363,19 @@ void GenSim(){
 
 
 
+	//VISUALIZATION :D  --------------------------------------------------------------------------
 
+		//note to self; maybe just use vectors in the first place
+	
+	std::vector<float> vmP;
 
+	for(int i = 0; i < NEvents; i++) {
+
+		vmP.emplace_back(mP[i]);
+
+	}
+
+	float mPmin = *min_element(vmP.begin(), vmP.end());
+	float mPmax = *max_element(vmP.begin(), vmP.end());
+	TH1D
 }

@@ -231,6 +231,7 @@ void GenSim(){
 	
 	//generating mG::	
 	float mG[NEvents];
+	float EG[NEvents];
 
 	for(int i = 0; i < NEvents; i++) {
 

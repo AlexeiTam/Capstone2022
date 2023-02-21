@@ -297,6 +297,68 @@ void GenSim(){
 
 	float LCtoP[NEvents][4][4];
 
+		//initialize to 0;
+		for(int i = 0; i < NEvents; i++) {
+			
+			for(int j = 0; j < 4; j++) {
+
+				for(int k = 0; k < 4; k++) {
+					
+					LCtoP[i][j][k] = 0.0;
+				}
+			}
+		}
+
+
+		//now, beta(in RF(C1)) = -1.0*beta(in RF(P))
+		for(int i = 0; i < NEvents; i++) {
+
+			LCtoP[i][0][0] = gamma[i];
+			LCtoP[i][1][1] = gamma[i];
+			LCtoP[i][0][1] = (gamma[i])*(beta[i]);
+			LCtoP[i][1][0] = (gamma[i])*(beta[i]);
+
+			LCtoP[i][2][2] = 1.0;
+			LCtoP[i][3][3] = 1.0;
+
+		}
+
+
+		//generate new pG11 in RF(P)
+		
+		float PG11[NEvents][4];		//4-vector of g11 in RF(C1)
+		float PG11New[NEvents][4];	//4-vector of g11 in RF(P)
+
+		//fill pG11, initialize pG11New as 0
+		for(int i = 0; i < NEvents; i++) {
+
+			PG11[i][0] = EG11[i];
+			PG11[i][1] = pG11x[i];
+			PG11[i][2] = pG11y[i];
+			PG11[i][3] = pG11z[i];
+
+		}
+
+		for(int i = 0; i < NEvents; i++) {
+
+			for(int j = 0; j <4; j++) {
+
+				PG11New[i][j] = 0.0;
+			}
+		}
+
+		//PG11New = LCtoP*PG11
+		for(int i = 0; i < NEvents; i++) {
+
+			for(int j = 0; j < 4; j++) {
+
+				for(int k = 0; k < 4; k++) {
+
+					PG11New[i][j] = PG11New[i][j] + (LCtoP[i][j][k])*(PG11[i][k]);
+				}
+			}
+		}
+
 
 
 

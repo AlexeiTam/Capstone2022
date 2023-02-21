@@ -203,30 +203,103 @@ void GenSim(){
 //cout << "pC1y:" << pC1y[0] << "..." << "pCNewy:" << pCNewy[0] << endl;
 //cout << "pC1z:" << pC1z[0] << "..." << "pCNewz:" << pCNewz[0] << endl;
 
-	//generate mG
+	//C1-->g11 + g21
+	
 	//mG = mG11 = mG12
 	
 		//first, determine avg, width of mCNew
-		float mCNewMean;
-		float mCNewSigma;
+		float mCNewMean = 0.0;
+		float mCNewSigma = 0.0;
+
+		float ECNewMean;
+		float ECNewSigma;
 
 		for(int i = 0; i < NEvents; i++) {
 
-			mCNewMean = (mCNew[i])/NEvents;
+			mCNewMean = mCNewMean + (mCNew[i])/NEvents;
+			ECNewMean = ECNewMean + (ECNew[i])/NEvents;
 		}
 
 		for(int i = 0; i < NEvents; i++) {
 
-			mCNewSigma = ((mCNew[i] - mCNewMean)*(mCNew[i] - mCNewMean))/(NEvents - 1);
+			mCNewSigma = mCNewSigma + ((mCNew[i] - mCNewMean)*(mCNew[i] - mCNewMean))/(NEvents - 1);
+			ECNewSigma = ECNewSigma + ((ECNew[i] - ECNewMean)*(ECNew[i] - ECNewMean))/(NEvents - 1);
 		}
 
 		mCNewSigma = sqrt(mCNewSigma);
+		ECNewSigma = sqrt(ECNewSigma);
+	
+	//generating mG::	
 	float mG[NEvents];
 
 	for(int i = 0; i < NEvents; i++) {
 
-		mG[i] = gRandom->Gaus	
+		mG[i] = gRandom->Gaus(mCNewMean, mCNewSigma);
+		EG[i] = gRandom->Gaus(ECNewMean, ECNewSigma);
+
 	}
+
+	//generating pG: 
+	//constrained: EG^2 = pG^2c^2 + mG^2c^4
+	//pG11 = - pG21 --> pG11x = - pG21x; same for y and z
+	//??is this right?
+		//pick y s.t. pG || y in RF(C1)
+		//then pG11x = pG21 x = pG11z = pG21z = 0.0
+	
+	float pG[NEvents];
+	float pG11x[NEvents];
+	float pG11y[NEvents];
+	float pG11z[NEvents];
+
+	float pG21x[NEvents];
+	float pG21y[NEvents];
+	float pG21z[NEvents];
+
+	float EG11[NEvents];
+	float EG21[NEvents];
+	float mG11[NEvents];
+	float mG21[NEvents];
+	
+	//filling pG, individual EG, mG arrays
+	for(int i = 0; i < NEvents; i++) {
+
+
+		pG[i] = sqrt((((EG[i])*(EG[i]))/(c*c))+((mG[i])*(mG[i])*c*c));
+	
+		EG11[i] = EG[i];
+		EG21[i] = EG[i];
+
+		mG11[i] = mG[i];
+		mG21[i] = mG[i];
+	
+	}
+
+	//filling individual pG's
+	
+	for(int i = 0; i < NEvents; i++) {
+
+		pG11x[i] = 0.0;
+		pG11z[i] = 0.0;
+		pG21x[i] = 0.0;
+		pG21z[i] = 0.0;
+
+	}
+
+	for(int i = 0; i < NEvents; i++) {
+
+		pG11y[i] = pG[i];
+		pG21y[i] = -1.0*(pG11y[i]);
+
+	}
+
+	//BOOST: RF(C1) --> RF(P) --------------------------------------------------------------------------------------
+	
+
+	float LCtoP[NEvents][4][4];
+
+
+
+
 
 
 }

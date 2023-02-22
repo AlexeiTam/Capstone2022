@@ -511,10 +511,33 @@ void GenSim(){
 
 	hTheta->GetXaxis()->SetTitle("#Theta");
 	hTheta->GetYaxis()->SetTitle("Counts");
+	
+	hmP->SettFillColor(0);
+	hmP->SetLineWidth(5);
+	hEP->SetFillColor(1);
+	hmP->SetLineWidth(5);
+	hmC1->SetFillColor(2);
+	hmC1->SetLineWidth(5);
+	hEC1->SetFillColor(3);
+	hEC1->SetLineWidth(5);
+	hpC1->SetFillColor(4);
+	hpC1->SetLineWidth(5);
+
+	hmCNew->SetFillColor(5);
+	hmCNew->SetLineWidth(5);
+	hECNew->SetFillColor(6);
+	hECNew->SetLineWidth(5);
+	hmG11->SetFillColor(7);
+	hmG11->SetLineWidth(5);
+	hEG11->SetFillColor(8);
+	hEG11->SetLineWidth(5);
+	hpG11->SetFillColor(9);
+	hpG11->SetLineWidth(5);
+
+	hTheta->SetFillColor(10);
+	hTheta->SetLineWidth(5);
 
 
-	hmP->GetXaxis()->SetTitle("M");	
-	hmP->GetXaxis()->SetLineWidth("M");
 
 
 }

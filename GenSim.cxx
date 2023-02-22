@@ -328,7 +328,9 @@ void GenSim(){
 		//generate new pG11 in RF(P)
 		
 		float PG11[NEvents][4];		//4-vector of g11 in RF(C1)
+		float PG21[NEvents][4];		//4-vector of g21 in RF(C1)
 		float PG11New[NEvents][4];	//4-vector of g11 in RF(P)
+		float PG21New[NEvents][4];	//4-vector of g11 in RF(P)
 
 		//fill pG11, initialize pG11New as 0
 		for(int i = 0; i < NEvents; i++) {
@@ -338,6 +340,10 @@ void GenSim(){
 			PG11[i][2] = pG11y[i];
 			PG11[i][3] = pG11z[i];
 
+			PG21[i][0] = EG21[i];
+			PG21[i][1] = pG21x[i]
+			PG21[i][2] = pG21y[i];
+			PG21[i][3] = pG21z[i];
 		}
 
 		for(int i = 0; i < NEvents; i++) {
@@ -345,6 +351,7 @@ void GenSim(){
 			for(int j = 0; j <4; j++) {
 
 				PG11New[i][j] = 0.0;
+				PG21New[i][j] = 0.0;
 			}
 		}
 
@@ -356,26 +363,156 @@ void GenSim(){
 				for(int k = 0; k < 4; k++) {
 
 					PG11New[i][j] = PG11New[i][j] + (LCtoP[i][j][k])*(PG11[i][k]);
+					PG21New[i][j] = PG21New[i][j] + (LCtoP[i][j][k])*(PG21[i][k]);
 				}
 			}
 		}
 
 
+		//calculating Theta
+		//u * v = uv*cos(theta) --> cos(theta) = (u*v)/(uv) --> theta = acos(...)
+		//all in RF(P)
 
+		float dot[NEvents]; //dot product pG11*pG21
+		float pG11[NEvents]; //|pG11| = sqrt( pG11x*pG11x + ...)
+		float pG21[NEvents]; //|pG21| = sqrt( pG21x*pG21x + ...)
+
+		float cosine[NEvents];
+		float theta[NEvents];
+
+		for(int i = 0; i < NEvents; i++) {
+
+			dot[i] = (((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
+			pG11[i] = sqrt(((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
+			pG21[i] = sqrt(((PG21New[i][1])*(PG21New[i][1]))+((PG21New[i][2])*(PG21New[i][2]))+((PG21New[i][3])*(PG11New[i][3])));
+
+			cosine[i] = ((dot[i])/((pG11[i])*(pG21[i])));
+			theta[i] = acos(cosine[i]);	//in radians
+			theta[i] = (theta[i])*((180.0)/(TMath::Pi()));	//conversion: radians -- degrees
+		}
 
 	//VISUALIZATION :D  --------------------------------------------------------------------------
 
 		//note to self; maybe just use vectors in the first place
 	
+	const Int_t NBins = 10000;	//10,000
 	std::vector<float> vmP;
+	std::vector<float> vEP;
+	std::vector<float> vmC1;
+	std::vector<float> vmC2;
+	std::vector<float> vEC1;
+	std::vector<float> vpC1;
+	std::vector<float> vpC2;
 
+	std::vector<float> vmCNew;
+	std::vector<float> vECNew;
+	std::vector<float> vmG11;
+	std::vector<float> vEG11;
+	std::vector<float> vmG21;
+	std::vector<float> vpG11;
+	std::vector<float> vpG21;
+
+	std::vector<float> vEG11New;
+	std::vector<float> vmG11New;
+	std::vector<float> vpG11xNew;
+	std::vector<float> vpG11yNew;
+	std::vector<float> vpG11zNew;
+
+		//canvas: split based on RF
+		TCanvas *cP = new TCanvas("cP","REST FRAME:PARENT", 1500, 1500);
+		TCanvas *cC1 = new TCanvas("cC1", "REST FRAME:C1", 1500, 1500);
+		
 	for(int i = 0; i < NEvents; i++) {
 
 		vmP.emplace_back(mP[i]);
+		vEP.emplace_back(EP[i]);
+		vmC1.emplace_back(mC1[i]);
+		vmC2.emplace_back(mC2[i]);
+		vEC1.emplace_back(EC1[i]);
+		vpC1.emplace_back(pC1x[i]);
+		vpC2.emplace_Back(pC2x[i]);
+
+		vmCNew.emplace_back(mCNew[i]);
+		vECNew.emplace_back(EC[i]);
+		vmG11.emplace_back(mG11[i]);
+		vEG11.emplace_back(EG11[i]);
+		vmG21.emplace_back(mG21[i]);
+		vpG11.emplace_back(pG11y[i]);
+		vpG21.emplace_back(pG21y[i]);
+
+		
 
 	}
 
 	float mPmin = *min_element(vmP.begin(), vmP.end());
 	float mPmax = *max_element(vmP.begin(), vmP.end());
-	TH1D
+
+	TH1D *hmP = new TH1D("hmP","Parent Mass", NBins, mPmin - 5.0; mPmax + 5.0);
+	TH1D *hEP = new TH1D("hEP","Parent Energy", NBins, (*min_element(vEP.begin(), vEP.end())) - 5.0; (*max_element(vEP.begin(), vEP.end())) + 5.0);
+	TH1D *hmC1 = new TH1D("hmC1","C1 Mass", NBins, (*min_element(vmC1.begin(), vmC1.end())) - 5.0; (*max_element(vmC1.begin(), vmC1.end())) + 5.0);
+	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass Distribution", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
+	TH1D *hEC1 = new TH1D("hEC","C1 Energy", NBins, (*min_element(vEC1.begin(), vEC1.end())) - 5.0; (*max_element(vEC1.begin(), vEC1.end())) + 5.0);
+	TH1D *hpC1 = new TH1D("hpC1","Parent Mass", NBins, (*min_element(vpC1.begin(), vpC1.end())) - 5.0; (*max_element(vPC1.begin(), vpC1.end())) + 5.0);
+	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
+	//
+
+	TH1D *hmCNew = new TH1D("hmCNew","C1 Mass (RF:C1)", NBins, (*min_element(vmCNew.begin(), vmCNew.end())) - 5.0; (*max_element(vmCNew.begin(), vmCNew.end())) + 5.0);
+	TH1D *hECNew = new TH1D("hEP","C1 Energy (RF:C1)", NBins, (*min_element(vECNew.begin(), vECNew.end())) - 5.0; (*max_element(vECNew.begin(), vECNew.end())) + 5.0);
+	TH1D *hmG11 = new TH1D("hmG11","G11 Mass", NBins, (*min_element(vmG11.begin(), vmG11.end())) - 5.0; (*max_element(vmG11.begin(), vmG11.end())) + 5.0);
+	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
+	TH1D *hEG11 = new TH1D("hEG11","G11 Energy Distribution", NBins, (*min_element(vEG11.begin(), vEG11.end())) - 5.0; (*max_element(vEG11.begin(), vEG11.end())) + 5.0);
+	TH1D *hpG11 = new TH1D("hpG11","G11 Momentum", NBins, (*min_element(vpC1.begin(), vpC1.end())) - 5.0; (*max_element(vPC1.begin(), vpC1.end())) + 5.0);
+	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
+
+	TH1D *hTheta = new TH1D("hTheta", "Angular Deflection", NBins, -5.0, 185.0);
+
+	//filling histograms
+	
+	for(int i = 0 ; i < NEvents; i++) {
+
+		hmP->Fill(mP[i]);
+		hEP->Fill(EP[i]);
+		hmC1->Fill(mC1[i]);
+		hEC1->Fill(EC1[i]);
+		hpC1->Fill(pC1[i]);
+
+
+		hmCNew->Fill(mCNew[i]);
+		hECNew->Fill(ECNew[i]);
+		hmG11->Fill(mG11[i]);
+		hEG11->Fill(EG11[i]);
+		hpG11->Fill(pG11y[i]);
+
+		hTheta->Fill(Theta[i]);
+
+	}
+
+	hmP->GetXaxis()->SetTitle("M");
+	hmP->GetYaxis()->SetTitle("Counts");
+	hEP->GetXaxis()->SetTitle("E");
+	hEP->GetYaxis()->SetTitle("Counts");
+	hmC1->GetXaxis()->SetTitle("m_C");
+	hmC1->GetYaxis()->SetTitle("Counts");
+	hEC1->GetXaxis()->SetTitle("E_C");
+	hEC1->GetYaxis()->SetTitle("Counts");
+	hpC1->GetXaxis()->SetTitle("p_C");
+	hpC1->GetYaxis()->SetTitle("Counts");
+
+	hmCNew->GetXaxis()->SetTitle("m_C (REST)");
+	hmCNew->GetYaxis()->SetTitle("Counts");
+	hECNew->GetXaxis()->SetTitle("E_C (REST)");
+	hECNew->GetYaxis()->SetTitle("Counts");
+	hmG11->GetXaxis()->SetTitle("m_{G11}");
+	hmG11->GetYaxis()->SetTitle("Counts");
+	hEG11->GetXaxis()->SetTitle("E_{G11}");
+	hEG11->GetYaxis()->SetTitle("Counts");
+	hpG11->GetXaxis()->SetTitle("p_{G11,y}");
+	hpG11->GetYaxis()->SetTitle("Counts");
+
+	hTheta->GetXaxis()->SetTitle("#Theta");
+	hTheta->GetYaxis()->SetTitle("Counts");
+	
+	//Drawing
+	
+
 }

@@ -511,8 +511,10 @@ void GenSim(){
 
 	hTheta->GetXaxis()->SetTitle("#Theta");
 	hTheta->GetYaxis()->SetTitle("Counts");
-	
-	//Drawing
-	
+
+
+	hmP->GetXaxis()->SetTitle("M");	
+	hmP->GetXaxis()->SetLineWidth("M");
+
 
 }

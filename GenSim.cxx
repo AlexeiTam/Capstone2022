@@ -421,7 +421,10 @@ void GenSim(){
 		//canvas: split based on RF
 		TCanvas *cP = new TCanvas("cP","REST FRAME:PARENT", 1500, 1500);
 		TCanvas *cC1 = new TCanvas("cC1", "REST FRAME:C1", 1500, 1500);
-		
+
+		cP->Divide(3,2);
+		cC1->Divide(3,2);
+
 	for(int i = 0; i < NEvents; i++) {
 
 		vmP.emplace_back(mP[i]);
@@ -537,7 +540,43 @@ void GenSim(){
 	hTheta->SetFillColor(10);
 	hTheta->SetLineWidth(5);
 
+	cP->cd(1);
+	hmP->Draw();
 
+	cP->cd(2);
+	hEP->Draw();
+	
+	cP->cd(3);
+	hmC1->Draw();
+	
+	cP->cd(4);
+	hEC1->Draw();
+	
+	cP->cd(5);
+	hpC1->Draw();
+
+	cP->cd(6);
+	hTheta->Draw();
+	
+	cC1->cd(1);
+	hmCNew->Draw();
+	
+	cC1->cd(2);
+	hECNew->Draw();
+
+	cC1->cd(3);
+	hmG11->Draw();
+
+	cC1->cd(4);
+	hEG11->Draw();
+
+	cC1->cd(5);
+	hpG11->Draw();
+
+	
+
+	cP->Draw();
+	cC1->Draw();
 
 
 }

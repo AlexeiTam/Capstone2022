@@ -1,7 +1,7 @@
 void GenSim(){
 	//GOAL: simulate general two-step decay: P->C1 + C2; C1->g11 + g12
 	//ED: Natural Units; i.e, c = 1; can change to c = 3e-8 later
-	const Int_t NEvents = 10000; //number of simulations: 10,000
+	const Int_t NEvents = 1000; //number of simulations: 10,000
 	float c = 1.0;
 
 //REST FRAME: PARENT----------------------------------------------------------------------------------------
@@ -26,8 +26,8 @@ void GenSim(){
 	float EC1[NEvents];
 	float EC2[NEvents];
 
-	float mPMean = 5.0;	//can be made initializable
-	float mPSigma = 0.50;	//same as above
+	float mPMean = 17.0;	//can be made initializable
+	float mPSigma = 2.0;	//same as above
 	float mCMean = 0.25*mPMean;
 	float mCSigma = 0.25*mCSigma;
 
@@ -182,10 +182,10 @@ void GenSim(){
 
 	for(int i = 0; i < NEvents; i++) {
 
-		PCNew[i][0] = ECNew[i];
-		PCNew[i][1] = pCNewx[i];
-		PCNew[i][2] = pCNewy[i];
-		PCNew[i][3] = pCNewz[i];
+		ECNew[i] = PCNew[i][0];
+		pCNewx[i] = PCNew[i][1];
+		pCNewy[i] = PCNew[i][2];
+		pCNewz[i] = PCNew[i][3];
 
 		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
 	}
@@ -316,8 +316,8 @@ void GenSim(){
 
 			LCtoP[i][0][0] = gamma[i];
 			LCtoP[i][1][1] = gamma[i];
-			LCtoP[i][0][1] = (gamma[i])*(beta[i]);
-			LCtoP[i][1][0] = (gamma[i])*(beta[i]);
+			LCtoP[i][0][1] = -1.0*(gamma[i])*(beta[i]);
+			LCtoP[i][1][0] = -1.0*(gamma[i])*(beta[i]);
 
 			LCtoP[i][2][2] = 1.0;
 			LCtoP[i][3][3] = 1.0;
@@ -341,7 +341,7 @@ void GenSim(){
 			PG11[i][3] = pG11z[i];
 
 			PG21[i][0] = EG21[i];
-			PG21[i][1] = pG21x[i]
+			PG21[i][1] = pG21x[i];
 			PG21[i][2] = pG21y[i];
 			PG21[i][3] = pG21z[i];
 		}
@@ -356,18 +356,25 @@ void GenSim(){
 		}
 
 		//PG11New = LCtoP*PG11
+		//for(int i = 0; i < NEvents; i++) {
+
+			//for(int j = 0; j < 4; j++) {
+
+			//	for(int k = 0; k < 4; k++) {
+
+			//		PG11New[i][j] = PG11New[i][j] + (LCtoP[i][j][k])*(PG11[i][k]);
+			//		PG21New[i][j] = PG21New[i][j] + (LCtoP[i][j][k])*(PG21[i][k]);
+			//	}
+			//}
+		//}
+
 		for(int i = 0; i < NEvents; i++) {
 
-			for(int j = 0; j < 4; j++) {
-
-				for(int k = 0; k < 4; k++) {
-
-					PG11New[i][j] = PG11New[i][j] + (LCtoP[i][j][k])*(PG11[i][k]);
-					PG21New[i][j] = PG21New[i][j] + (LCtoP[i][j][k])*(PG21[i][k]);
-				}
-			}
+			PG11New[i][0] = LCtoP[i][0][0]*PG11[i][0] + LCtoP[i][0][1]*PG11[i][1] + LCtoP[i][0][2]*PG11[i][2] + LCtoP[i][0][3]*PG11[i][3];
+			PG11New[i][1] = LCtoP[i][1][0]*PG11[i][0] + LCtoP[i][1][1]*PG11[i][1] + LCtoP[i][1][2]*PG11[i][2] + LCtoP[i][1][3]*PG11[i][3];
+			PG11New[i][2] = LCtoP[i][2][0]*PG11[i][0] + LCtoP[i][2][1]*PG11[i][1] + LCtoP[i][2][2]*PG11[i][2] + LCtoP[i][2][3]*PG11[i][3];
+			PG11New[i][3] = LCtoP[i][3][0]*PG11[i][0] + LCtoP[i][3][1]*PG11[i][1] + LCtoP[i][3][2]*PG11[i][2] + LCtoP[i][3][3]*PG11[i][3];
 		}
-
 
 		//calculating Theta
 		//u * v = uv*cos(theta) --> cos(theta) = (u*v)/(uv) --> theta = acos(...)
@@ -391,11 +398,17 @@ void GenSim(){
 			theta[i] = (theta[i])*((180.0)/(TMath::Pi()));	//conversion: radians -- degrees
 		}
 
+		//test
+		for(int i = 0; i < 10; i++) {
+
+			cout << "REST FRAME : P" << endl;
+			cout << "pG11x[" << i <<"]:" << PG11New[i][1] << "..." << "pG11y[" << i << "]:" << PG11[i][2] << "..." << "pG11z[" << i << "]:" << PG11New[i][3] << endl;
+		}
 	//VISUALIZATION :D  --------------------------------------------------------------------------
 
 		//note to self; maybe just use vectors in the first place
 	
-	const Int_t NBins = 10000;	//10,000
+	const Int_t NBins = 300;	//
 	std::vector<float> vmP;
 	std::vector<float> vEP;
 	std::vector<float> vmC1;
@@ -433,7 +446,7 @@ void GenSim(){
 		vmC2.emplace_back(mC2[i]);
 		vEC1.emplace_back(EC1[i]);
 		vpC1.emplace_back(pC1x[i]);
-		vpC2.emplace_Back(pC2x[i]);
+		vpC2.emplace_back(pC2x[i]);
 
 		vmCNew.emplace_back(mCNew[i]);
 		vECNew.emplace_back(EC[i]);
@@ -450,21 +463,21 @@ void GenSim(){
 	float mPmin = *min_element(vmP.begin(), vmP.end());
 	float mPmax = *max_element(vmP.begin(), vmP.end());
 
-	TH1D *hmP = new TH1D("hmP","Parent Mass", NBins, mPmin - 5.0; mPmax + 5.0);
-	TH1D *hEP = new TH1D("hEP","Parent Energy", NBins, (*min_element(vEP.begin(), vEP.end())) - 5.0; (*max_element(vEP.begin(), vEP.end())) + 5.0);
-	TH1D *hmC1 = new TH1D("hmC1","C1 Mass", NBins, (*min_element(vmC1.begin(), vmC1.end())) - 5.0; (*max_element(vmC1.begin(), vmC1.end())) + 5.0);
+	TH1D *hmP = new TH1D("hmP","Parent Mass", NBins, mPmin - 5.0, mPmax + 5.0);
+	TH1D *hEP = new TH1D("hEP","Parent Energy", NBins, (*min_element(vEP.begin(), vEP.end())) - 5.0, (*max_element(vEP.begin(), vEP.end())) + 5.0);
+	TH1D *hmC1 = new TH1D("hmC1","C1 Mass", NBins, (*min_element(vmC1.begin(), vmC1.end())) - 5.0, (*max_element(vmC1.begin(), vmC1.end())) + 5.0);
 	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass Distribution", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
-	TH1D *hEC1 = new TH1D("hEC","C1 Energy", NBins, (*min_element(vEC1.begin(), vEC1.end())) - 5.0; (*max_element(vEC1.begin(), vEC1.end())) + 5.0);
-	TH1D *hpC1 = new TH1D("hpC1","Parent Mass", NBins, (*min_element(vpC1.begin(), vpC1.end())) - 5.0; (*max_element(vPC1.begin(), vpC1.end())) + 5.0);
+	TH1D *hEC1 = new TH1D("hEC","C1 Energy", NBins, (*min_element(vEC1.begin(), vEC1.end())) - 5.0, (*max_element(vEC1.begin(), vEC1.end())) + 5.0);
+	TH1D *hpC1 = new TH1D("hpC1","Parent Mass", NBins, (*min_element(vpC1.begin(), vpC1.end())) - 5.0, (*max_element(vpC1.begin(), vpC1.end())) + 5.0);
 	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
 	//
 
-	TH1D *hmCNew = new TH1D("hmCNew","C1 Mass (RF:C1)", NBins, (*min_element(vmCNew.begin(), vmCNew.end())) - 5.0; (*max_element(vmCNew.begin(), vmCNew.end())) + 5.0);
-	TH1D *hECNew = new TH1D("hEP","C1 Energy (RF:C1)", NBins, (*min_element(vECNew.begin(), vECNew.end())) - 5.0; (*max_element(vECNew.begin(), vECNew.end())) + 5.0);
-	TH1D *hmG11 = new TH1D("hmG11","G11 Mass", NBins, (*min_element(vmG11.begin(), vmG11.end())) - 5.0; (*max_element(vmG11.begin(), vmG11.end())) + 5.0);
+	TH1D *hmCNew = new TH1D("hmCNew","C1 Mass (RF:C1)", NBins, (*min_element(vmCNew.begin(), vmCNew.end())) - 5.0, (*max_element(vmCNew.begin(), vmCNew.end())) + 5.0);
+	TH1D *hECNew = new TH1D("hEP","C1 Energy (RF:C1)", NBins, (*min_element(vECNew.begin(), vECNew.end())) - 5.0, (*max_element(vECNew.begin(), vECNew.end())) + 5.0);
+	TH1D *hmG11 = new TH1D("hmG11","G11 Mass", NBins, (*min_element(vmG11.begin(), vmG11.end())) - 5.0, (*max_element(vmG11.begin(), vmG11.end())) + 5.0);
 	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
-	TH1D *hEG11 = new TH1D("hEG11","G11 Energy Distribution", NBins, (*min_element(vEG11.begin(), vEG11.end())) - 5.0; (*max_element(vEG11.begin(), vEG11.end())) + 5.0);
-	TH1D *hpG11 = new TH1D("hpG11","G11 Momentum", NBins, (*min_element(vpC1.begin(), vpC1.end())) - 5.0; (*max_element(vPC1.begin(), vpC1.end())) + 5.0);
+	TH1D *hEG11 = new TH1D("hEG11","G11 Energy Distribution", NBins, (*min_element(vEG11.begin(), vEG11.end())) - 5.0, (*max_element(vEG11.begin(), vEG11.end())) + 5.0);
+	TH1D *hpG11 = new TH1D("hpG11","G11 Momentum", NBins, (*min_element(vpG11.begin(), vpG11.end())) - 5.0, (*max_element(vpG11.begin(), vpG11.end())) + 5.0);
 	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
 
 	TH1D *hTheta = new TH1D("hTheta", "Angular Deflection", NBins, -5.0, 185.0);
@@ -477,7 +490,7 @@ void GenSim(){
 		hEP->Fill(EP[i]);
 		hmC1->Fill(mC1[i]);
 		hEC1->Fill(EC1[i]);
-		hpC1->Fill(pC1[i]);
+		hpC1->Fill(pC1x[i]);
 
 
 		hmCNew->Fill(mCNew[i]);
@@ -486,7 +499,7 @@ void GenSim(){
 		hEG11->Fill(EG11[i]);
 		hpG11->Fill(pG11y[i]);
 
-		hTheta->Fill(Theta[i]);
+		hTheta->Fill(theta[i]);
 
 	}
 
@@ -515,7 +528,7 @@ void GenSim(){
 	hTheta->GetXaxis()->SetTitle("#Theta");
 	hTheta->GetYaxis()->SetTitle("Counts");
 	
-	hmP->SettFillColor(0);
+	hmP->SetFillColor(0);
 	hmP->SetLineWidth(5);
 	hEP->SetFillColor(1);
 	hmP->SetLineWidth(5);

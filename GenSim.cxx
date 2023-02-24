@@ -374,6 +374,13 @@ void GenSim(){
 			PG11New[i][1] = LCtoP[i][1][0]*PG11[i][0] + LCtoP[i][1][1]*PG11[i][1] + LCtoP[i][1][2]*PG11[i][2] + LCtoP[i][1][3]*PG11[i][3];
 			PG11New[i][2] = LCtoP[i][2][0]*PG11[i][0] + LCtoP[i][2][1]*PG11[i][1] + LCtoP[i][2][2]*PG11[i][2] + LCtoP[i][2][3]*PG11[i][3];
 			PG11New[i][3] = LCtoP[i][3][0]*PG11[i][0] + LCtoP[i][3][1]*PG11[i][1] + LCtoP[i][3][2]*PG11[i][2] + LCtoP[i][3][3]*PG11[i][3];
+
+			
+			PG21New[i][0] = LCtoP[i][0][0]*PG21[i][0] + LCtoP[i][0][1]*PG21[i][1] + LCtoP[i][0][2]*PG21[i][2] + LCtoP[i][0][3]*PG21[i][3];
+			PG21New[i][0] = LCtoP[i][0][0]*PG21[i][0] + LCtoP[i][0][1]*PG21[i][1] + LCtoP[i][0][2]*PG21[i][2] + LCtoP[i][0][3]*PG21[i][3];
+			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
+			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
+
 		}
 
 		//calculating Theta
@@ -389,20 +396,25 @@ void GenSim(){
 
 		for(int i = 0; i < NEvents; i++) {
 
-			dot[i] = (((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
+			dot[i] = (((PG11New[i][1])*(PG21New[i][1]))+((PG11New[i][2])*(PG21New[i][2]))+((PG11New[i][3])*(PG21New[i][3])));
 			pG11[i] = sqrt(((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
 			pG21[i] = sqrt(((PG21New[i][1])*(PG21New[i][1]))+((PG21New[i][2])*(PG21New[i][2]))+((PG21New[i][3])*(PG11New[i][3])));
 
-			cosine[i] = ((dot[i])/((pG11[i])*(pG21[i])));
+			cosine[i] = (dot[i])/(pG11[i]*pG21[i]);
 			theta[i] = acos(cosine[i]);	//in radians
 			theta[i] = (theta[i])*((180.0)/(TMath::Pi()));	//conversion: radians -- degrees
 		}
 
 		//test
-		for(int i = 0; i < 10; i++) {
 
-			cout << "REST FRAME : P" << endl;
-			cout << "pG11x[" << i <<"]:" << PG11New[i][1] << "..." << "pG11y[" << i << "]:" << PG11[i][2] << "..." << "pG11z[" << i << "]:" << PG11New[i][3] << endl;
+		cout << "RF:P" << endl;
+		//cout << "i...pG11[i]" << endl;
+		cout << "i...pg11x[i]...pg11y[i]...pg11z[i]...cosine[i]...theta[i]" << endl;
+		for(int i = 0; i < NEvents; i++) {
+
+			//cout << i << "..." << pG11[i] << endl;
+			cout << i << "..." << PG11New[i][1] << "..." << PG11New[i][2] << "..." << PG11New[i][3] << "..." << cosine[i] << "..." << theta[i] << endl;
+
 		}
 	//VISUALIZATION :D  --------------------------------------------------------------------------
 
@@ -453,8 +465,8 @@ void GenSim(){
 		vmG11.emplace_back(mG11[i]);
 		vEG11.emplace_back(EG11[i]);
 		vmG21.emplace_back(mG21[i]);
-		vpG11.emplace_back(pG11y[i]);
-		vpG21.emplace_back(pG21y[i]);
+		vpG11.emplace_back(pG11[i]);
+		vpG21.emplace_back(pG21[i]);
 
 		
 

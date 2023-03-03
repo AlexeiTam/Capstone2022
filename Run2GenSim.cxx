@@ -1,5 +1,5 @@
 void Run2GenSim(){
-	//SAME AS GenSim.cxx, but with imporvements (Run2Improvements.txt)
+	//SAME AS GenSim.cxx, but with improvements (Run2Improvements.txt)
 	//GOAL: simulate general two-step decay: P->C1 + C2; C1->g11 + g12
 
 	//ED: Natural Units; i.e, c = 1; can change to c = 3e-8 later
@@ -9,60 +9,70 @@ void Run2GenSim(){
 //REST FRAME: PARENT----------------------------------------------------------------------------------------
 		//generate mP-->gives EP as EP = mP*c^2
 		//generate mP by Breit-Wigner
-		//generate mC,EP by BW (avg 0.25*P, width 0.25*(width of P))
+		//generate EP by BW rest mass-energy: E = mc^2
 		//generate pC:
 			//choose x-dir. of RF(P) s.t. pC1y = pC1z = 0, |pC| = pCx
 			//by conservation, pC1x = -1.0*pC2x
 	
 	std::cout << "REST FRAME: PARENT" << std::endl;
-	std::cout << "generating mP..." << std::endl;
+	std::cout << "generating Parent, C1 masses & energies..." << std::endl;
 
 	//GENERATNG mP, EP, mC, EC
 	//parameters, arrays
-	float mP[NEvents];
-	float EP[NEvents];
-	float mC[NEvents];
-	float EC[NEvents];
-	float mC1[NEvents];
-	float mC2[NEvents];
-	float EC1[NEvents];
-	float EC2[NEvents];
+	std::vector<float> mP;	//float mP[NEvents];
+	std::vector<float> EP;	//float EP[NEvents];
+	std::vector<float> mC;	//float mC[NEvents];
+	std::vector<float> EC;	//float EC[NEvents];
+	std::vector<float> mC1;	//float mC1[NEvents];
+	std::vector<float> mC2;	//float mC2[NEvents];
+	std::vector<float> EC1;	//float EC1[NEvents];
+	std::vector<float> EC2;	//float EC2[NEvents];
 
+	float fmC = 3.5;	//INITIALIZE LATER, MASS OF SINGLE
 	float mPMean = 17.0;	//can be made initializable
 	float mPSigma = 2.0;	//same as above
-	float mCMean = 0.25*mPMean;
-	float mCSigma = 0.25*mCSigma;
+	//float mCMean = 0.25*mPMean;
+	//float mCSigma = 0.25*mCSigma;
 
-
+	//float fmP, fEP, fmC, fEC, fmC1, fmC2, fEC1, fEC2;
 	//generation: mP, EP
 	for(int i = 0; i < NEvents; i++) {
 
 		//ED: gaussian instead of BW; work out later
-		mP[i] = gRandom->Gaus(mPMean, mPSigma);
-		EP[i] = (mP[i])*c*c;
+		mP.emplace_back(gRandom->Gaus(mPMean, mPSigma));
+		EP.emplace_back((mP.at(i))*c*c);
+		//mP[i] = gRandom->Gaus(mPMean, mPSigma);
+		//EP[i] = (mP[i])*c*c;
 
-		mC[i] = gRandom->Gaus(0.25*mPMean, 0.25*mPSigma);
-		mC1[i] = mC[i];
-		mC2[i] = mC[i];
+		mC.emplace_back(fmC);	//gen. base children particle mass
+		mC1.emplace_back(mC.at(i));	//C1 mass = C2 mass = children particle mass
+		mC2.emplace_back(mC.at(i));
+		//mC[i] = gRandom->Gaus(0.25*mPMean, 0.25*mPSigma);
+		//mC1[i] = mC[i];
+		//mC2[i] = mC[i];
 
-		EC[i] = gRandom->Gaus(0.25*c*c*mPMean, 0.25*mPSigma*c*c);	//fix::get avg of EP?
-		EC1[i] = EC[i];
-		EC2[i] = EC[i];
+		EC.emplace_back((mC.at(i))*c*c);
+		EC1.emplace_back(EC.at(i));
+		EC2.emplace_back(EC.at(i));
 
-			//if(i == 0.125*NEvents) std::cout << "12.5%" << std::endl;
-			//if(i == 0.250*NEvents) std::cout << "25.0%" << std::endl;
-			//if(i == 0.375*NEvents) std::cout << "37.5%" << std::endl;
-			//if(i == 0.500*NEvents) std::cout << "50.0%" << std::endl;
-			//if(i == 0.625*NEvents) std::cout << "62.5%" << std::endl;
-			//if(i == 0.750*NEvents) std::cout << "75.0%" << std::endl;
-			//if(i == 0.875*NEvents) std::cout << "87.5%" << std::endl;
-			//if(i == NEvents-1) std::cout << "PARENT MASS GENERATION COMPLETE" << std::endl;
+		//EC[i] = gRandom->Gaus(0.25*c*c*mPMean, 0.25*mPSigma*c*c);	//fix::get avg of EP?
+		//EC1[i] = EC[i];
+		//EC2[i] = EC[i];
+
+			if(i == 0.125*NEvents) std::cout << "12.5%" << std::endl;
+			if(i == 0.250*NEvents) std::cout << "25.0%" << std::endl;
+			if(i == 0.375*NEvents) std::cout << "37.5%" << std::endl;
+			if(i == 0.500*NEvents) std::cout << "50.0%" << std::endl;
+			if(i == 0.625*NEvents) std::cout << "62.5%" << std::endl;
+			if(i == 0.750*NEvents) std::cout << "75.0%" << std::endl;
+			if(i == 0.875*NEvents) std::cout << "87.5%" << std::endl;
+			if(i == NEvents-1) std::cout << "PARENT, C1 MASS/ENERGY GENERATION COMPLETE" << std::endl;
 	}
 
 	//generation: mC, EC, pC1, pC2
 	//??p-->beta?
 	//
-
+	//BOOKMARK
 	float beta[NEvents];
 	float gamma[NEvents];	//related to pC in RF(P)
 

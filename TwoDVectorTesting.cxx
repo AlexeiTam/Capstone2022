@@ -58,4 +58,37 @@ void TwoDVectorTesting(){
 
 	}
 
+	//DOT PRODUCT?
+	
+	std::cout << "DOT PRODUCT:" << std::endl;
+	
+	std::vector<vector<float>> L 
+	{
+		{-2.0, 0.0, 0.0, 0.0},
+		{0.0, -2.0, 0.0, 0.0},
+		{0.0, 0.0, 1.0, 0.0 },
+		{0.0, 0.0, 0.0, 1.0}
+	};
+	std::vector<float> p {1.0, 1.0, 1.0, 1.0};
+
+	std::vector<float> pnew;
+
+	float placeholder = 0.0;
+	for(int i = 0; i < 4; i++) {
+		placeholder = 0.0;
+		for(int j = 0; j < 4; j++) {
+
+			placeholder = placeholder + (L[i].at(j))*(p.at(j));
+		}
+
+		pnew.emplace_back(placeholder);
+
+	}
+
+	std::cout << "pnew = { -2.0, -2.0, 1.0, 1.0}:" << std::endl;
+	std::cout << "actual = {" << pnew.at(0) << "," << pnew.at(1) << "," << pnew.at(2) << "," << pnew.at(3) << std::endl;
+	
+
+
+	
 }

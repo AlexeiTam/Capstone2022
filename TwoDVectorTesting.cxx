@@ -13,7 +13,7 @@ void TwoDVectorTesting(){
 	std::vector<float> pz2;
 
 	std::vector<float> vP1;
-	std::vector<vector<float>> P1(NEvents, 4);
+	std::vector<vector<float>> P1;
 	std::vector<vector<float>> P2;
 
 

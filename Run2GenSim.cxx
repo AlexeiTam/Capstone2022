@@ -84,13 +84,10 @@ void Run2GenSim(){
 	std::vector<float> pC1z;
 	//float pC1z[NEvents];
 	
-	//BOOKMARK
-	std::vector<float> ;
-	float pC2x[NEvents];
-	std::vector<float> ;
-	float pC2y[NEvents];
-	std::vector<float> ;
-	float pC2z[NEvents];
+	
+	std::vector<float> pC2x;
+	std::vector<float> pC2y;
+	std::vector<float> pC2z;
 
 	float chance; 	//flip a coin; add chance that pC1 can be negative
 
@@ -98,15 +95,16 @@ void Run2GenSim(){
 	for(int i = 0; i < NEvents; i++) {
 
 		chance = gRandom->Rndm();
-		pC1x[i] = sqrt(((EC[i]*EC[i])/(c*c))+(mC[i]*mC[i]*c*c));
-		if(chance < 0.5) pC1x[i] = 1.0*pC1x[i];
+		pC1x.emplace_back(sqrt(((EC[i]*EC[i])/(c*c))+(mC[i]*mC[i]*c*c)));
 
-		pC2x[i] = -1.0*pC1x[i];
+		if(chance < 0.5) pC1x.at(i) = -1.0*(pC1x.at(i));
+	
+		pC2x.emplace_back(-1.0*(pC1x.at(i)));
 
-		pC1y[i] = 0.0;
-		pC1z[i] = 0.0;
-		pC2y[i] = 0.0;
-		pC2z[i] = 0.0;
+		pC1y.emplace_back(0.0);
+		pC1z.emplace_back(0.0);
+		pC2y.emplace_back(0.0);
+		pC2z.emplace_back(0.0);
 	
 	}
 
@@ -114,8 +112,8 @@ void Run2GenSim(){
 	//generate beta, gamma
 	for(int i = 0; i < NEvents; i++) {
 
-		beta[i] = ((pC1x[i])/(c))/(sqrt((mC1[i]*mC1[i])+((pC1x[i]*pC1x[i])/(c*c))));
-		gamma[i] = sqrt((1.0)/(1.0 - (beta[i]*beta[i])));
+		beta.emplace_back(((pC1x[i])/(c))/(sqrt((mC1[i]*mC1[i])+((pC1x[i]*pC1x[i])/(c*c)))));
+		gamma.emplace_back(sqrt((1.0)/(1.0 - (beta[i]*beta[i]))));
 
 	}
 
@@ -141,10 +139,10 @@ void Run2GenSim(){
 	//generate based on gamma, beta
 	for(int i = 0; i < NEvents; i++) {
 
-		L[i][0][0] = gamma[i];
-		L[i][1][1] = gamma[i];
-		L[i][0][1] = (gamma[i])*(beta[i]);
-		L[i][1][0] = (gamma[i])*(beta[i]);
+		L[i][0][0] = gamma.at(i);
+		L[i][1][1] = gamma.at(i);
+		L[i][0][1] = (gamma.at(i))*(beta.at(i));
+		L[i][1][0] = (gamma.at(i))*(beta.at(i));
 
 		L[i][2][2] = 1.0;
 		L[i][3][3] = 1.0;
@@ -155,18 +153,22 @@ void Run2GenSim(){
 	
 	//BOOKMARK: perform boost on PC	
 
-	float PC[NEvents][4];	//4-vector of C1 in RF(P)
-	float PCNew[NEvents][4];	//4-vector of C1 in RF(C1)
+	std::vector<vector<float>> PC;
+	std::vector<vector<float>> PCNew;
 
+	//float PC[NEvents][4];	//4-vector of C1 in RF(P)
+	//float PCNew[NEvents][4];	//4-vector of C1 in RF(C1)
 	for(int i = 0; i < NEvents; i++) {
 
-		PC[i][0] = EC1[i];
+		PC[i][0] = EC[i];
 		PC[i][1] = pC1x[i];
 		PC[i][2] = pC1y[i];
 		PC[i][3] = pC1z[i];
 		
+		PC.push_back({EC1.at(i), pC1x.at(i), pC1y.at(i), pC1z.at(i)});
 	}
 
+	//BOOKMARK
 	for(int i = 0; i < NEvents; i++) {
 
 

@@ -72,16 +72,24 @@ void Run2GenSim(){
 	//generation: mC, EC, pC1, pC2
 	//??p-->beta?
 	//
+	std::vector<float> beta;
+	//float beta[NEvents];
+	std::vector<float> gamma;
+	//float gamma[NEvents];	//related to pC in RF(P)
+
+	std::vector<float> pC1x;
+	//float pC1x[NEvents];
+	std::vector<float> pC1y;
+	//float pC1y[NEvents];
+	std::vector<float> pC1z;
+	//float pC1z[NEvents];
+	
 	//BOOKMARK
-	float beta[NEvents];
-	float gamma[NEvents];	//related to pC in RF(P)
-
-	float pC1x[NEvents];
-	float pC1y[NEvents];
-	float pC1z[NEvents];
-
+	std::vector<float> ;
 	float pC2x[NEvents];
+	std::vector<float> ;
 	float pC2y[NEvents];
+	std::vector<float> ;
 	float pC2z[NEvents];
 
 	float chance; 	//flip a coin; add chance that pC1 can be negative

@@ -12,6 +12,7 @@ void TwoDVectorTesting(){
 	std::vector<float> py2;
 	std::vector<float> pz2;
 
+	std::vector<float> vP1;
 	std::vector<vector<float>> P1(NEvents, 4);
 	std::vector<vector<float>> P2;
 
@@ -35,8 +36,8 @@ void TwoDVectorTesting(){
 		//P1[i][2] = py1.at(i);
 		//P1[i][3] = pz1.at(i);
 
-		P1.emplace_back({E1.at(i) , px1.at(i), py1.at(i), pz1.at(i)});
-
+		vP1 = {E1.at(i), px1.at(i), py1.at(i), pz1.at(i)};
+		P1.push_back(vP1);
 	}
 
 	std::cout << "i...E1[i]...px1[i]...py1[i]...pz1[i]" << std::endl;

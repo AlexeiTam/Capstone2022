@@ -1,4 +1,4 @@
-void GenSim(){
+void Run2GenSim(){
 	//GOAL: simulate general two-step decay: P->C1 + C2; C1->g11 + g12
 	//ED: Natural Units; i.e, c = 1; can change to c = 3e-8 later
 	const Int_t NEvents = 1000; //number of simulations: 10,000
@@ -28,9 +28,10 @@ void GenSim(){
 
 	float mPMean = 17.0;	//can be made initializable
 	float mPSigma = 2.0;	//same as above
-	float mCMean = 0.25*mPMean;
-	float mCSigma = 0.25*mCSigma;
+	//float mCMean = 0.25*mPMean;
+	//float mCSigma = 0.25*mCSigma;
 
+	float MC = 2.0;	//INITIALIZE: mass of children
 
 	//generation: mP, EP
 	for(int i = 0; i < NEvents; i++) {
@@ -39,11 +40,13 @@ void GenSim(){
 		mP[i] = gRandom->Gaus(mPMean, mPSigma);
 		EP[i] = (mP[i])*c*c;
 
-		mC[i] = gRandom->Gaus(0.25*mPMean, 0.25*mPSigma);
+		//mC[i] = gRandom->Gaus(0.25*mPMean, 0.25*mPSigma);
+		mC[i] = MC;
 		mC1[i] = mC[i];
 		mC2[i] = mC[i];
 
-		EC[i] = gRandom->Gaus(0.25*c*c*mPMean, 0.25*mPSigma*c*c);	//fix::get avg of EP?
+		//EC[i] = gRandom->Gaus(0.25*c*c*mPMean, 0.25*mPSigma*c*c);	//fix::get avg of EP?
+		EC[i] = 0.5*(EP[i]);
 		EC1[i] = EC[i];
 		EC2[i] = EC[i];
 
@@ -207,36 +210,39 @@ void GenSim(){
 	
 	//mG = mG11 = mG12
 	
+		//OLD:Generating EG from 0.5*ECNew, not fractions of ECNew_avg, ECNew_Sigma
+
 		//first, determine avg, width of mCNew
-		float mCNewMean = 0.0;
-		float mCNewSigma = 0.0;
+		//float mCNewMean = 0.0;
+		//float mCNewSigma = 0.0;
 
-		float ECNewMean;
-		float ECNewSigma;
+		//float ECNewMean;
+		//float ECNewSigma;
 
-		for(int i = 0; i < NEvents; i++) {
+		//for(int i = 0; i < NEvents; i++) {
 
-			mCNewMean = mCNewMean + (mCNew[i])/NEvents;
-			ECNewMean = ECNewMean + (ECNew[i])/NEvents;
-		}
+			//mCNewMean = mCNewMean + (mCNew[i])/NEvents;
+			//ECNewMean = ECNewMean + (ECNew[i])/NEvents;
+		//}
 
-		for(int i = 0; i < NEvents; i++) {
+		//for(int i = 0; i < NEvents; i++) {
 
-			mCNewSigma = mCNewSigma + ((mCNew[i] - mCNewMean)*(mCNew[i] - mCNewMean))/(NEvents - 1);
-			ECNewSigma = ECNewSigma + ((ECNew[i] - ECNewMean)*(ECNew[i] - ECNewMean))/(NEvents - 1);
-		}
+			//mCNewSigma = mCNewSigma + ((mCNew[i] - mCNewMean)*(mCNew[i] - mCNewMean))/(NEvents - 1);
+			//ECNewSigma = ECNewSigma + ((ECNew[i] - ECNewMean)*(ECNew[i] - ECNewMean))/(NEvents - 1);
+		//}
 
-		mCNewSigma = sqrt(mCNewSigma);
-		ECNewSigma = sqrt(ECNewSigma);
+		//mCNewSigma = sqrt(mCNewSigma);
+		//ECNewSigma = sqrt(ECNewSigma);
 	
 	//generating mG::	
 	float mG[NEvents];
 	float EG[NEvents];
 
+	float MG = 0.25;  //INITIALIZE
 	for(int i = 0; i < NEvents; i++) {
 
-		mG[i] = gRandom->Gaus(mCNewMean, mCNewSigma);
-		EG[i] = gRandom->Gaus(ECNewMean, ECNewSigma);
+		mG[i] = MG;
+		EG[i] = 0.5*(ECNew[i]);
 
 	}
 
@@ -461,7 +467,7 @@ void GenSim(){
 		vpC2.emplace_back(pC2x[i]);
 
 		vmCNew.emplace_back(mCNew[i]);
-		vECNew.emplace_back(EC[i]);
+		vECNew.emplace_back(ECNew[i]);
 		vmG11.emplace_back(mG11[i]);
 		vEG11.emplace_back(EG11[i]);
 		vmG21.emplace_back(mG21[i]);
@@ -480,12 +486,12 @@ void GenSim(){
 	TH1D *hmC1 = new TH1D("hmC1","C1 Mass", NBins, (*min_element(vmC1.begin(), vmC1.end())) - 5.0, (*max_element(vmC1.begin(), vmC1.end())) + 5.0);
 	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass Distribution", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
 	TH1D *hEC1 = new TH1D("hEC","C1 Energy", NBins, (*min_element(vEC1.begin(), vEC1.end())) - 5.0, (*max_element(vEC1.begin(), vEC1.end())) + 5.0);
-	TH1D *hpC1 = new TH1D("hpC1","Parent Mass", NBins, (*min_element(vpC1.begin(), vpC1.end())) - 5.0, (*max_element(vpC1.begin(), vpC1.end())) + 5.0);
+	TH1D *hpC1 = new TH1D("hpC1","C1 Momentum Distribution", NBins, (*min_element(vpC1.begin(), vpC1.end())) - 5.0, (*max_element(vpC1.begin(), vpC1.end())) + 5.0);
 	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
 	//
 
 	TH1D *hmCNew = new TH1D("hmCNew","C1 Mass (RF:C1)", NBins, (*min_element(vmCNew.begin(), vmCNew.end())) - 5.0, (*max_element(vmCNew.begin(), vmCNew.end())) + 5.0);
-	TH1D *hECNew = new TH1D("hEP","C1 Energy (RF:C1)", NBins, (*min_element(vECNew.begin(), vECNew.end())) - 5.0, (*max_element(vECNew.begin(), vECNew.end())) + 5.0);
+	TH1D *hECNew = new TH1D("hECNew","C1 Energy (RF:C1)", NBins, (*min_element(vECNew.begin(), vECNew.end())) - 5.0, (*max_element(vECNew.begin(), vECNew.end())) + 5.0);
 	TH1D *hmG11 = new TH1D("hmG11","G11 Mass", NBins, (*min_element(vmG11.begin(), vmG11.end())) - 5.0, (*max_element(vmG11.begin(), vmG11.end())) + 5.0);
 	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
 	TH1D *hEG11 = new TH1D("hEG11","G11 Energy Distribution", NBins, (*min_element(vEG11.begin(), vEG11.end())) - 5.0, (*max_element(vEG11.begin(), vEG11.end())) + 5.0);
@@ -541,29 +547,29 @@ void GenSim(){
 	hTheta->GetYaxis()->SetTitle("Counts");
 	
 	hmP->SetFillColor(0);
-	hmP->SetLineWidth(5);
+	//hmP->SetLineWidth(5);
 	hEP->SetFillColor(1);
-	hmP->SetLineWidth(5);
+	//hmP->SetLineWidth(5);
 	hmC1->SetFillColor(2);
-	hmC1->SetLineWidth(5);
+	//hmC1->SetLineWidth(5);
 	hEC1->SetFillColor(3);
-	hEC1->SetLineWidth(5);
+	//hEC1->SetLineWidth(5);
 	hpC1->SetFillColor(4);
-	hpC1->SetLineWidth(5);
+	//hpC1->SetLineWidth(5);
 
 	hmCNew->SetFillColor(5);
-	hmCNew->SetLineWidth(5);
+	//hmCNew->SetLineWidth(5);
 	hECNew->SetFillColor(6);
-	hECNew->SetLineWidth(5);
+	//hECNew->SetLineWidth(5);
 	hmG11->SetFillColor(7);
-	hmG11->SetLineWidth(5);
+	//hmG11->SetLineWidth(5);
 	hEG11->SetFillColor(8);
-	hEG11->SetLineWidth(5);
+	//hEG11->SetLineWidth(5);
 	hpG11->SetFillColor(9);
-	hpG11->SetLineWidth(5);
+	//hpG11->SetLineWidth(5);
 
 	hTheta->SetFillColor(10);
-	hTheta->SetLineWidth(5);
+	//hTheta->SetLineWidth(5);
 
 	cP->cd(1);
 	hmP->Draw();

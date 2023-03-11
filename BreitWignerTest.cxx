@@ -1,6 +1,6 @@
 void BreitWignerTest() {
 
-	int NEvents = 10;
+	int NEvents = 10000;
 	int NBins = 100;
 
 	float mean = 17.0;
@@ -9,54 +9,88 @@ void BreitWignerTest() {
 	float norm = (2*width*width)/((fabs(width))*(fabs(width))*(fabs(width)));  //normalization const.
 
 	TCanvas *c1 = new TCanvas("c1","",900,900);
+	c1->Divide(2,1);
 
 	std::vector<float> U;
 	std::vector<float> vBW;
 
 
 	float pi = TMath::Pi();
-	float xmax = mean + (sqrt(((norm*width)/(pi*0.10))-(width*width)));
+	float cutoff = 0.10;
+	float xmax = mean + (sqrt(((norm*width)/(pi*cutoff))-(width*width)));	//end when P(x) = cutoff
+	
 	TF1 *BW = new TF1("BW","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, xmax);
 
 	BW->SetParameters(pi, mean, width, norm);
 
+	c1->cd(1);
 	BW->Draw();
+
 	float x;
 
 	float BWMax = BW->GetMaximum();
 
 	cout << "BWMax:" << BWMax << endl;
 
-	float chance, prob, coin;
-	float dx = 0.01;	//slice of space for probability density
+	float chance, prob;
+//	float dx = xmax/NBins;	//slice of space for probability density
 
 	int index = 0;
 
 	//test
-	cout << "i...x...coin...chance" << endl;
-	//while(index<NEvents+1) {
-	for(int i = 0; i < NEvents; i++) {	
+//	cout << "i...x...prob...chance" << endl;
+	
+//	int it;
+	while(index < NEvents+1) {
 		
-		//index++;
+		index++;
 
+//		it = index;
 		x = 25.0*(gRandom->Rndm());
 		
-		prob = BW->Eval(x);
+		prob = gRandom->Rndm();
 
-		chance = (prob)*(prob)*dx;
+		chance = BW->Eval(x);
 
-		coin = (BWMax*BWMax)*gRandom->Rndm();	//??
+		//coin = (BWMax)*gRandom->Rndm();	//??
 
-		cout << i << "..." << x << "..." << coin << "..." << chance << endl;
+//		cout << vBW.size() << "..." << x << "..." << prob << "..." << chance << endl;
 		
-		//if(coin < chance) { vBW.emplace_back(x); }
-		//else if(coin > chance){
-			
-		//index = index - 1;
-		//continue;
-		//}
+		if(prob > chance) { 
+			index = index - 1;	
+		}
+		else if(prob < chance) {
+			vBW.emplace_back(x);
+		}
+	}
+
+
+	float Size = vBW.size() ;
+	
+	TH1 *hist = new TH1D("hist","Breit-Wigner Dist.", NBins, 0, xmax);
+
+//test	
+//	std::cout << "i...vBW[i]" << std::endl;
+
+//	for(int i = 0; i < Size; i++) {
+
+//		std::cout << i << "..." << vBW.at(i) << std::endl;
+
+//	}
+
+	float placeholder;
+	for(int i = 0; i < Size; i++) {
+
+		placeholder = vBW.at(i);
+		hist->Fill( placeholder );
 
 	}
+
+	c1->cd(2);
+	hist->Draw();
+	
+
+	
 
 
 

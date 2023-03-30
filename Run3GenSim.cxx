@@ -1,4 +1,7 @@
 void Run2GenSim(){
+	//inputs:( fmC)
+	//fmC = mass of child particle
+	
 	//SAME AS GenSim.cxx, but with improvements (Run2Improvements.txt)
 	//GOAL: simulate general two-step decay: P->C1 + C2; C1->g11 + g12
 
@@ -29,8 +32,8 @@ void Run2GenSim(){
 	std::vector<float> EC2;	//float EC2[NEvents];
 
 	float fmC = 3.5;	//INITIALIZE LATER, MASS OF SINGLE
-	float mPMean = 17.0;	//can be made initializable
-	float mPSigma = 2.0;	//same as above
+	//float mPMean = 17.0;	//can be made initializable
+	//float mPSigma = 2.0;	//same as above
 	//float mCMean = 0.25*mPMean;
 	//float mCSigma = 0.25*mCSigma;
 

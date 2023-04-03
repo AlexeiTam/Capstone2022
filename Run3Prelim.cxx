@@ -49,6 +49,7 @@ void Run2GenSim(){
 	//G11, G12 = e^+, e^-
 	
 	float me = 0.511;	//mass of electron = 0.511 MeV
+	float meMean = 0.511;
 	//float meSigma = 0.0;	//very stable, no spread
 
 	//float mCMean = 0.25*mPMean;
@@ -306,7 +307,7 @@ void Run2GenSim(){
 
 	for(int i = 0; i < NEvents; i++) {
 
-		ECNew.emplace_back(PCNew[i][0]);
+		ECNew[i] = PCNew[i][0];
 		pCNewx[i] = PCNew[i][1];
 		pCNewy[i] = PCNew[i][2];
 		pCNewz[i] = PCNew[i][3];
@@ -360,7 +361,7 @@ void Run2GenSim(){
 	for(int i = 0; i < NEvents; i++) {
 
 		mG[i] = meMean;	//electron & positron are VERY stable
-		EG[i] = 0.5*ECNew.at(i);
+		EG[i] = 0.5*ECNew[i];
 
 	}
 
@@ -438,10 +439,10 @@ void Run2GenSim(){
 		//now, beta(in RF(C1)) = -1.0*beta(in RF(P))
 		for(int i = 0; i < NEvents; i++) {
 
-			LCtoP[i][0][0] = gamma[i];
-			LCtoP[i][1][1] = gamma[i];
-			LCtoP[i][0][1] = -1.0*(gamma[i])*(beta[i]);
-			LCtoP[i][1][0] = -1.0*(gamma[i])*(beta[i]);
+			LCtoP[i][0][0] = gamma.at(i);
+			LCtoP[i][1][1] = gamma.at(i);
+			LCtoP[i][0][1] = -1.0*(gamma.at(i))*(beta.at(i));
+			LCtoP[i][1][0] = -1.0*(gamma.at(i))*(beta.at(i));
 
 			LCtoP[i][2][2] = 1.0;
 			LCtoP[i][3][3] = 1.0;
@@ -596,7 +597,7 @@ void Run2GenSim(){
 	std::vector<float> vpG11yNew;
 	std::vector<float> vpG11zNew;
 		
-	std::vector<float> vmTotal;	//the money plot :)
+	//std::vector<float> vmTotal;	//the money plot :)
 
 		//canvas: split based on RF
 		TCanvas *cP = new TCanvas("cP","REST FRAME:PARENT", 1500, 1500);
@@ -609,13 +610,13 @@ void Run2GenSim(){
 
 	for(int i = 0; i < NEvents; i++) {
 
-		vmP.emplace_back(mP[i]);
-		vEP.emplace_back(EP[i]);
-		vmC1.emplace_back(mC1[i]);
-		vmC2.emplace_back(mC2[i]);
-		vEC1.emplace_back(EC1[i]);
-		vpC1.emplace_back(pC1x[i]);
-		vpC2.emplace_back(pC2x[i]);
+		vmP.emplace_back(mP.at(i));
+		vEP.emplace_back(EP.at(i));
+		vmC1.emplace_back(mC1.at(i));
+		vmC2.emplace_back(mC2.at(i));
+		vEC1.emplace_back(EC1.at(i));
+		vpC1.emplace_back(pC1x.at(i));
+		vpC2.emplace_back(pC2x.at(i));
 
 		vmCNew.emplace_back(mCNew[i]);
 		vECNew.emplace_back(EC[i]);

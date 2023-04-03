@@ -236,24 +236,26 @@ void Run2GenSim(){
 	
 	//BOOKMARK: perform boost on PC	
 
-	float PC[NEvents];
-	float PCNew[NEvents];
+	float PC[NEvents][4];
+	float PCNew[NEvents][4];
 
 	//float PC[NEvents][4];	//4-vector of C1 in RF(P)
 	//float PCNew[NEvents][4];	//4-vector of C1 in RF(C1)
 	for(int i = 0; i < NEvents; i++) {
 
-		//PC[i][0] = EC[i];
-		//PC[i][1] = pC1x[i];
-		//PC[i][2] = pC1y[i];
-		//PC[i][3] = pC1z[i];
+		PC[i][0] = EC1.at(i);
+		PC[i][1] = pC1x.at(i);
+		PC[i][2] = pC1y.at(i);
+		PC[i][3] = pC1z.at(i);
 		
-		PC.push_back({EC1.at(i), pC1x.at(i), pC1y.at(i), pC1z.at(i)});
+		//PC.push_back({EC1.at(i), pC1x.at(i), pC1y.at(i), pC1z.at(i)});
 	}
 
 	for(int i = 0; i < NEvents; i++) {
 
-			PCNew[i].emplace_back({0.0, 0.0, 0.0, 0.0});
+			for(int j = 0; j < 4; j++){
+			PCNew[i][j] = 0.0;
+			}
 		
 	}
 
@@ -272,19 +274,19 @@ void Run2GenSim(){
 
 	//??May take out this loop
 
-	float placeholder2 = 0.0;
+	//float placeholder2 = 0.0;
 
-	for(int i = 0; i < NEvents; i++) {
+	//for(int i = 0; i < NEvents; i++) {
 		
-		for(int j = 0; j < 4; j++) {
+		//for(int j = 0; j < 4; j++) {
 
-			placeholder2 = 0.0;
-			for(int k = 0; k < 4; k++) {
+		//	placeholder2 = 0.0;
+		//	for(int k = 0; k < 4; k++) {
 
-				placeholder2 = placeholder2 + ((L[i][j][k])*(PC[i].at(k)))
+		//		placeholder2 = placeholder2 + ((L[i][j][k])*(PC[i].at(k)))
 
-			}
-		}
+		//	}
+		//}
 
 		
 		

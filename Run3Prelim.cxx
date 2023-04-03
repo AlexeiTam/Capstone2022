@@ -191,8 +191,7 @@ void Run2GenSim(){
 	}
 
 	//generate beta, gamma
-		std::vector<float> beta;
-		std::vector<float> gamma;
+	
 	for(int i = 0; i < NEvents; i++) {
 
 		beta.emplace_back(((pC1x.at(i))/(c))/(sqrt(((mC1.at(i))*(mC1.at(i)))+(((pC1x.at(i))*(pC1x.at(i)))/(c*c)))));

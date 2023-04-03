@@ -68,7 +68,7 @@ void Run2GenSim(){
 	//not taking m with P < cutoff
 	
 	TF1 *BW = new TF1("BW","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mPMax);
-	BW->SetParamters(pi, mPMean, mPSigma, norm);
+	BW->SetParameters(pi, mPMean, mPSigma, norm);
 
 	//generating P:
 	
@@ -181,18 +181,20 @@ void Run2GenSim(){
 		
 		
 		//!!momenta only in x-axis
-	pC1y.emplace_back(0);
-	pC1z.emplace_back(0);
-	pC2y.emplace_back(0);
-	pC2z.emplace_back(0);
+	pC1y.emplace_back(0.0);
+	pC1z.emplace_back(0.0);
+	pC2y.emplace_back(0.0);
+	pC2z.emplace_back(0.0);
 		
-	pC2x.emplace_back(0);	//!! 8Be* @ rest --> 8Be approx. at rest
+	pC2x.emplace_back(0.0);	//!! 8Be* @ rest --> 8Be approx. at rest
 	pC1x.emplace_back(c*sqrt((((mP.at(i))-(mC2.at(i)))*((mP.at(i))-(mC2.at(i))))-((mC1.at(i))*(mC1.at(i)))));	//Energy conservation + Relativistic Eqn.
 		//pC1 = c*sqrt((mP - mC2)^2 - (mC1)^2)
 		
 	}
 
 	//generate beta, gamma
+		std::vector<float> beta;
+		std::vector<float> gamma;
 	for(int i = 0; i < NEvents; i++) {
 
 		beta.emplace_back(((pC1x.at(i))/(c))/(sqrt(((mC1.at(i))*(mC1.at(i)))+(((pC1x.at(i))*(pC1x.at(i)))/(c*c)))));

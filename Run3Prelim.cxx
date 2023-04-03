@@ -1,10 +1,12 @@
 void Run2GenSim(){
-	//inputs:( fmC)
-	//fmC = mass of child particle
 	
 	//SAME AS GenSim.cxx, but with improvements (Run2Improvements.txt)
 	//GOAL: simulate general two-step decay: P->C1 + C2; C1->g11 + g12
 
+	//!!Everything is working on MeV
+	//mass = MeV/c^2
+	//momentum = MeV/c
+	
 	//ED: Natural Units; i.e, c = 1; can change to c = 3e-8 later
 	const Int_t NEvents = 1000; //number of simulations: 10,000
 	float c = 1.0;
@@ -32,10 +34,23 @@ void Run2GenSim(){
 	std::vector<float> EC1;	//float EC1[NEvents];
 	std::vector<float> EC2;	//float EC2[NEvents];
 
-	float fmC = 3.5;	//INITIALIZE LATER, MASS OF SINGLE
-	float mPMean = 17.0;	//can be made initializable
-	float mPSigma = 2.0;	//same as above
+	//P = Be*
+	float mPMean = 8022.2851;	//?? issues w/ m(Be*) determined by p(X17), random value; rn using m(Be) + m(X17)
+	float mPSigma = 3.9E-11;	//Be8 is very stable
 	
+	//C2 = Be
+	float mC2Mean = 8005.30510;	//base value
+	float mC2Sigma = 3.9E-11;	//Be8 is very stable
+
+	//C1 = X17
+	float mC1Mean = 16.98;	//X17 ==> invariant mass about 17 MeV
+	float mC1Sigma = 1.0;	//will play with later?
+
+	//G11, G12 = e^+, e^-
+	
+	float meMean = 0.511;	//mass of electron = 0.511 MeV
+	float meSigma = 0.0;	//very stable, no spread
+
 	//float mCMean = 0.25*mPMean;
 	//float mCSigma = 0.25*mCSigma;
 
@@ -60,12 +75,12 @@ void Run2GenSim(){
 	float chance, prob;
 	int index = 0;
 
-	float x;	//placeholder
+	float mPplaceholder;	//placeholder
 	while(index < NEvents + 1) {
 
 		index++;
 		
-		x = mPMax*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+		mPplaceholder = mPMax*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
 
 		prob = gRandom->Rndm();		//choose some #, associated with x
 		chance = BW->Eval(x);		//threshold for x to be accepted
@@ -76,11 +91,12 @@ void Run2GenSim(){
 		//prob > chance --> reject
 
 		else if(prob < chance) {
-			mP.emplace_back(x);
+			mP.emplace_back(mPplaceholder);
 		}
 		//prob < chance --> accept
 		
 		//do it again, until we get all the parents we need
+	
 	}
 
 

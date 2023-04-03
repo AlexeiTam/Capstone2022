@@ -83,7 +83,7 @@ void Run2GenSim(){
 		mPplaceholder = mPMax*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
 
 		prob = gRandom->Rndm();		//choose some #, associated with x
-		chance = BW->Eval(x);		//threshold for x to be accepted
+		chance = BW->Eval(mPplaceholder);		//threshold for x to be accepted
 
 		if(prob > chance) {
 			index = index -1;
@@ -102,84 +102,101 @@ void Run2GenSim(){
 
 
 //GENERATING C1, C2
-	for(int i = 0; i < NEvents; i++) {
+	
+	for(int i = 0; i < NEvents; i++){
+	
+		//C2 mass & energy
+		
+		float mC2chance, mC2prob;
+		int mC2index = 0;
+		float mC2norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
+		float mC2Max = mC2Mean + (sqrt(((mC2norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
 
-		//ED: gaussian instead of BW; work out later
-		//mP.emplace_back(gRandom->Gaus(mPMean, mPSigma));
-		//EP.emplace_back((mP.at(i))*c*c);
-		//mP[i] = gRandom->Gaus(mPMean, mPSigma);
-		//EP[i] = (mP[i])*c*c;
+	float mC2placeholder;	//placeholder
+	while(mC2index < NEvents + 1) {
 
-		mC.emplace_back(fmC);	//gen. base children particle mass
-		mC1.emplace_back(mC.at(i));	//C1 mass = C2 mass = children particle mass
-		mC2.emplace_back(mC.at(i));
-		//mC[i] = gRandom->Gaus(0.25*mPMean, 0.25*mPSigma);
-		//mC1[i] = mC[i];
-		//mC2[i] = mC[i];
+		mC2index++;
+		
+		mC2placeholder = mC2Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
 
-		EC.emplace_back((mC.at(i))*c*c);
-		EC1.emplace_back(EC.at(i));
-		EC2.emplace_back(EC.at(i));
+		prob = gRandom->Rndm();		//choose some #, associated with x
+		chance = BW->Eval(mC2placeholder);		//threshold for x to be accepted
 
-		//EC[i] = gRandom->Gaus(0.25*c*c*mPMean, 0.25*mPSigma*c*c);	//fix::get avg of EP?
-		//EC1[i] = EC[i];
-		//EC2[i] = EC[i];
+		if(prob > chance) {
+			index = index -1;
+		}
+		//prob > chance --> reject
 
-			if(i == 0.125*NEvents) std::cout << "12.5%" << std::endl;
-			if(i == 0.250*NEvents) std::cout << "25.0%" << std::endl;
-			if(i == 0.375*NEvents) std::cout << "37.5%" << std::endl;
-			if(i == 0.500*NEvents) std::cout << "50.0%" << std::endl;
-			if(i == 0.625*NEvents) std::cout << "62.5%" << std::endl;
-			if(i == 0.750*NEvents) std::cout << "75.0%" << std::endl;
-			if(i == 0.875*NEvents) std::cout << "87.5%" << std::endl;
-			if(i == NEvents-1) std::cout << "C1 MASS/ENERGY GENERATION COMPLETE" << std::endl;
+		else if(prob < chance) {
+			mC2.emplace_back(mC2placeholder);
+		}
+		//prob < chance --> accept
+		
+		EC2.emplace_back((mC2.at(i))*c*c);	//P: at rest --> C2, approx. at rest
+		
+		//C1: mass & energy
+		
+		EC1.emplace_back((EP.at(i))-(EC2.at(i)));	//EP = EC1 + EC2 (Energy conservation) --> EC1 = EP - EC2
+	
+		float mC1chance, mC1prob;
+		int mC1index = 0;
+		float mC1norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
+		float mC1Max = mC1Mean + (sqrt(((mC1norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
+
+	float mC1placeholder;	//placeholder
+	while(mC1index < NEvents + 1) {
+
+		mC1index++;
+		
+		mC1placeholder = mC1Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+
+		prob = gRandom->Rndm();		//choose some #, associated with x
+		chance = BW->Eval(mC1placeholder);		//threshold for x to be accepted
+
+		if(prob > chance) {
+			index = index -1;
+		}
+		//prob > chance --> reject
+
+		else if(prob < chance) {
+			mC1.emplace_back(mC1placeholder);
+		}
+		//prob < chance --> accept
 	}
-
-	//generation: mC, EC, pC1, pC2
-	//??p-->beta?
-	//
+		
+		
+	for(int i = 0; i < NEvents; i++){
+	//C1,C2: momenta:
+		
 	std::vector<float> beta;
-	//float beta[NEvents];
 	std::vector<float> gamma;
-	//float gamma[NEvents];	//related to pC in RF(P)
 
 	std::vector<float> pC1x;
-	//float pC1x[NEvents];
 	std::vector<float> pC1y;
-	//float pC1y[NEvents];
 	std::vector<float> pC1z;
-	//float pC1z[NEvents];
-	
 	
 	std::vector<float> pC2x;
 	std::vector<float> pC2y;
 	std::vector<float> pC2z;
-
-	float chance; 	//flip a coin; add chance that pC1 can be negative
-
-	//generate pC: y and z = 0; x constrained by E^2 = p^2c^2 + m^2c^4
-	for(int i = 0; i < NEvents; i++) {
-
-		chance = gRandom->Rndm();
-		pC1x.emplace_back(sqrt(((EC[i]*EC[i])/(c*c))+(mC[i]*mC[i]*c*c)));
-
-		if(chance < 0.5) pC1x.at(i) = -1.0*(pC1x.at(i));
-	
-		pC2x.emplace_back(-1.0*(pC1x.at(i)));
-
-		pC1y.emplace_back(0.0);
-		pC1z.emplace_back(0.0);
-		pC2y.emplace_back(0.0);
-		pC2z.emplace_back(0.0);
-	
+		
+		
+		//!!momenta only in x-axis
+	pC1y.emplace_back(0);
+	pC1z.emplace_back(0);
+	pC2y.emplace_back(0);
+	pC2z.emplace_back(0);
+		
+	pC2x.emplace_back(0);	//!! 8Be* @ rest --> 8Be approx. at rest
+	pC1x.emplace_back(c*sqrt((((mP.at(i))-(mC2.at(i)))*((mP.at(i))-(mC2.at(i))))-((mC1.at(i))*(mC1.at(i)))));	//Energy conservation + Relativistic Eqn.
+		//pC1 = c*sqrt((mP - mC2)^2 - (mC1)^2)
+		
 	}
-
 
 	//generate beta, gamma
 	for(int i = 0; i < NEvents; i++) {
 
-		beta.emplace_back(((pC1x[i])/(c))/(sqrt((mC1[i]*mC1[i])+((pC1x[i]*pC1x[i])/(c*c)))));
-		gamma.emplace_back(sqrt((1.0)/(1.0 - (beta[i]*beta[i]))));
+		beta.emplace_back(((pC1x.at(i))/(c))/(sqrt(((mC1.at(i))*(mC1.at(i)))+(((pC1x.at(i))*(pC1x.at(i)))/(c*c)))));
+		gamma.emplace_back(sqrt((1.0)/(1.0 - ((beta.at(i))*(beta.at(i))))));
 
 	}
 
@@ -234,7 +251,6 @@ void Run2GenSim(){
 		PC.push_back({EC1.at(i), pC1x.at(i), pC1y.at(i), pC1z.at(i)});
 	}
 
-	//BOOKMARK
 	for(int i = 0; i < NEvents; i++) {
 
 			PCNew[i].emplace_back({0.0, 0.0, 0.0, 0.0});
@@ -254,7 +270,7 @@ void Run2GenSim(){
 
 	}
 
-	//BOOKMARK
+	//??May take out this loop
 
 	float placeholder2 = 0.0;
 
@@ -277,18 +293,19 @@ void Run2GenSim(){
 	
 	//fill ECnew, generate mCnew: from ECnew^2 = EC^2 = mCnew*c^2
 	
-	float ECNew[NEvents];
-	float mCNew[NEvents];
+		//!!swapped to vectors
+	std::vector<float> ECNew;
+	std::vector<float> mCNew;
 
-	float pCNewx[NEvents];
-	float pCNewy[NEvents];
-	float pCNewz[NEvents];
+	std::vector<float> pCNewx;
+	std::vector<float> pCNewy;
+	std::vector<float> pCNewz;
 
 	float pNew[NEvents];
 
 	for(int i = 0; i < NEvents; i++) {
 
-		ECNew[i] = PCNew[i][0];
+		ECNew.emplace_back(PCNew[i][0]);
 		pCNewx[i] = PCNew[i][1];
 		pCNewy[i] = PCNew[i][2];
 		pCNewz[i] = PCNew[i][3];

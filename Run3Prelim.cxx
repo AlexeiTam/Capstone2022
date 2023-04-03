@@ -532,7 +532,7 @@ void Run2GenSim(){
 		for(int i = 0; i < NEvents; i++){
 		
 			mTotal[i] = sqrt((((PGNewSum[i][0])/(c*c))*((PGNewSum[i][0])/(c*c)))-(((pTotal[i])/(c))*((pTotal[i])/(c))));
-			vmTotal.emplace_back(mTotal);
+			
 		}
 
 		//calculating Theta
@@ -623,7 +623,8 @@ void Run2GenSim(){
 		vmG21.emplace_back(mG21[i]);
 		vpG11.emplace_back(pG11[i]);
 		vpG21.emplace_back(pG21[i]);
-
+		
+		vmTotal.emplace_back(mTotal[i]);
 		
 
 	}
@@ -671,6 +672,7 @@ void Run2GenSim(){
 		hpG11->Fill(pG11y[i]);
 
 		hTheta->Fill(theta[i]);
+		hmTotal->Fill(mTotal[i]);
 
 	}
 
@@ -698,31 +700,37 @@ void Run2GenSim(){
 
 	hTheta->GetXaxis()->SetTitle("#Theta");
 	hTheta->GetYaxis()->SetTitle("Counts");
+		
+	hmTotal->GetXaxis()->SetTitle("m_{e^{+}e^{-}}");
+	hmTotal->GetYaxis()->SetTitle("Counts");
 	
 	hmP->SetFillColor(0);
-	hmP->SetLineWidth(5);
+	hmP->SetLineWidth(2);
 	hEP->SetFillColor(1);
-	hmP->SetLineWidth(5);
+	hmP->SetLineWidth(2);
 	hmC1->SetFillColor(2);
-	hmC1->SetLineWidth(5);
+	hmC1->SetLineWidth(2);
 	hEC1->SetFillColor(3);
-	hEC1->SetLineWidth(5);
+	hEC1->SetLineWidth(2);
 	hpC1->SetFillColor(4);
-	hpC1->SetLineWidth(5);
+	hpC1->SetLineWidth(2);
 
 	hmCNew->SetFillColor(5);
-	hmCNew->SetLineWidth(5);
+	hmCNew->SetLineWidth(2);
 	hECNew->SetFillColor(6);
-	hECNew->SetLineWidth(5);
+	hECNew->SetLineWidth(2);
 	hmG11->SetFillColor(7);
-	hmG11->SetLineWidth(5);
+	hmG11->SetLineWidth(2);
 	hEG11->SetFillColor(8);
-	hEG11->SetLineWidth(5);
+	hEG11->SetLineWidth(2);
 	hpG11->SetFillColor(9);
-	hpG11->SetLineWidth(5);
+	hpG11->SetLineWidth(2);
 
 	hTheta->SetFillColor(10);
-	hTheta->SetLineWidth(5);
+	hTheta->SetLineWidth(2);
+		
+	hmTotal->SetFillColor(11);
+	hmTotal->SetLineWidth(2);
 
 	cP->cd(1);
 	hmP->Draw();
@@ -764,6 +772,7 @@ void Run2GenSim(){
 
 	cP->Draw();
 	cC1->Draw();
+	c1->Draw();
 
 
 }

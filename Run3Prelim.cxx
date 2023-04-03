@@ -236,8 +236,8 @@ void Run2GenSim(){
 	
 	//BOOKMARK: perform boost on PC	
 
-	std::vector<vector<float>> PC;
-	std::vector<vector<float>> PCNew;
+	float PC[NEvents];
+	float PCNew[NEvents];
 
 	//float PC[NEvents][4];	//4-vector of C1 in RF(P)
 	//float PCNew[NEvents][4];	//4-vector of C1 in RF(C1)
@@ -293,13 +293,13 @@ void Run2GenSim(){
 	
 	//fill ECnew, generate mCnew: from ECnew^2 = EC^2 = mCnew*c^2
 	
-		//!!swapped to vectors
-	std::vector<float> ECNew;
-	std::vector<float> mCNew;
+	
+	float ECNew[NEvents];
+	float mCNew[NEvents];
 
-	std::vector<float> pCNewx;
-	std::vector<float> pCNewy;
-	std::vector<float> pCNewz;
+	float pCNewx[NEvents];
+	float pCNewy[NEvents];
+	float pCNewz[NEvents];
 
 	float pNew[NEvents];
 
@@ -331,26 +331,26 @@ void Run2GenSim(){
 	//mG = mG11 = mG12
 	
 		//first, determine avg, width of mCNew
-		float mCNewMean = 0.0;
-		float mCNewSigma = 0.0;
+		//float mCNewMean = 0.0;
+		//float mCNewSigma = 0.0;
 
-		float ECNewMean;
-		float ECNewSigma;
+		//float ECNewMean;
+		//float ECNewSigma;
 
-		for(int i = 0; i < NEvents; i++) {
+		//for(int i = 0; i < NEvents; i++) {
 
-			mCNewMean = mCNewMean + (mCNew[i])/NEvents;
-			ECNewMean = ECNewMean + (ECNew[i])/NEvents;
-		}
+		//	mCNewMean = mCNewMean + (mCNew[i])/NEvents;
+		//	ECNewMean = ECNewMean + (ECNew[i])/NEvents;
+		//}
 
-		for(int i = 0; i < NEvents; i++) {
+		//for(int i = 0; i < NEvents; i++) {
 
-			mCNewSigma = mCNewSigma + ((mCNew[i] - mCNewMean)*(mCNew[i] - mCNewMean))/(NEvents - 1);
-			ECNewSigma = ECNewSigma + ((ECNew[i] - ECNewMean)*(ECNew[i] - ECNewMean))/(NEvents - 1);
-		}
+			//mCNewSigma = mCNewSigma + ((mCNew[i] - mCNewMean)*(mCNew[i] - mCNewMean))/(NEvents - 1);
+			//ECNewSigma = ECNewSigma + ((ECNew[i] - ECNewMean)*(ECNew[i] - ECNewMean))/(NEvents - 1);
+		//}
 
-		mCNewSigma = sqrt(mCNewSigma);
-		ECNewSigma = sqrt(ECNewSigma);
+		//mCNewSigma = sqrt(mCNewSigma);
+		//ECNewSigma = sqrt(ECNewSigma);
 	
 	//generating mG::	
 	float mG[NEvents];
@@ -358,8 +358,8 @@ void Run2GenSim(){
 
 	for(int i = 0; i < NEvents; i++) {
 
-		mG[i] = gRandom->Gaus(mCNewMean, mCNewSigma);
-		EG[i] = gRandom->Gaus(ECNewMean, ECNewSigma);
+		mG[i] = meMean;	//electron & positron are VERY stable
+		EG[i] = 0.5*ECNew.at(i);
 
 	}
 
@@ -388,7 +388,7 @@ void Run2GenSim(){
 	for(int i = 0; i < NEvents; i++) {
 
 
-		pG[i] = sqrt((((EG[i])*(EG[i]))/(c*c))+((mG[i])*(mG[i])*c*c));
+		pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));
 	
 		EG11[i] = EG[i];
 		EG21[i] = EG[i];
@@ -454,6 +454,10 @@ void Run2GenSim(){
 		float PG21[NEvents][4];		//4-vector of g21 in RF(C1)
 		float PG11New[NEvents][4];	//4-vector of g11 in RF(P)
 		float PG21New[NEvents][4];	//4-vector of g11 in RF(P)
+		
+		//pGNewSum: sum of e+, e- 4-vectors in RF(P)
+		float PGNewSum[NEvents][4];
+		
 
 		//fill pG11, initialize pG11New as 0
 		for(int i = 0; i < NEvents; i++) {
@@ -504,6 +508,31 @@ void Run2GenSim(){
 			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
 			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
 
+		}
+		
+		//summing up 4-vectors
+		
+		for(int i = 0; i < NEvents; i++) {
+		
+			PGNewSum[i][0] = PG11New[i][0] + PG21New[i][0];
+			PGNewSum[i][1] = PG11New[i][1] + PG21New[i][1];
+			PGNewSum[i][2] = PG11New[i][2] + PG21New[i][2];
+			PGNewSum[i][3] = PG11New[i][3] + PG21New[i][3];
+		}
+		
+		float mTotal[NEvents];	//the money plot
+		std::vector<float> vmTotal;
+		float pTotal[NEvents];
+		
+		for(int i = 0; i < NEvents; i++){
+		
+			pTotal[i] = sqrt(((pGNewSum[i][1])*(pGNewSum[i][1]))+((pGNewSum[i][1])*(pGNewSum[i][1]))+((pGNewSum[i][1])*(pGNewSum[i][1])));
+		}
+		
+		for(int i = 0; i < NEvents; i++){
+		
+			mTotal[i] = sqrt((((PGNewSum[i][0])/(c*c))*((PGNewSum[i][0])/(c*c)))-(((pTotal[i])/(c))*((pTotal[i])/(c))));
+			vmTotal.emplace_back(mTotal);
 		}
 
 		//calculating Theta
@@ -565,10 +594,14 @@ void Run2GenSim(){
 	std::vector<float> vpG11xNew;
 	std::vector<float> vpG11yNew;
 	std::vector<float> vpG11zNew;
+		
+	std::vector<float> vmTotal;	//the money plot :)
 
 		//canvas: split based on RF
 		TCanvas *cP = new TCanvas("cP","REST FRAME:PARENT", 1500, 1500);
 		TCanvas *cC1 = new TCanvas("cC1", "REST FRAME:C1", 1500, 1500);
+		
+		TCanvas *c1 = new TCanvas("c1","The Money Plot; RF(P)", 1500, 1500);
 
 		cP->Divide(3,2);
 		cC1->Divide(3,2);
@@ -616,6 +649,9 @@ void Run2GenSim(){
 	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
 
 	TH1D *hTheta = new TH1D("hTheta", "Angular Deflection", NBins, -5.0, 185.0);
+		
+	//determine min,max values of me+e-
+	TH1D *hmTotal = new TH1D("hmTotal", "Invariant Mass Sum", NBins, *min_element(vmTotal.begin(), vmTotal.end()), *max_element(vmTotal.begin(), vmTotal.end()));
 
 	//filling histograms
 	
@@ -703,8 +739,11 @@ void Run2GenSim(){
 	cP->cd(5);
 	hpC1->Draw();
 
-	cP->cd(6);
+	c1->cd(1);
 	hTheta->Draw();
+		
+	c1->cd(2);
+	hmTotal->Draw();
 	
 	cC1->cd(1);
 	hmCNew->Draw();

@@ -164,8 +164,6 @@ void Run2GenSim(){
 		//prob < chance --> accept
 	}
 		
-		
-	for(int i = 0; i < NEvents; i++){
 	//C1,C2: momenta:
 		
 	std::vector<float> beta;
@@ -177,9 +175,9 @@ void Run2GenSim(){
 	
 	std::vector<float> pC2x;
 	std::vector<float> pC2y;
-	std::vector<float> pC2z;
+	std::vector<float> pC2z;	
 		
-		
+	for(int i = 0; i < NEvents; i++){	
 		//!!momenta only in x-axis
 	pC1y.emplace_back(0.0);
 	pC1z.emplace_back(0.0);

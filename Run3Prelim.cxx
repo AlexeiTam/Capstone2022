@@ -527,7 +527,7 @@ void Run2GenSim(){
 		
 		for(int i = 0; i < NEvents; i++){
 		
-			pTotal[i] = sqrt(((pGNewSum[i][1])*(pGNewSum[i][1]))+((pGNewSum[i][1])*(pGNewSum[i][1]))+((pGNewSum[i][1])*(pGNewSum[i][1])));
+			pTotal[i] = sqrt(((PGNewSum[i][1])*(PGNewSum[i][1]))+((PGNewSum[i][2])*(PGNewSum[i][2]))+((PGNewSum[i][3])*(PGNewSum[i][3])));
 		}
 		
 		for(int i = 0; i < NEvents; i++){

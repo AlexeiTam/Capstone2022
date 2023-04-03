@@ -48,8 +48,8 @@ void Run2GenSim(){
 
 	//G11, G12 = e^+, e^-
 	
-	float meMean = 0.511;	//mass of electron = 0.511 MeV
-	float meSigma = 0.0;	//very stable, no spread
+	float me = 0.511;	//mass of electron = 0.511 MeV
+	//float meSigma = 0.0;	//very stable, no spread
 
 	//float mCMean = 0.25*mPMean;
 	//float mCSigma = 0.25*mCSigma;

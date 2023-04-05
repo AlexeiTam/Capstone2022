@@ -92,7 +92,7 @@ void Run2GenSim(){
 		//prob > chance --> reject
 
 		else if(prob < chance) {
-			mP[i] = mPplaceholder;
+			mP[index] = mPplaceholder;
 		}
 		//prob < chance --> accept
 		
@@ -187,7 +187,7 @@ void Run2GenSim(){
 		
 	pC2x[i] = (0.0);	//!! 8Be* @ rest --> 8Be approx. at rest
 	//pC1x[i] = (c*sqrt((((mP[i])-(mC2[i]))*((mP[i]))-(mC2[i])))-((mC1[i])*(mC1[i]))));
-	pC1x[i] = c*sqrt(((mP[i] - mC2[i])*(mP[i] - mC2[i])) - ((mC1[i])*(mC1[i])))	//Energy conservation + Relativistic Eqn.
+	pC1x[i] = c*sqrt(((mP[i] - mC2[i])*(mP[i] - mC2[i])) - ((mC1[i])*(mC1[i])));	//Energy conservation + Relativistic Eqn.
 		//pC1 = c*sqrt((mP - mC2)^2 - (mC1)^2)
 		
 	}
@@ -196,8 +196,8 @@ void Run2GenSim(){
 	
 	for(int i = 0; i < NEvents; i++) {
 
-		beta[i] = (((pC1x.at(i))/(c))/(sqrt(((mC1.at(i))*(mC1.at(i)))+(((pC1x.at(i))*(pC1x.at(i)))/(c*c)))));
-		gamma[i] = (sqrt((1.0)/(1.0 - ((beta.at(i))*(beta.at(i))))));
+		beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));
+		gamma[i] = (sqrt((1.0)/(1.0 - ((beta[i])*(beta[i])))));
 
 	}
 

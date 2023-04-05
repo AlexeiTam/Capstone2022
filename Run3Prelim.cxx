@@ -125,12 +125,12 @@ void Run2GenSim(){
 		chance = BW->Eval(mC2placeholder);		//threshold for x to be accepted
 
 		if(prob > chance) {
-			index = index -1;
+			mC2index = mC2index -1;
 		}
 		//prob > chance --> reject
 
 		else if(prob < chance) {
-			mC2[i] = mC2placeholder;
+			mC2[mC2index] = mC2placeholder;
 		}
 		//prob < chance --> accept
 		
@@ -156,12 +156,12 @@ void Run2GenSim(){
 		chance = BW->Eval(mC1placeholder);		//threshold for x to be accepted
 
 		if(prob > chance) {
-			index = index -1;
+			mC1index = mC1index -1;
 		}
 		//prob > chance --> reject
 
 		else if(prob < chance) {
-			mC1[i] = mC1placeholder;
+			mC1[mC1index] = mC1placeholder;
 		}
 		//prob < chance --> accept
 	}

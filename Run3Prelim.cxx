@@ -112,7 +112,8 @@ void Run2GenSim(){
 		int mC2index = 0;
 		float mC2norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
 		float mC2Max = mC2Mean + (sqrt(((mC2norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
-
+	}
+	
 	float mC2placeholder;	//placeholder
 	while(mC2index < NEvents + 1) {
 

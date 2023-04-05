@@ -25,14 +25,14 @@ void Run2GenSim(){
 
 	//GENERATNG mP, EP, mC, EC
 	//parameters, arrays
-	std::vector<float> mP;	//float mP[NEvents];
-	std::vector<float> EP;	//float EP[NEvents];
-	std::vector<float> mC;	//float mC[NEvents];
-	std::vector<float> EC;	//float EC[NEvents];
-	std::vector<float> mC1;	//float mC1[NEvents];
-	std::vector<float> mC2;	//float mC2[NEvents];
-	std::vector<float> EC1;	//float EC1[NEvents];
-	std::vector<float> EC2;	//float EC2[NEvents];
+	float mP[NEvents];	//float mP[NEvents];
+	float EP[NEvents];	//float EP[NEvents];
+	float mC[NEvents];	//float mC[NEvents];
+	float EC[NEvents];	//float EC[NEvents];
+	float mC1[NEvents];	//float mC1[NEvents];
+	float mC2[NEvents];	//float mC2[NEvents];
+	float EC1[NEvents];	//float EC1[NEvents];
+	float EC2[NEvents];	//float EC2[NEvents];
 
 	//P = Be*
 	float mPMean = 8022.2851;	//?? issues w/ m(Be*) determined by p(X17), random value; rn using m(Be) + m(X17)
@@ -92,7 +92,7 @@ void Run2GenSim(){
 		//prob > chance --> reject
 
 		else if(prob < chance) {
-			mP.emplace_back(mPplaceholder);
+			mP[i] = mPplaceholder;
 		}
 		//prob < chance --> accept
 		
@@ -129,15 +129,15 @@ void Run2GenSim(){
 		//prob > chance --> reject
 
 		else if(prob < chance) {
-			mC2.emplace_back(mC2placeholder);
+			mC2[i] = mC2placeholder;
 		}
 		//prob < chance --> accept
 		
-		EC2.emplace_back((mC2.at(i))*c*c);	//P: at rest --> C2, approx. at rest
+		EC2[i] = (mC2[i])*c*c;	//P: at rest --> C2, approx. at rest
 		
 		//C1: mass & energy
 		
-		EC1.emplace_back((EP.at(i))-(EC2.at(i)));	//EP = EC1 + EC2 (Energy conservation) --> EC1 = EP - EC2
+		EC1[i] = EP[i] - EC2[i];	//EP = EC1 + EC2 (Energy conservation) --> EC1 = EP - EC2
 	
 		float mC1chance, mC1prob;
 		int mC1index = 0;
@@ -160,33 +160,34 @@ void Run2GenSim(){
 		//prob > chance --> reject
 
 		else if(prob < chance) {
-			mC1.emplace_back(mC1placeholder);
+			mC1[i] = mC1placeholder;
 		}
 		//prob < chance --> accept
 	}
 		
 	//C1,C2: momenta:
 		
-	std::vector<float> beta;
-	std::vector<float> gamma;
+	float beta[NEvents];
+	float gamma[NEvents];
 
-	std::vector<float> pC1x;
-	std::vector<float> pC1y;
-	std::vector<float> pC1z;
+	float pC1x[NEvents];
+	float pC1y[NEvents];
+	float pC1z[NEvents];
 	
-	std::vector<float> pC2x;
-	std::vector<float> pC2y;
-	std::vector<float> pC2z;	
+	float pC2x[NEvents];
+	float pC2y[NEvents];
+	float pC2z[NEvents];	
 		
 	for(int i = 0; i < NEvents; i++){	
 		//!!momenta only in x-axis
-	pC1y.emplace_back(0.0);
-	pC1z.emplace_back(0.0);
-	pC2y.emplace_back(0.0);
-	pC2z.emplace_back(0.0);
+	pC1y[i] = (0.0);
+	pC1z[i] = (0.0);
+	pC2y[i] = (0.0);
+	pC2z[i] = (0.0);
 		
-	pC2x.emplace_back(0.0);	//!! 8Be* @ rest --> 8Be approx. at rest
-	pC1x.emplace_back(c*sqrt((((mP.at(i))-(mC2.at(i)))*((mP.at(i))-(mC2.at(i))))-((mC1.at(i))*(mC1.at(i)))));	//Energy conservation + Relativistic Eqn.
+	pC2x[i] = (0.0);	//!! 8Be* @ rest --> 8Be approx. at rest
+	//pC1x[i] = (c*sqrt((((mP[i])-(mC2[i]))*((mP[i]))-(mC2[i])))-((mC1[i])*(mC1[i]))));
+	pC1x[i] = c*sqrt(((mP[i] - mC2[i])*(mP[i] - mC2[i])) - ((mC1[i])*(mC1[i])))	//Energy conservation + Relativistic Eqn.
 		//pC1 = c*sqrt((mP - mC2)^2 - (mC1)^2)
 		
 	}
@@ -195,8 +196,8 @@ void Run2GenSim(){
 	
 	for(int i = 0; i < NEvents; i++) {
 
-		beta.emplace_back(((pC1x.at(i))/(c))/(sqrt(((mC1.at(i))*(mC1.at(i)))+(((pC1x.at(i))*(pC1x.at(i)))/(c*c)))));
-		gamma.emplace_back(sqrt((1.0)/(1.0 - ((beta.at(i))*(beta.at(i))))));
+		beta[i] = (((pC1x.at(i))/(c))/(sqrt(((mC1.at(i))*(mC1.at(i)))+(((pC1x.at(i))*(pC1x.at(i)))/(c*c)))));
+		gamma[i] = (sqrt((1.0)/(1.0 - ((beta.at(i))*(beta.at(i))))));
 
 	}
 
@@ -222,10 +223,10 @@ void Run2GenSim(){
 	//generate based on gamma, beta
 	for(int i = 0; i < NEvents; i++) {
 
-		L[i][0][0] = gamma.at(i);
-		L[i][1][1] = gamma.at(i);
-		L[i][0][1] = (gamma.at(i))*(beta.at(i));
-		L[i][1][0] = (gamma.at(i))*(beta.at(i));
+		L[i][0][0] = gamma[i];
+		L[i][1][1] = gamma[i];
+		L[i][0][1] = (gamma[i])*(beta[i]);
+		L[i][1][0] = (gamma[i])*(beta[i]);
 
 		L[i][2][2] = 1.0;
 		L[i][3][3] = 1.0;
@@ -243,10 +244,10 @@ void Run2GenSim(){
 	//float PCNew[NEvents][4];	//4-vector of C1 in RF(C1)
 	for(int i = 0; i < NEvents; i++) {
 
-		PC[i][0] = EC1.at(i);
-		PC[i][1] = pC1x.at(i);
-		PC[i][2] = pC1y.at(i);
-		PC[i][3] = pC1z.at(i);
+		PC[i][0] = EC1[i];
+		PC[i][1] = pC1x[i];
+		PC[i][2] = pC1y[i];
+		PC[i][3] = pC1z[i];
 		
 		//PC.push_back({EC1.at(i), pC1x.at(i), pC1y.at(i), pC1z.at(i)});
 	}
@@ -439,10 +440,10 @@ void Run2GenSim(){
 		//now, beta(in RF(C1)) = -1.0*beta(in RF(P))
 		for(int i = 0; i < NEvents; i++) {
 
-			LCtoP[i][0][0] = gamma.at(i);
-			LCtoP[i][1][1] = gamma.at(i);
-			LCtoP[i][0][1] = -1.0*(gamma.at(i))*(beta.at(i));
-			LCtoP[i][1][0] = -1.0*(gamma.at(i))*(beta.at(i));
+			LCtoP[i][0][0] = gamma[i];
+			LCtoP[i][1][1] = gamma[i];
+			LCtoP[i][0][1] = -1.0*(gamma[i])*(beta[i]);
+			LCtoP[i][1][0] = -1.0*(gamma[i])*(beta[i]);
 
 			LCtoP[i][2][2] = 1.0;
 			LCtoP[i][3][3] = 1.0;
@@ -523,7 +524,7 @@ void Run2GenSim(){
 		}
 		
 		float mTotal[NEvents];	//the money plot
-		std::vector<float> vmTotal;
+		
 		float pTotal[NEvents];
 		
 		for(int i = 0; i < NEvents; i++){
@@ -597,6 +598,8 @@ void Run2GenSim(){
 	std::vector<float> vpG11yNew;
 	std::vector<float> vpG11zNew;
 		
+	std::vector<float> vmTotal;
+		
 	//std::vector<float> vmTotal;	//the money plot :)
 
 		//canvas: split based on RF
@@ -610,13 +613,13 @@ void Run2GenSim(){
 
 	for(int i = 0; i < NEvents; i++) {
 
-		vmP.emplace_back(mP.at(i));
-		vEP.emplace_back(EP.at(i));
-		vmC1.emplace_back(mC1.at(i));
-		vmC2.emplace_back(mC2.at(i));
-		vEC1.emplace_back(EC1.at(i));
-		vpC1.emplace_back(pC1x.at(i));
-		vpC2.emplace_back(pC2x.at(i));
+		vmP.emplace_back(mP[i]);
+		vEP.emplace_back(EP[i]);
+		vmC1.emplace_back(mC1[i]);
+		vmC2.emplace_back(mC2[i]);
+		vEC1.emplace_back(EC1[i]);
+		vpC1.emplace_back(pC1x[i]);
+		vpC2.emplace_back(pC2x[i]);
 
 		vmCNew.emplace_back(mCNew[i]);
 		vECNew.emplace_back(EC[i]);

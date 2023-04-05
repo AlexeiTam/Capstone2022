@@ -115,6 +115,7 @@ void Run2GenSim(){
 	}
 	
 	float mC2placeholder;	//placeholder
+	int mC2index;
 	while(mC2index < NEvents + 1) {
 
 		mC2index++;
@@ -133,6 +134,7 @@ void Run2GenSim(){
 			mC2[mC2index] = mC2placeholder;
 		}
 		//prob < chance --> accept
+	}
 		
 		EC2[i] = (mC2[i])*c*c;	//P: at rest --> C2, approx. at rest
 		

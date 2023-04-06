@@ -131,6 +131,7 @@ void Run3New(){
 	
 	//GENERATING C1----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+		//mC1
 	float mC1Norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
 	//float cutoff = 0.10; 	//not taking values less probable than cutoff
 	float mC1Max = mC1Mean + (sqrt(((mC1Norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
@@ -158,6 +159,7 @@ void Run3New(){
 	}
 	
 	
+	/*
 	const Int_t NBins = 1000; 
 	TH1D *hmC1 = new TH1D("hmC1", "X17 Mass", NBins, 0.0, mC1Max + 5.0);
 	hmC1->GetXaxis()->SetTitle("Mass [MeV]");
@@ -168,6 +170,17 @@ void Run3New(){
 	}
 
 	hmC1->Draw();
+	*/
+	
+		//EC1: from energy conservation; gap btwn P & C2
+	for(int i = 0; i < NEvents; i++){
+		EC1[i] = fabs(EP[i] - EC2[i]);	//!!check later if we get issues w/ EP > EC2
+	}
+		//pC1: use energy conservation, relativistic eqn.
+	for(int i = 0; i < NEvents; i++){
+		pC1x[i] = c*sqrt();
+		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
+	}
 	
 	
 

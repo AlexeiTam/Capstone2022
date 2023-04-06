@@ -231,8 +231,47 @@ void Run3New(){
 
 	}
 
+	//4-vectors
+	float PC[NEvents][4];	//of C1 in RF(P)
 	
+	for(int i = 0; i < NEvents; i++){
+		
+		PC[i][0] = EC1[i];
+		PC[i][1] = pC1x[i];
+		PC[i][2] = pC1y[i];
+		PC[i][3] = pC1z[i];
+		
+	}
 	
+	//REST FRAME: C1 ============================================================================================================================================
+	
+	//4-vector in RF(C1)
+	
+	float PCNew[NEvents][4];
+	
+	//initialize at zero
+	for(int i = 0; i < NEvents; i++){
+		
+		for(int j = 0; j < 4; j++){
+		
+			PCNew[i][j] = 0.0;
+			
+		}
+	}
+	
+	//perform Lorentz Boost
+	
+	for(int i = 0; i < NEvents; i++) {
+		
+		for(int j = 0; j < 4; j++) {
+
+			for(int k = 0; k < 4; k++) {
+
+				PCNew[i][j] = PCNew[i][j] + (L[i][j][k])*(PC[i][k]); 
+			}
+		}
+
+	}
 	
 	
 

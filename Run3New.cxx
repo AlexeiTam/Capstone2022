@@ -59,6 +59,14 @@ void Run3New(){
 	//prob < chance -->accept, if not reject
 	//repeat until we get all the parents we need
 	
+	//test:
+	const Int_t NBins = 100; 
+	TH1D *hmP = ("hmP", "^{8}Be^{*} Mass", NBins, -0.2, mPMax + 0.2);
+	hmP->GetXaxis()->SetTitle("Mass [MeV]");
+	hmP->GetYaxis()->SetTitle("Counts");
+	
+	hmP->Draw();
+	
 
 
 

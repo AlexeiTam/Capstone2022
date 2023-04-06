@@ -107,6 +107,14 @@ void Run3New(){
 		}
 	}
 	
+		//pC2: at rest
+	
+		for(int i = 0; i < NEvents; i++){
+			pC2x[i] = 0.0;
+			pC2y[i] = 0.0;
+			pC2z[i] = 0.0;
+		}
+	
 	/*
 	const Int_t NBins = 1000; 
 	TH1D *hmC2 = new TH1D("hmC2", "^{8}Be Mass", NBins, mC2Max - 0.2, mC2Max + 0.2);
@@ -178,9 +186,52 @@ void Run3New(){
 	}
 		//pC1: use energy conservation, relativistic eqn.
 	for(int i = 0; i < NEvents; i++){
-		pC1x[i] = c*sqrt();
+		pC1x[i] = c*sqrt(((mP[i] - mC1[i])*(mP[i] - mC1[i])) - ((mC1[i])*(mC1[i])));
+		pC1y[i] = 0.0;
+		pC1z[i] = 0.0;
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
 	}
+	
+	//RF(P): beta, gamma
+	
+	for(int i = 0; i < NEvents; i++){
+		
+		beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));
+		gamma[i] = (sqrt((1.0)/(1.0 - ((beta[i])*(beta[i])))));
+	
+	}
+	
+	//RF(P) --> RF(C1)
+	
+	float L[NEvents][4][4];
+
+	//initialize as zero
+	for(int i = 0 ; i < NEvents; i++) {
+
+		for(int j = 0; j < 4; j++) {
+
+			for(int k = 0; k < 4; k++) {
+
+				L[i][j][k] = 0.0;
+			}
+		}
+	}
+
+	//fill w/ lorentz transformation values
+	for(int i = 0; i < NEvents; i++) {
+
+		L[i][0][0] = gamma[i];
+		L[i][1][1] = gamma[i];
+		L[i][0][1] = (gamma[i])*(beta[i]);
+		L[i][1][0] = (gamma[i])*(beta[i]);
+
+		L[i][2][2] = 1.0;
+		L[i][3][3] = 1.0;
+
+	}
+
+	
+	
 	
 	
 

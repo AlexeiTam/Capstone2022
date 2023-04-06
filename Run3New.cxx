@@ -25,7 +25,7 @@ void Run3New(){
 	float me = 0.511;	//mass of electron/positron = 0.511 MeV
 
 
-	//GENERATING P
+	//GENERATING P-----------------------------------------------------------------------------------------------------------------------------------------------------
 		//mP: in RF(P), just from Lorentzian Dist., w/ given avg. & width
 			//Breit-Wigner
 	
@@ -67,7 +67,7 @@ void Run3New(){
 	
 	//test:will use
 	/*
-	const Int_t NBins = 100; 
+	const Int_t NBins = 1000; 
 	TH1D *hmP = new TH1D("hmP", "^{8}Be^{*} Mass", NBins, mPMax - 0.2, mPMax + 0.2);
 	hmP->GetXaxis()->SetTitle("Mass [MeV]");
 	hmP->GetYaxis()->SetTitle("Counts");
@@ -79,7 +79,7 @@ void Run3New(){
 	hmP->Draw();
 	
 	*/
-	//GENERATING C2:
+	//GENERATING C2------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	float mC2Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
 	//float cutoff = 0.10; 	//not taking values less probable than cutoff
@@ -108,7 +108,7 @@ void Run3New(){
 	}
 	
 	/*
-	const Int_t NBins = 100; 
+	const Int_t NBins = 1000; 
 	TH1D *hmC2 = new TH1D("hmC2", "^{8}Be Mass", NBins, mC2Max - 0.2, mC2Max + 0.2);
 	hmC2->GetXaxis()->SetTitle("Mass [MeV]");
 	hmC2->GetYaxis()->SetTitle("Counts");
@@ -119,6 +119,7 @@ void Run3New(){
 
 	hmC2->Draw();
 	
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HOW TO GET MAX.VALUE FROM AN ARRAY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	cout << "mC2Max:" << *max_element(mC2,mC2+NEvents) << endl;
 	*/
 	
@@ -127,7 +128,48 @@ void Run3New(){
 	for(int i = 0; i < NEvents; i++){
 		EC2[i] = c*c*mC2[i];	
 	}
+	
+	//GENERATING C1----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+	float mC1Norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
+	//float cutoff = 0.10; 	//not taking values less probable than cutoff
+	float mC1Max = mC1Mean + (sqrt(((mC1Norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
+
+	TF1 *BWC1 = new TF1("BWC1","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC1Max);
+	BWC1->SetParameters(pi, mC1Mean, mC1Sigma, mC1Norm);
+	float mC1placeholder;
+	int mC1index = 0;
+	while(mC1index < NEvents + 1){
+	
+		mC1index++;
+
+		mC1placeholder = mC1Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+	
+		prob = gRandom->Rndm();		//U(x)
+		chance = BWC1->Eval(mC1placeholder);	//P(x)	
+	
+		if(prob > chance) {
+			mC1index = mC1index - 1;
+		}
+
+		else if(prob < chance) {
+			mC1[mC1index] = mC1placeholder;
+		}
+	}
+	
+	
+	const Int_t NBins = 1000; 
+	TH1D *hmC1 = new TH1D("hmC1", "X17 Mass", NBins, 0.0, mC1Max + 5.0);
+	hmC1->GetXaxis()->SetTitle("Mass [MeV]");
+	hmC1->GetYaxis()->SetTitle("Counts");
+	
+	for(int i = 0; i < NEvents; i++){
+		hmC1->Fill(mC1[i]);
+	}
+
+	hmC1->Draw();
+	
+	
 
 
 }

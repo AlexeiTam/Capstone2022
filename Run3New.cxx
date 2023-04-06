@@ -59,9 +59,10 @@ void Run3New(){
 	//prob < chance -->accept, if not reject
 	//repeat until we get all the parents we need
 	
-	//test:
+	//test:will use
+	/*
 	const Int_t NBins = 100; 
-	TH1D *hmP = new TH1D("hmP", "^{8}Be^{*} Mass", NBins, -0.2, mPMax + 0.2);
+	TH1D *hmP = new TH1D("hmP", "^{8}Be^{*} Mass", NBins, mPMax - 0.2, mPMax + 0.2);
 	hmP->GetXaxis()->SetTitle("Mass [MeV]");
 	hmP->GetYaxis()->SetTitle("Counts");
 	
@@ -71,6 +72,47 @@ void Run3New(){
 
 	hmP->Draw();
 	
+	*/
+	//GENERATING C2:
+	
+	float mC2Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
+	float cutoff = 0.10; 	//not taking values less probable than cutoff
+	float mC2Max = mC2Mean + (sqrt(((mC2Norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
+
+	TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
+	BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
+	float mC2Pplaceholder;
+	int mC2index = 0;
+	while(mC2index < NEvents + 1){
+	
+		mC2index++;
+
+		mC2placeholder = mC2Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+	
+		prob = gRandom->Rndm();		//U(x)
+		chance = BWC2->Eval(mC2placeholder);	//P(x)	
+	
+		if(prob > chance) {
+			mC2index = mC2index - 1;
+		}
+
+		else if(prob < chance) {
+			mC2[mC2index] = mC2placeholder;
+		}
+	}
+	
+	const Int_t NBins = 100; 
+	TH1D *hmC2 = new TH1D("hmC2", "^{8}Be Mass", NBins, mC2Max - 0.2, mC2Max + 0.2);
+	hmC2->GetXaxis()->SetTitle("Mass [MeV]");
+	hmC2->GetYaxis()->SetTitle("Counts");
+	
+	for(int i = 0; i < NEvents; i++){
+		hmC2->Fill(mC2[i]);
+	}
+
+	hmC2->Draw();
+	
+	cout << "mC2Max:" << *max_element(mC2,mC2+NEvents) << endl;
 
 
 

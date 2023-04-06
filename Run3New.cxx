@@ -25,7 +25,9 @@ void Run3New(){
 	float me = 0.511;	//mass of electron/positron = 0.511 MeV
 
 
-	//Breit-Wigner
+	//GENERATING P
+		//mP: in RF(P), just from Lorentzian Dist., w/ given avg. & width
+			//Breit-Wigner
 	
 	float mPNorm = (2*mPSigma*mPSigma)/((fabs(mPSigma))*(fabs(mPSigma))*(fabs(mPSigma)));
 	float cutoff = 0.10; 	//not taking values less probable than cutoff
@@ -55,9 +57,13 @@ void Run3New(){
 			mP[mPindex] = mPplaceholder;
 		}
 	}
-
 	//prob < chance -->accept, if not reject
 	//repeat until we get all the parents we need
+	
+		//EP: in RF(P) from rest mass
+	for(int i = 0; i < NEvents; i++){
+		EP[i] = c*c*mP[i];	
+	}
 	
 	//test:will use
 	/*
@@ -101,6 +107,7 @@ void Run3New(){
 		}
 	}
 	
+	/*
 	const Int_t NBins = 100; 
 	TH1D *hmC2 = new TH1D("hmC2", "^{8}Be Mass", NBins, mC2Max - 0.2, mC2Max + 0.2);
 	hmC2->GetXaxis()->SetTitle("Mass [MeV]");
@@ -113,6 +120,13 @@ void Run3New(){
 	hmC2->Draw();
 	
 	cout << "mC2Max:" << *max_element(mC2,mC2+NEvents) << endl;
+	*/
+	
+		//EC2: C2 = 8Be approx. at rest ==> EC2 approx. rest mass
+	
+	for(int i = 0; i < NEvents; i++){
+		EC2[i] = c*c*mC2[i];	
+	}
 
 
 

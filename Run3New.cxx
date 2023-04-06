@@ -76,12 +76,12 @@ void Run3New(){
 	//GENERATING C2:
 	
 	float mC2Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
-	float cutoff = 0.10; 	//not taking values less probable than cutoff
+	//float cutoff = 0.10; 	//not taking values less probable than cutoff
 	float mC2Max = mC2Mean + (sqrt(((mC2Norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
 
 	TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
 	BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
-	float mC2Pplaceholder;
+	float mC2placeholder;
 	int mC2index = 0;
 	while(mC2index < NEvents + 1){
 	

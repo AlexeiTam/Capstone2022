@@ -193,6 +193,8 @@ void Run3New(){
 	}
 	
 	//RF(P): beta, gamma
+	float beta[NEvents];
+	float gamma[NEvents];
 	
 	for(int i = 0; i < NEvents; i++){
 		
@@ -202,7 +204,6 @@ void Run3New(){
 	}
 	
 	//RF(P) --> RF(C1)
-	
 	float L[NEvents][4][4];
 
 	//initialize as zero

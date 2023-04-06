@@ -65,6 +65,10 @@ void Run3New(){
 	hmP->GetXaxis()->SetTitle("Mass [MeV]");
 	hmP->GetYaxis()->SetTitle("Counts");
 	
+	for(int i = 0; i < NEvents; i++){
+		hmP->Fill(mP[i]);
+	}
+
 	hmP->Draw();
 	
 

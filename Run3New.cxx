@@ -61,7 +61,7 @@ void Run3New(){
 	
 	//test:
 	const Int_t NBins = 100; 
-	TH1D *hmP = ("hmP", "^{8}Be^{*} Mass", NBins, -0.2, mPMax + 0.2);
+	TH1D *hmP = new TH1D("hmP", "^{8}Be^{*} Mass", NBins, -0.2, mPMax + 0.2);
 	hmP->GetXaxis()->SetTitle("Mass [MeV]");
 	hmP->GetYaxis()->SetTitle("Counts");
 	

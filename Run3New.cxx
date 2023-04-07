@@ -301,7 +301,7 @@ void Run3New(){
 	//E^2 = p^2c^2 + m^2c^4 --> m = sqrt((E^2/c^4) + (p^2/c^2);
 	for(int i = 0 ; i < NEvents; i++) {
 		
-		mCNew[i] = sqrt((((ECNew[i])*(ECNew[i]))/(c*c*c*c))+(((pNew[i])*(pNew[i]))/(c*c)));
+		mCNew[i] = sqrt((((ECNew[i])*(ECNew[i]))/(c*c*c*c))-(((pNew[i])*(pNew[i]))/(c*c)));
 		
 
 	}

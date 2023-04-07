@@ -56,7 +56,18 @@ void Run3New(){
 
 		else if(prob < chance) {
 			mP[mPindex] = mPplaceholder;
+			
+			if(mPindex == 0.125*NEvents) std::cout << "12.5%" << std::endl;
+			if(mPindex == 0.250*NEvents) std::cout << "25.0%" << std::endl;
+			if(mPindex == 0.375*NEvents) std::cout << "37.5%" << std::endl;
+			if(mPindex == 0.500*NEvents) std::cout << "50.0%" << std::endl;
+			if(mPindex == 0.625*NEvents) std::cout << "62.5%" << std::endl;
+			if(mPindex == 0.750*NEvents) std::cout << "75.0%" << std::endl;
+			if(mPindex == 0.875*NEvents) std::cout << "87.5%" << std::endl;
+			if(mPindex == NEvents-1) std::cout << "PARENT MASS GENERATION COMPLETE" << std::endl;
 		}
+		
+			
 	}
 	//prob < chance -->accept, if not reject
 	//repeat until we get all the parents we need
@@ -109,6 +120,15 @@ void Run3New(){
 
 		else if(prob < chance) {
 			mC2[mC2index] = mC2placeholder;
+			
+			if(mC2index == 0.125*NEvents) std::cout << "12.5%" << std::endl;
+			if(mC2index == 0.250*NEvents) std::cout << "25.0%" << std::endl;
+			if(mC2index == 0.375*NEvents) std::cout << "37.5%" << std::endl;
+			if(mC2index == 0.500*NEvents) std::cout << "50.0%" << std::endl;
+			if(mC2index == 0.625*NEvents) std::cout << "62.5%" << std::endl;
+			if(mC2index == 0.750*NEvents) std::cout << "75.0%" << std::endl;
+			if(mC2index == 0.875*NEvents) std::cout << "87.5%" << std::endl;
+			if(mC2index == NEvents-1) std::cout << "C2 MASS GENERATION COMPLETE" << std::endl;
 		}
 	}
 	
@@ -169,6 +189,15 @@ void Run3New(){
 
 		else if(prob < chance) {
 			mC1[mC1index] = mC1placeholder;
+			
+			if(mC1index == 0.125*NEvents) std::cout << "12.5%" << std::endl;
+			if(mC1index == 0.250*NEvents) std::cout << "25.0%" << std::endl;
+			if(mC1index == 0.375*NEvents) std::cout << "37.5%" << std::endl;
+			if(mC1index == 0.500*NEvents) std::cout << "50.0%" << std::endl;
+			if(mC1index == 0.625*NEvents) std::cout << "62.5%" << std::endl;
+			if(mC1index == 0.750*NEvents) std::cout << "75.0%" << std::endl;
+			if(mC1index == 0.875*NEvents) std::cout << "87.5%" << std::endl;
+			if(mC1index == NEvents-1) std::cout << "C1 MASS GENERATION COMPLETE" << std::endl;
 		}
 	}
 	

@@ -437,6 +437,22 @@ void Run3New(){
 			}
 		}
 	
+		for(int i = 0; i < NEvents; i++) {
+
+			PG11New[i][0] = LCtoP[i][0][0]*PG11[i][0] + LCtoP[i][0][1]*PG11[i][1] + LCtoP[i][0][2]*PG11[i][2] + LCtoP[i][0][3]*PG11[i][3];
+			PG11New[i][1] = LCtoP[i][1][0]*PG11[i][0] + LCtoP[i][1][1]*PG11[i][1] + LCtoP[i][1][2]*PG11[i][2] + LCtoP[i][1][3]*PG11[i][3];
+			PG11New[i][2] = LCtoP[i][2][0]*PG11[i][0] + LCtoP[i][2][1]*PG11[i][1] + LCtoP[i][2][2]*PG11[i][2] + LCtoP[i][2][3]*PG11[i][3];
+			PG11New[i][3] = LCtoP[i][3][0]*PG11[i][0] + LCtoP[i][3][1]*PG11[i][1] + LCtoP[i][3][2]*PG11[i][2] + LCtoP[i][3][3]*PG11[i][3];
+
+			
+			PG21New[i][0] = LCtoP[i][0][0]*PG21[i][0] + LCtoP[i][0][1]*PG21[i][1] + LCtoP[i][0][2]*PG21[i][2] + LCtoP[i][0][3]*PG21[i][3];
+			PG21New[i][0] = LCtoP[i][0][0]*PG21[i][0] + LCtoP[i][0][1]*PG21[i][1] + LCtoP[i][0][2]*PG21[i][2] + LCtoP[i][0][3]*PG21[i][3];
+			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
+			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
+
+		}
+	
+	
 	
 	
 	

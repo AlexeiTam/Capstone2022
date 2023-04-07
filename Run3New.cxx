@@ -302,6 +302,9 @@ void Run3New(){
 	for(int i = 0 ; i < NEvents; i++) {
 		
 		mCNew[i] = sqrt((((ECNew[i])*(ECNew[i]))/(c*c*c*c))+(((pNew[i])*(pNew[i]))/(c*c)));
+		//test
+		cout << "test:line 307" << endl;
+		cout << mCNew[i] << endl;
 
 	}
 	

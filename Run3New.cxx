@@ -313,7 +313,7 @@ void Run3New(){
 
 	for(int i = 0; i < NEvents; i++) {
 
-		mG[i] = meMean;	//electron & positron are VERY stable
+		mG[i] = me;	//electron & positron are VERY stable
 		EG[i] = 0.5*ECNew[i];
 
 	}

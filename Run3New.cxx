@@ -356,7 +356,7 @@ void Run3New(){
 		else if(SignChance > 0.5){
 			Sign = -1.0;
 		}
-		else if(SignChance = 0.5){
+		else if(SignChance == 0.5){
 			Sign = -1.0;
 		}
 			

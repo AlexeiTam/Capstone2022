@@ -523,7 +523,7 @@ void Run3New(){
 	//
 
 	TH1D *hmCNew = new TH1D("hmCNew","X17 Mass (RF:X17)", NBins,(*min_element(mCNew,mCNew+NEvents)) - 10.0, (*max_element(mCNew,mCNew+NEvents)) + 10.0 );
-	TH1D *hECNew = new TH1D("hECNew","X17 Energy (RF:C1)", NBins,(*min_element(mCNew,mCNew+NEvents)) - 10.0, (*max_element(mCNew,mCNew+NEvents)) + 10.0 );
+	TH1D *hECNew = new TH1D("hECNew","X17 Energy (RF:C1)", NBins,(*min_element(ECNew,ECNew+NEvents)) - 10.0, (*max_element(ECNew,ECNew+NEvents)) + 10.0 );
 	TH1D *hmG11 = new TH1D("hmG11","e^{+},e^{-} Mass", NBins, (*min_element(mG11,mG11+NEvents)) - 10.0, (*max_element(mG11,mG11+NEvents)) + 10.0 );
 	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
 	TH1D *hEG11 = new TH1D("hEG11","e^{+},e^{-} Energy", NBins, (*min_element(EG11,EG11+NEvents)) - 10.0, (*max_element(EG11,EG11+NEvents)) + 10.0 );
@@ -579,7 +579,7 @@ void Run3New(){
 	hpG11->GetXaxis()->SetTitle("Momentum [\frac{MeV}{c}]");
 	hpG11->GetYaxis()->SetTitle("Counts");
 
-	hTheta->GetXaxis()->SetTitle("#Theta [^{\circ}]");
+	hTheta->GetXaxis()->SetTitle("#Theta [^{#circ}]");
 	hTheta->GetYaxis()->SetTitle("Counts");
 		
 	hmTotal->GetXaxis()->SetTitle("m_{e^{+}e^{-}} [\frac{MeV}{c^2}]");

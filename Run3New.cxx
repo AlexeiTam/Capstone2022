@@ -535,7 +535,127 @@ void Run3New(){
 	//determine min,max values of me+e-
 	TH1D *hmTotal = new TH1D("hmTotal", "Invariant Mass Sum", NBins, (*min_element(mTotal,mTotal+NEvents)) - 10.0, (*max_element(mTotal,mTotal+NEvents)) + 10.0 );
 	
+	//filling histograms
 	
+	for(int i = 0 ; i < NEvents; i++) {
+
+		hmP->Fill(mP[i]);
+		hEP->Fill(EP[i]);
+		hmC1->Fill(mC1[i]);
+		hEC1->Fill(EC1[i]);
+		hpC1->Fill(pC1x[i]);
+
+
+		hmCNew->Fill(mCNew[i]);
+		hECNew->Fill(ECNew[i]);
+		hmG11->Fill(mG11[i]);
+		hEG11->Fill(EG11[i]);
+		hpG11->Fill(pG11y[i]);
+
+		hTheta->Fill(theta[i]);
+		hmTotal->Fill(mTotal[i]);
+
+	}
+
+	hmP->GetXaxis()->SetTitle("Mass [\frac{MeV}{c^2}]");
+	hmP->GetYaxis()->SetTitle("Counts");
+	hEP->GetXaxis()->SetTitle("Energy [MeV]");
+	hEP->GetYaxis()->SetTitle("Counts");
+	hmC1->GetXaxis()->SetTitle("Mass [\frac{MeV}{c^2}]");
+	hmC1->GetYaxis()->SetTitle("Counts");
+	hEC1->GetXaxis()->SetTitle("Energy [MeV]");
+	hEC1->GetYaxis()->SetTitle("Counts");
+	hpC1->GetXaxis()->SetTitle("Momentum [\frac{MeV}{c}]");
+	hpC1->GetYaxis()->SetTitle("Counts");
+
+	hmCNew->GetXaxis()->SetTitle("Mass [\frac{MeV}{c^2}]");
+	hmCNew->GetYaxis()->SetTitle("Counts");
+	hECNew->GetXaxis()->SetTitle("Energy [MeV]");
+	hECNew->GetYaxis()->SetTitle("Counts");
+	hmG11->GetXaxis()->SetTitle("Mass [\frac{MeV}{c^2}]");
+	hmG11->GetYaxis()->SetTitle("Counts");
+	hEG11->GetXaxis()->SetTitle("Energy [MeV]");
+	hEG11->GetYaxis()->SetTitle("Counts");
+	hpG11->GetXaxis()->SetTitle("Momentum [\frac{MeV}{c}]");
+	hpG11->GetYaxis()->SetTitle("Counts");
+
+	hTheta->GetXaxis()->SetTitle("#Theta [^{\circ}]");
+	hTheta->GetYaxis()->SetTitle("Counts");
+		
+	hmTotal->GetXaxis()->SetTitle("m_{e^{+}e^{-}} [\frac{MeV}{c^2}]");
+	hmTotal->GetYaxis()->SetTitle("Counts");
+	
+	hmP->SetFillColor(0);
+	hmP->SetLineWidth(2);
+	hEP->SetFillColor(1);
+	hmP->SetLineWidth(2);
+	hmC1->SetFillColor(2);
+	hmC1->SetLineWidth(2);
+	hEC1->SetFillColor(3);
+	hEC1->SetLineWidth(2);
+	hpC1->SetFillColor(4);
+	hpC1->SetLineWidth(2);
+
+	hmCNew->SetFillColor(5);
+	hmCNew->SetLineWidth(2);
+	hECNew->SetFillColor(6);
+	hECNew->SetLineWidth(2);
+	hmG11->SetFillColor(7);
+	hmG11->SetLineWidth(2);
+	hEG11->SetFillColor(8);
+	hEG11->SetLineWidth(2);
+	hpG11->SetFillColor(9);
+	hpG11->SetLineWidth(2);
+
+	hTheta->SetFillColor(10);
+	hTheta->SetLineWidth(2);
+		
+	hmTotal->SetFillColor(11);
+	hmTotal->SetLineWidth(2);
+
+	cP->cd(1);
+	hmP->Draw();
+
+	cP->cd(2);
+	hEP->Draw();
+	
+	cP->cd(3);
+	hmC1->Draw();
+	
+	cP->cd(4);
+	hEC1->Draw();
+	
+	cP->cd(5);
+	hpC1->Draw();
+
+	c1->cd(1);
+	hTheta->Draw();
+		
+	c1->cd(2);
+	hmTotal->Draw();
+	
+	cC1->cd(1);
+	hmCNew->Draw();
+	
+	cC1->cd(2);
+	hECNew->Draw();
+
+	cC1->cd(3);
+	hmG11->Draw();
+
+	cC1->cd(4);
+	hEG11->Draw();
+
+	cC1->cd(5);
+	hpG11->Draw();
+
+	
+
+	cP->Draw();
+	cC1->Draw();
+	c1->Draw();
+
+
 	
 
 }

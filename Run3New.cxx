@@ -402,7 +402,40 @@ void Run3New(){
 
 		}
 	
+		//generate new pG11 in RF(P)
+		
+		float PG11[NEvents][4];		//4-vector of g11 in RF(C1)
+		float PG21[NEvents][4];		//4-vector of g21 in RF(C1)
 	
+		float PG11New[NEvents][4];	//4-vector of g11 in RF(P)
+		float PG21New[NEvents][4];	//4-vector of g11 in RF(P)
+		
+		//pGNewSum: sum of e+, e- 4-vectors in RF(P)
+		float PGNewSum[NEvents][4];
+	
+	
+		//fill PG11 & PG21, initialize PG11New as 0
+		for(int i = 0; i < NEvents; i++) {
+
+			PG11[i][0] = EG11[i];
+			PG11[i][1] = pG11x[i];
+			PG11[i][2] = pG11y[i];
+			PG11[i][3] = pG11z[i];
+
+			PG21[i][0] = EG21[i];
+			PG21[i][1] = pG21x[i];
+			PG21[i][2] = pG21y[i];
+			PG21[i][3] = pG21z[i];
+		}
+
+		for(int i = 0; i < NEvents; i++) {
+
+			for(int j = 0; j <4; j++) {
+
+				PG11New[i][j] = 0.0;
+				PG21New[i][j] = 0.0;
+			}
+		}
 	
 	
 	

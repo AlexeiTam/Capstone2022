@@ -114,7 +114,7 @@ void Run3New(){
 			mC2index = mC2index - 1;
 		}
 		
-		if( (c*c*mC2placeholder) > (c*c*mP[mC2index]) ){
+		else if( (c*c*mC2placeholder) > (c*c*mP[mC2index]) ){
 			mC2index = mC2index - 1;
 		}	//not accepting upward transitions
 

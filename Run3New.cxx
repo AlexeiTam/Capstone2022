@@ -264,14 +264,10 @@ void Run3New(){
 	
 	for(int i = 0; i < NEvents; i++) {
 		
-		for(int j = 0; j < 4; j++) {
-
-			for(int k = 0; k < 4; k++) {
-
-				PCNew[i][j] = PCNew[i][j] + (L[i][j][k])*(PC[i][k]); 
-			}
-		}
-
+		PCNew[i][0] = L[i][0][0]*PC[i][0] + L[i][0][1]*PC[i][1] + L[i][0][2]*PC[i][2] + L[i][0][3]*PC[i][3];
+		PCNew[i][1] = L[i][1][0]*PC[i][0] + L[i][1][1]*PC[i][1] + L[i][1][2]*PC[i][2] + L[i][1][3]*PC[i][3];
+		PCNew[i][2] = L[i][2][0]*PC[i][0] + L[i][2][1]*PC[i][1] + L[i][2][2]*PC[i][2] + L[i][2][3]*PC[i][3];
+		PCNew[i][3] = L[i][3][0]*PC[i][0] + L[i][3][1]*PC[i][1] + L[i][3][2]*PC[i][2] + L[i][3][3]*PC[i][3];
 	}
 	
 	

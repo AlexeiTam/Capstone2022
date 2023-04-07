@@ -228,7 +228,7 @@ void Run3New(){
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
 		cout << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
 	}
-	cout << "-----------------------------------------------------------------------------------------" << endl;
+	cout << "........................................................................................................" << endl;
 	
 	//RF(P): beta, gamma
 	float beta[NEvents];
@@ -402,8 +402,8 @@ void Run3New(){
 	cout << "test line 349" << endl;
 	for(int i = 0; i < NEvents; i++) {
 
-
-		pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
+		pG[i] = sqrt((((EG[i])*(EG[i]))/(c*c))-(me*me*c*c));
+		//pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
 		//cout << (0.25*(mCNew[i])*(mCNew[i]))-((me*me)) << endl;
 		
 		

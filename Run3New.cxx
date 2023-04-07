@@ -452,6 +452,31 @@ void Run3New(){
 
 		}
 	
+	//summing up 4-vectors
+		
+		for(int i = 0; i < NEvents; i++) {
+		
+			PGNewSum[i][0] = PG11New[i][0] + PG21New[i][0];
+			PGNewSum[i][1] = PG11New[i][1] + PG21New[i][1];
+			PGNewSum[i][2] = PG11New[i][2] + PG21New[i][2];
+			PGNewSum[i][3] = PG11New[i][3] + PG21New[i][3];
+		}
+		
+		float mTotal[NEvents];	//the money plot
+		
+		float pTotal[NEvents];
+		
+		for(int i = 0; i < NEvents; i++){
+		
+			pTotal[i] = sqrt(((PGNewSum[i][1])*(PGNewSum[i][1]))+((PGNewSum[i][2])*(PGNewSum[i][2]))+((PGNewSum[i][3])*(PGNewSum[i][3])));
+		}
+		
+		for(int i = 0; i < NEvents; i++){
+		
+			mTotal[i] = sqrt((((PGNewSum[i][0])/(c*c))*((PGNewSum[i][0])/(c*c)))-(((pTotal[i])/(c))*((pTotal[i])/(c))));
+			
+		}
+
 	
 	
 	

@@ -81,7 +81,7 @@ void Run3New(){
 	
 	*/
 	//GENERATING C2------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+	/*
 	float mC2Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
 	//float cutoff = 0.10; 	//not taking values less probable than cutoff
 	float mC2Max = mC2Mean + (sqrt(((mC2Norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
@@ -137,7 +137,7 @@ void Run3New(){
 	for(int i = 0; i < NEvents; i++){
 		EC2[i] = c*c*mC2[i];	
 	}
-	
+	*/
 	//GENERATING C1----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		//mC1
@@ -183,7 +183,8 @@ void Run3New(){
 	
 		//EC1: from energy conservation; gap btwn P & C2
 	for(int i = 0; i < NEvents; i++){
-		EC1[i] = EP[i] - EC2[i];	//!!check later if we get issues w/ EP > EC2
+		//EC1[i] = EP[i] - EC2[i];	//!!check later if we get issues w/ EP > EC2
+		EC1[i] = c*c*mC1[i];	
 	}
 		//pC1: use energy conservation, relativistic eqn.
 	for(int i = 0; i < NEvents; i++){
@@ -194,6 +195,16 @@ void Run3New(){
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
 		cout << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
 	}
+	
+	//C2------------------------------------------------------------------------------------------------------
+	
+		for(int i = 0; i < NEvents; i++){
+			EC2[i] = EP[i] - EC1[i];
+			mC2[i] = (EP[i])/(c*c);
+			pC2x[i] = 0.0;
+			pC2y[i] = 0.0;
+			pC2z[i] = 0.0;
+		}
 	
 	//RF(P): beta, gamma
 	float beta[NEvents];

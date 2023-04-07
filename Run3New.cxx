@@ -322,7 +322,7 @@ void Run3New(){
 	*/
 	
 	//bypass L, do it myself
-	for(int i = 0; i < NEventsl i++){
+	for(int i = 0; i < NEvents; i++){
 	
 		PCNew[i][0] = ((gamma[i])*(PC[i][0])) + ((gamma[i])*(beta[i])*(PC[i][1]));
 		PCNew[i][1] = ((gamma[i])*(PC[i][1])) + ((gamma[i])*(beta[i])*(PC[i][0]));

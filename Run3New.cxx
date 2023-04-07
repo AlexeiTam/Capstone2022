@@ -274,6 +274,27 @@ void Run3New(){
 	}
 	
 	
+	//C1
+	
+	float ECNew[NEvents];	//new values for C1 in RF(C1)
+	float mCNew[NEvents];
 
+	float pCNewx[NEvents];
+	float pCNewy[NEvents];
+	float pCNewz[NEvents];
+
+	float pNew[NEvents];
+
+	for(int i = 0; i < NEvents; i++) {
+
+		ECNew[i] = PCNew[i][0];
+		pCNewx[i] = PCNew[i][1];
+		pCNewy[i] = PCNew[i][2];
+		pCNewz[i] = PCNew[i][3];
+
+		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
+	}
+	
+	
 
 }

@@ -285,6 +285,7 @@ void Run3New(){
 
 	float pNew[NEvents];
 
+	//read values from 4-vectors
 	for(int i = 0; i < NEvents; i++) {
 
 		ECNew[i] = PCNew[i][0];
@@ -294,6 +295,58 @@ void Run3New(){
 
 		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
 	}
+	
+	//mCNew: mC in RF(C1)
+	//E^2 = p^2c^2 + m^2c^4 --> m = sqrt((E^2/c^4) + (p^2/c^2);
+	for(int i = 0 ; i < NEvents; i++) {
+		
+		mCNew[i] = sqrt((((ECNew[i])*(ECNew[i]))/(c*c*c*c))+(((pNew[i])*(pNew[i]))/(c*c)));
+
+	}
+	
+	
+	//G11, G12
+	
+	//e^+, e^- basically the same
+	float mG[NEvents];
+	float EG[NEvents];
+
+	for(int i = 0; i < NEvents; i++) {
+
+		mG[i] = meMean;	//electron & positron are VERY stable
+		EG[i] = 0.5*ECNew[i];
+
+	}
+	
+	//individual values of G11 and G12
+	float pG[NEvents];
+	float pG11x[NEvents];
+	float pG11y[NEvents];
+	float pG11z[NEvents];
+
+	float pG21x[NEvents];
+	float pG21y[NEvents];
+	float pG21z[NEvents];
+
+	float EG11[NEvents];
+	float EG21[NEvents];
+	float mG11[NEvents];
+	float mG21[NEvents];
+	
+	//pG, mG, EG arrays
+	for(int i = 0; i < NEvents; i++) {
+
+
+		pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
+	
+		EG11[i] = EG[i];
+		EG21[i] = EG[i];
+
+		mG11[i] = mG[i];
+		mG21[i] = mG[i];
+	
+	}
+	
 	
 	
 

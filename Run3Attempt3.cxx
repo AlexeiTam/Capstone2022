@@ -116,7 +116,7 @@ void Run3New(){
 			pC2z[i] = 0.0;
 		}
 	
-	/*
+	
 	const Int_t NBins = 1000; 
 	TH1D *hmC2 = new TH1D("hmC2", "^{8}Be Mass", NBins, mC2Max - 0.2, mC2Max + 0.2);
 	hmC2->GetXaxis()->SetTitle("Mass [MeV]");
@@ -130,7 +130,7 @@ void Run3New(){
 	
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HOW TO GET MAX.VALUE FROM AN ARRAY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	cout << "mC2Max:" << *max_element(mC2,mC2+NEvents) << endl;
-	*/
+	
 	
 		//EC2: C2 = 8Be approx. at rest ==> EC2 approx. rest mass
 	
@@ -141,7 +141,8 @@ void Run3New(){
 	//GENERATING C1----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		//mC1
-	float mC1Norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
+	float mC1Norm = (((2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
+			 
 	//float cutoff = 0.10; 	//not taking values less probable than cutoff
 	float mC1Max = mC1Mean + (sqrt(((mC1Norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
 

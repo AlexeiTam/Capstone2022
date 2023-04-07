@@ -194,6 +194,7 @@ void Run3New(){
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
 		cout << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
 	}
+	cout << "-----------------------------------------------------------------------------------------" << endl;
 	
 	//RF(P): beta, gamma
 	float beta[NEvents];

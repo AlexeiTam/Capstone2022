@@ -3,6 +3,7 @@ void Run3New(){
 	//everything is in MeV, c = 1 (Natural units)
 
 	const Int_t NEvents = 1000;	//number of decays: 1000
+	const Int_t NBins = 1000;
 	float c = 1.0;	//c: speed of light = 1
 	float pi = TMath::Pi();
 
@@ -477,8 +478,62 @@ void Run3New(){
 			
 		}
 
+		
+		//calculating Theta
+		//u * v = uv*cos(theta) --> cos(theta) = (u*v)/(uv) --> theta = acos(...)
+		//all in RF(P)
+
+		float dot[NEvents]; //dot product pG11*pG21
+		float pG11[NEvents]; //|pG11| = sqrt( pG11x*pG11x + ...)
+		float pG21[NEvents]; //|pG21| = sqrt( pG21x*pG21x + ...)
+
+		float cosine[NEvents];
+		float theta[NEvents];
+
+		for(int i = 0; i < NEvents; i++) {
+
+			dot[i] = (((PG11New[i][1])*(PG21New[i][1]))+((PG11New[i][2])*(PG21New[i][2]))+((PG11New[i][3])*(PG21New[i][3])));
+			pG11[i] = sqrt(((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
+			pG21[i] = sqrt(((PG21New[i][1])*(PG21New[i][1]))+((PG21New[i][2])*(PG21New[i][2]))+((PG21New[i][3])*(PG11New[i][3])));
+
+			cosine[i] = (dot[i])/(pG11[i]*pG21[i]);
+			theta[i] = acos(cosine[i]);	//in radians
+			theta[i] = (theta[i])*((180.0)/(TMath::Pi()));	//conversion: radians -- degrees
+		}
+
+	//VISUALIZATION========================================================================================================================
 	
+	//canvas: split based on RF
+		TCanvas *cP = new TCanvas("cP","REST FRAME:PARENT", 1500, 1500);
+		TCanvas *cC1 = new TCanvas("cC1", "REST FRAME:C1", 1500, 1500);
+		
+		TCanvas *c1 = new TCanvas("c1","Important Plots; RF(P)", 1500, 1500);
+
+		cP->Divide(3,2);
+		cC1->Divide(3,2);
+		c1->Divide(2,1);
 	
+	TH1D *hmP = new TH1D("hmP","^{8}Be^{*} Mass", NBins, (*min_element(mP,mP+NEvents)) - 10.0, (*max_element(mP,mP+NEvents)) + 10.0 );
+	TH1D *hEP = new TH1D("hEP","^{8}Be^{*} Energy", NBins, (*min_element(EP,EP+NEvents)) - 10.0, (*max_element(EP,EP+NEvents)) + 10.0 );
+	TH1D *hmC1 = new TH1D("hmC1","X17 Mass", NBins, (*min_element(mC1,mC1+NEvents)) - 10.0, (*max_element(mC1,mC1+NEvents)) + 10.0 );
+	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass Distribution", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
+	TH1D *hEC1 = new TH1D("hEC","X17 Energy", NBins, (*min_element(EC1,EC1+NEvents)) - 10.0, (*max_element(EC1,EC1+NEvents)) + 10.0 );
+	TH1D *hpC1 = new TH1D("hpC1","X17 Momentum", NBins, (*min_element(pC1x,pC1x+NEvents)) - 10.0, (*max_element(pC1x,pC1x+NEvents)) + 10.0 );
+	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
+	//
+
+	TH1D *hmCNew = new TH1D("hmCNew","X17 Mass (RF:X17)", NBins,(*min_element(mCNew,mCNew+NEvents)) - 10.0, (*max_element(mCNew,mCNew+NEvents)) + 10.0 );
+	TH1D *hECNew = new TH1D("hECNew","X17 Energy (RF:C1)", NBins,(*min_element(mCNew,mCNew+NEvents)) - 10.0, (*max_element(mCNew,mCNew+NEvents)) + 10.0 );
+	TH1D *hmG11 = new TH1D("hmG11","e^{+},e^{-} Mass", NBins, (*min_element(mG11,mG11+NEvents)) - 10.0, (*max_element(mG11,mG11+NEvents)) + 10.0 );
+	//TH1D *hmC2 = new TH1D("hmC1","C2 Mass", NBins, (*min_element(vmC2.begin(), vmC1.end())) - 5.0; (*max_element(vmC2.begin(), vmC1.end())) + 5.0);
+	TH1D *hEG11 = new TH1D("hEG11","e^{+},e^{-} Energy", NBins, (*min_element(EG11,EG11+NEvents)) - 10.0, (*max_element(EG11,EG11+NEvents)) + 10.0 );
+	TH1D *hpG11 = new TH1D("hpG11","e^{+},e^{-} Momentum", NBins, (*min_element(pG11y,pG11y+NEvents)) - 10.0, (*max_element(pG11y,pG11y+NEvents)) + 10.0 );
+	//TH1D *hpC2 = new TH1D("hpC2","Parent Mass Distribution", NBins, mPmin - 5.0; mPmax + 5.0);
+
+	TH1D *hTheta = new TH1D("hTheta", "Angular Deflection", NBins, -5.0, 185.0);
+		
+	//determine min,max values of me+e-
+	TH1D *hmTotal = new TH1D("hmTotal", "Invariant Mass Sum", NBins, (*min_element(mTotal,mTotal+NEvents)) - 10.0, (*max_element(mTotal,mTotal+NEvents)) + 10.0 );
 	
 	
 	

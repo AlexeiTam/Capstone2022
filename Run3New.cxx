@@ -183,11 +183,12 @@ void Run3New(){
 	
 		//EC1: from energy conservation; gap btwn P & C2
 	for(int i = 0; i < NEvents; i++){
-		EC1[i] = fabs(EP[i] - EC2[i]);	//!!check later if we get issues w/ EP > EC2
+		EC1[i] = EP[i] - EC2[i];	//!!check later if we get issues w/ EP > EC2
 	}
 		//pC1: use energy conservation, relativistic eqn.
 	for(int i = 0; i < NEvents; i++){
-		pC1x[i] = c*sqrt(((mP[i] - mC1[i])*(mP[i] - mC1[i])) - ((mC1[i])*(mC1[i])));
+		//pC1x[i] = c*sqrt(((mP[i] - mC1[i])*(mP[i] - mC1[i])) - ((mC1[i])*(mC1[i])));
+		pC1[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c)) - ((c*mC1[i])*(c*mC1[i])));	//E^2 = p^2 + m^2 --> p = sqrt( E^2 - m^2 );
 		pC1y[i] = 0.0;
 		pC1z[i] = 0.0;
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )

@@ -343,7 +343,7 @@ void Run3New(){
 
 
 		pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
-		cout << (0.25*(mCNew[i])*(mCNew[i]))-((me*me)) << endl;
+		//cout << (0.25*(mCNew[i])*(mCNew[i]))-((me*me)) << endl;
 		
 		
 		

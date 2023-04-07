@@ -192,6 +192,7 @@ void Run3New(){
 		pC1y[i] = 0.0;
 		pC1z[i] = 0.0;
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
+		cout << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
 	}
 	
 	//RF(P): beta, gamma
@@ -294,7 +295,7 @@ void Run3New(){
 
 		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
 		
-		cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl; 
+		//cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl; 
 	}
 	
 	//mCNew: mC in RF(C1)

@@ -403,7 +403,7 @@ void Run3New(){
 	for(int i = 0; i < NEvents; i++) {
 
 		//pG[i] = sqrt((((EG[i])*(EG[i]))/(c*c))-(me*me*c*c));
-		pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
+		pG[i] = c*sqrt(fabs((0.25*(mCNew[i])*(mCNew[i]))-((me*me))));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
 		//cout << (0.25*(mCNew[i])*(mCNew[i]))-((me*me)) << endl;
 		cout << pG[i] << "..." << endl;
 		

@@ -302,9 +302,7 @@ void Run3New(){
 	for(int i = 0 ; i < NEvents; i++) {
 		
 		mCNew[i] = sqrt((((ECNew[i])*(ECNew[i]))/(c*c*c*c))+(((pNew[i])*(pNew[i]))/(c*c)));
-		//test
-		cout << "test:line 307" << endl;
-		cout << mCNew[i] << endl;
+		
 
 	}
 	
@@ -340,10 +338,16 @@ void Run3New(){
 	float SignChance;
 	float Sign;
 	//pG, mG, EG arrays
+	
+	//test
+	cout << "test line 349" << endl;
 	for(int i = 0; i < NEvents; i++) {
 
 
 		pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
+		cout << (0.25*(mCNew[i])*(mCNew[i]))-((me*me)) << endl;
+		
+		
 		
 		
 		pG11x[i] = 0.0;

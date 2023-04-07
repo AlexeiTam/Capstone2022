@@ -333,11 +333,33 @@ void Run3New(){
 	float mG11[NEvents];
 	float mG21[NEvents];
 	
+	float SignChance;
+	float Sign;
 	//pG, mG, EG arrays
 	for(int i = 0; i < NEvents; i++) {
 
 
 		pG[i] = c*sqrt((0.25*(mCNew[i])*(mCNew[i]))-((me*me)));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
+		
+		
+		pG11x[i] = 0.0;
+		pG11z[i] = 0.0;
+		pG21x[i] = 0.0;
+		pG21z[i] = 0.0;
+		
+		//Sign of G11,G12 momentum
+		SignChance = gRandom->Rndm();
+		
+		if(SignChance < 0.5){
+			Sign = 1.0;
+		}
+		else if(SignChance = > 0.5){
+			Sign = -1.0;
+		}
+			
+		
+		pG11y[i] = Sign*pG[i];	//all momentum in y-dir.
+		pG21y[i] = -1.0*(pG11y[i]);	//conservation of momentum
 	
 		EG11[i] = EG[i];
 		EG21[i] = EG[i];
@@ -346,6 +368,40 @@ void Run3New(){
 		mG21[i] = mG[i];
 	
 	}
+	
+	//LCtoP: BOOST C1 --> P
+	
+	float LCtoP[NEvents][4][4];
+
+		//initialize to 0;
+		for(int i = 0; i < NEvents; i++) {
+			
+			for(int j = 0; j < 4; j++) {
+
+				for(int k = 0; k < 4; k++) {
+					
+					LCtoP[i][j][k] = 0.0;
+				}
+			}
+		}
+
+
+		//now, beta(in RF(C1)) = -1.0*beta(in RF(P))
+		for(int i = 0; i < NEvents; i++) {
+
+			LCtoP[i][0][0] = gamma[i];
+			LCtoP[i][1][1] = gamma[i];
+			LCtoP[i][0][1] = -1.0*(gamma[i])*(beta[i]);
+			LCtoP[i][1][0] = -1.0*(gamma[i])*(beta[i]);
+
+			LCtoP[i][2][2] = 1.0;
+			LCtoP[i][3][3] = 1.0;
+
+		}
+	
+	
+	
+	
 	
 	
 	

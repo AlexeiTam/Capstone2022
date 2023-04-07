@@ -295,6 +295,8 @@ void Run3New(){
 		pCNewz[i] = PCNew[i][3];
 
 		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
+		
+		cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl; 
 	}
 	
 	//mCNew: mC in RF(C1)

@@ -480,7 +480,7 @@ void Run3New(){
 		
 		for(int i = 0; i < NEvents; i++){
 		
-			mTotal[i] = sqrt((((PGNewSum[i][0])/(c*c))*((PGNewSum[i][0])/(c*c)))-(((pTotal[i])/(c))*((pTotal[i])/(c))));
+			mTotal[i] = sqrt((((PGNewSum[i][0])/(c*c))*((PGNewSum[i][0])/(c*c)))+(((pTotal[i])/(c))*((pTotal[i])/(c))));
 			
 		}
 

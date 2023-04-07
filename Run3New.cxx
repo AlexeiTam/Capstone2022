@@ -251,6 +251,7 @@ void Run3New(){
 	
 	float PCNew[NEvents][4];
 	
+	/*
 	//initialize at zero
 	for(int i = 0; i < NEvents; i++){
 		
@@ -260,7 +261,7 @@ void Run3New(){
 			
 		}
 	}
-	
+	*/
 	//perform Lorentz Boost
 	
 	for(int i = 0; i < NEvents; i++) {
@@ -435,6 +436,7 @@ void Run3New(){
 			PG21[i][3] = pG21z[i];
 		}
 
+	/*
 		for(int i = 0; i < NEvents; i++) {
 
 			for(int j = 0; j <4; j++) {
@@ -443,6 +445,7 @@ void Run3New(){
 				PG21New[i][j] = 0.0;
 			}
 		}
+		*/
 	
 		for(int i = 0; i < NEvents; i++) {
 

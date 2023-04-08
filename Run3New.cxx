@@ -226,7 +226,7 @@ void Run3New(){
 		pC1y[i] = 0.0;
 		pC1z[i] = 0.0;
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
-		cout << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
+		//cout << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
 	}
 	cout << "........................................................................................................" << endl;
 	
@@ -352,7 +352,7 @@ void Run3New(){
 		pCNewy[i] = PCNew[i][2];
 		pCNewz[i] = PCNew[i][3];
 
-		cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl;
+		//cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl;
 		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
 		/*
 		if(pNew[i] > 0){
@@ -411,7 +411,7 @@ void Run3New(){
 		//pG[i] = sqrt((((EG[i])*(EG[i]))/(c*c))-(me*me*c*c));
 		pG[i] = c*sqrt(fabs((0.25*(mCNew[i])*(mCNew[i]))-((me*me))));		//EG = 0.5 EC1' (+) E^2 = p^2c^2 + m^2c^4 [G] (+) E' = m'c^2 [C1]
 		//cout << (0.25*(mCNew[i])*(mCNew[i]))-((me*me)) << endl;
-		cout << pG[i] << "..." << endl;
+		//cout << pG[i] << "..." << endl;
 		
 		
 		
@@ -630,14 +630,14 @@ void Run3New(){
 	//filling histograms
 	
 	//TEST: DET. WHY mCNew, ECNew, EG11, pG11 not working
-	
+	/*
 	cout << "Event ... mCNew ... ECNew ... EG11 ... pG11" << endl;
 	for(int i = 0; i < NEvents; i++){
 		
 		cout << i << "..." << mCNew[i] << "..." << ECNew[i] << "..." << EG11[i] << "..." << pG11y[i] << endl;
 		
 	}
-	
+	*/
 	
 	for(int i = 0 ; i < NEvents; i++) {
 
@@ -757,6 +757,29 @@ void Run3New(){
 	cC1->Draw();
 	c1->Draw();
 
+	//investigate everything
+	
+	cout << "=============================================REST FRAME: PARENT=============================================" << endl;
+	
+	cout << "i...mP...EP...mC2...EC2" << endl;
+	cout << "i...mC1...EC1...pC1x...pC1y...pC1z" << endl;
+	
+	for(int i = 0; i < NEvents; i++){
+		cout << i << "..." << mP[i] << "..." << EP[i] << "..." << mC2[i] << "..." << EC2[i] << "..." << endl;	
+	}
+	
+	cout << "======================================= C1 in RF(P) ===================================================" << endl;
+	
+	for(int i = 0; i < NEvents; i++){
+	cout << i << "..." << mC1[i] << "..." << EC1[i] << "..." << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
+	}
+	
+	cout << "=============================================REST FRAME: C1=============================================" << endl;
+	
+	cout << "i...mCNew....ECNew...pCNewx...pCNewy...pCNewz" << endl;
+	for(int i = 0; i < NEvents; i++){
+		cout << i << "..." << mCNew[i] << "..." << ECNew[i] << "..." << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl;
+	}
 
 	
 

@@ -759,7 +759,7 @@ void Run3New(){
 
 	//investigate everything
 	
-	cout << "=============================================REST FRAME: PARENT=============================================" << endl;
+	cout << "REST FRAME: PARENT" << endl;
 	
 	cout << "i...mP...EP...mC2...EC2" << endl;
 	cout << "i...mC1...EC1...pC1x...pC1y...pC1z" << endl;
@@ -768,13 +768,13 @@ void Run3New(){
 		cout << i << "..." << mP[i] << "..." << EP[i] << "..." << mC2[i] << "..." << EC2[i] << "..." << endl;	
 	}
 	
-	cout << "======================================= C1 in RF(P) ===================================================" << endl;
+	cout << " C1 in RF(P) " << endl;
 	
 	for(int i = 0; i < NEvents; i++){
 	cout << i << "..." << mC1[i] << "..." << EC1[i] << "..." << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
 	}
 	
-	cout << "=============================================REST FRAME: C1=============================================" << endl;
+	cout << "REST FRAME: C1" << endl;
 	
 	cout << "i...mCNew....ECNew...pCNewx...pCNewy...pCNewz" << endl;
 	for(int i = 0; i < NEvents; i++){

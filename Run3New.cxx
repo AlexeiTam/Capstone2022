@@ -228,7 +228,7 @@ void Run3New(){
 		//pC1 = c*sqrt( (mP-mC2)^2 - (mC1)^2 )
 		//cout << pC1x[i] << "..." << pC1y[i] << "..." << pC1z[i] << endl;
 	}
-	cout << "........................................................................................................" << endl;
+	//cout << "........................................................................................................" << endl;
 	
 	//RF(P): beta, gamma
 	float beta[NEvents];
@@ -343,7 +343,7 @@ void Run3New(){
 
 	float pNew[NEvents];
 
-	cout << "pCNewx ... pCNewy ... pCNewz ..." << endl;
+	//cout << "pCNewx ... pCNewy ... pCNewz ..." << endl;
 	//read values from 4-vectors
 	for(int i = 0; i < NEvents; i++) {
 
@@ -405,7 +405,7 @@ void Run3New(){
 	//pG, mG, EG arrays
 	
 	//test
-	cout << "test line 349, pG[i]" << endl;
+	//cout << "test line 349, pG[i]" << endl;
 	for(int i = 0; i < NEvents; i++) {
 
 		//pG[i] = sqrt((((EG[i])*(EG[i]))/(c*c))-(me*me*c*c));

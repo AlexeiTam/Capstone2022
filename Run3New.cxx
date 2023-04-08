@@ -324,8 +324,8 @@ void Run3New(){
 	//bypass L, do it myself
 	for(int i = 0; i < NEvents; i++){
 	
-		PCNew[i][0] = ((gamma[i])*(PC[i][0])) + ((gamma[i])*(beta[i])*(PC[i][1]));
-		PCNew[i][1] = ((gamma[i])*(PC[i][1])) + ((gamma[i])*(beta[i])*(PC[i][0]));
+		PCNew[i][0] = ((gamma[i])*(PC[i][0])) - ((gamma[i])*(beta[i])*(PC[i][1]));
+		PCNew[i][1] = ((gamma[i])*(PC[i][1])) - ((gamma[i])*(beta[i])*(PC[i][0]));
 		PCNew[i][2] = PC[i][2];
 		PCNew[i][3] = PC[i][3];
 		
@@ -533,13 +533,13 @@ void Run3New(){
 	
 		for(int i = 0; i < NEvents; i++){
 			
-			PG11New[i][0] = ((gamma[i])*(PG11[i][0])) - ((gamma[i])*(beta[i])*(PG11[i][1]));
-			PG11New[i][1] = ((gamma[i])*(PG11[i][1])) - ((gamma[i])*(beta[i])*(PG11[i][0]));
+			PG11New[i][0] = ((gamma[i])*(PG11[i][0])) + ((gamma[i])*(beta[i])*(PG11[i][1]));
+			PG11New[i][1] = ((gamma[i])*(PG11[i][1])) + ((gamma[i])*(beta[i])*(PG11[i][0]));
 			PG11New[i][2] = PG11[i][2];
 			PG11New[i][3] = PG11[i][3];
 			
-			PG21New[i][0] = ((gamma[i])*(PG21[i][0])) - ((gamma[i])*(beta[i])*(PG21[i][1]));
-			PG21New[i][1] = ((gamma[i])*(PG21[i][1])) - ((gamma[i])*(beta[i])*(PG21[i][0]));
+			PG21New[i][0] = ((gamma[i])*(PG21[i][0])) + ((gamma[i])*(beta[i])*(PG21[i][1]));
+			PG21New[i][1] = ((gamma[i])*(PG21[i][1])) + ((gamma[i])*(beta[i])*(PG21[i][0]));
 			PG21New[i][2] = PG21[i][2];
 			PG21New[i][3] = PG21[i][3];
 			
@@ -637,7 +637,7 @@ void Run3New(){
 		cout << i << "..." << mCNew[i] << "..." << ECNew[i] << "..." << EG11[i] << "..." << pG11y[i] << endl;
 		
 	}
-	/*
+	
 	
 	for(int i = 0 ; i < NEvents; i++) {
 
@@ -757,7 +757,7 @@ void Run3New(){
 	cC1->Draw();
 	c1->Draw();
 
-*/
+
 	
 
 }

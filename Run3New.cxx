@@ -343,6 +343,7 @@ void Run3New(){
 
 	float pNew[NEvents];
 
+	cout << "pCNewx ... pCNewy ... pCNewz ..." << endl;
 	//read values from 4-vectors
 	for(int i = 0; i < NEvents; i++) {
 
@@ -351,10 +352,13 @@ void Run3New(){
 		pCNewy[i] = PCNew[i][2];
 		pCNewz[i] = PCNew[i][3];
 
+		cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl;
 		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
+		/*
 		if(pNew[i] > 0){
-			cout << "ALERT:Event #" << i << "has nonzero rest momentum when it should!!" << endl;
+			cout << "ALERT:Event #" << i << " has nonzero rest momentum when it should!!" << endl;
 		}
+		*/
 		//cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl; 
 	}
 	

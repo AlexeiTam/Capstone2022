@@ -1,4 +1,4 @@
-void Run3New(){
+void Run3Attempt3(){
 
 	//everything is in MeV, c = 1 (Natural units)
 

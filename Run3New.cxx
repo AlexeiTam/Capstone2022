@@ -75,7 +75,7 @@ void Run3New(){
 	
 		//EP: in RF(P) from rest mass
 	for(int i = 0; i < NEvents; i++){
-		EP[i] = c*c*mP[i];	
+		EP[i] = (c*c)*(mP[i]);	
 	}
 	
 	//test:will use

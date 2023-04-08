@@ -52,6 +52,7 @@ void Run3New(){
 	
 		if(prob > chance) {
 			mPindex = mPindex - 1;
+			continue;
 		}
 
 		else if(prob < chance) {
@@ -112,6 +113,7 @@ void Run3New(){
 	
 		if(prob > chance) {
 			mC2index = mC2index - 1;
+			continue;
 		}
 		
 		else if( (c*c*mC2placeholder) > (c*c*mP[mC2index]) ){
@@ -184,6 +186,7 @@ void Run3New(){
 	
 		if(prob > chance) {
 			mC1index = mC1index - 1;
+			continue;
 		}
 		
 

@@ -395,7 +395,7 @@ void Run3New(){
 	float mG21[NEvents];
 	
 	float SignChance;
-	float Sign;
+	float Sign = 1.0;
 	//pG, mG, EG arrays
 	
 	//test
@@ -414,6 +414,7 @@ void Run3New(){
 		pG21x[i] = 0.0;
 		pG21z[i] = 0.0;
 		
+		/*
 		//Sign of G11,G12 momentum
 		SignChance = gRandom->Rndm();
 		
@@ -427,6 +428,7 @@ void Run3New(){
 			Sign = -1.0;
 		}
 			
+			*/
 		
 		pG11y[i] = Sign*pG[i];	//all momentum in y-dir.
 		pG21y[i] = -1.0*(pG11y[i]);	//conservation of momentum
@@ -506,6 +508,7 @@ void Run3New(){
 		}
 		*/
 	
+	/*
 		for(int i = 0; i < NEvents; i++) {
 
 			PG11New[i][0] = LCtoP[i][0][0]*PG11[i][0] + LCtoP[i][0][1]*PG11[i][1] + LCtoP[i][0][2]*PG11[i][2] + LCtoP[i][0][3]*PG11[i][3];
@@ -519,6 +522,21 @@ void Run3New(){
 			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
 			PG21New[i][1] = LCtoP[i][1][0]*PG21[i][0] + LCtoP[i][1][1]*PG21[i][1] + LCtoP[i][1][2]*PG21[i][2] + LCtoP[i][1][3]*PG21[i][3];
 
+		}
+		*/
+	
+		for(int i = 0; i < NEvents; i++){
+			
+			PG11New[i][0] = ((gamma[i])*(PG11[i][0])) - ((gamma[i])*(beta[i])*(PG11[i][1]));
+			PG11New[i][1] = ((gamma[i])*(PG11[i][1])) - ((gamma[i])*(beta[i])*(PG11[i][0]));
+			PG11New[i][2] = PG11[i][2];
+			PG11New[i][3] = PG11[i][3];
+			
+			PG21New[i][0] = ((gamma[i])*(PG21[i][0])) - ((gamma[i])*(beta[i])*(PG21[i][1]));
+			PG21New[i][1] = ((gamma[i])*(PG21[i][1])) - ((gamma[i])*(beta[i])*(PG21[i][0]));
+			PG21New[i][2] = PG21[i][2];
+			PG21New[i][3] = PG21[i][3];
+			
 		}
 	
 	//summing up 4-vectors

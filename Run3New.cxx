@@ -623,6 +623,16 @@ void Run3New(){
 	
 	//filling histograms
 	
+	//TEST: DET. WHY mCNew, ECNew, EG11, pG11 not working
+	
+	cout << "Event ... mCNew ... ECNew ... EG11 ... pG11" << endl;
+	for(int i = 0; i < NEvents; i++){
+		
+		cout << i << "..." << mCNew[i] << "..." << ECNew[i] << "..." << EG11[i] << "..." << pG11y[i] << endl;
+		
+	}
+	/*
+	
 	for(int i = 0 ; i < NEvents; i++) {
 
 		hmP->Fill(mP[i]);
@@ -741,7 +751,7 @@ void Run3New(){
 	cC1->Draw();
 	c1->Draw();
 
-
+*/
 	
 
 }

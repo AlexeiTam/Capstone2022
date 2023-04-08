@@ -353,7 +353,7 @@ void Run3New(){
 
 		pNew[i] = sqrt(((pCNewx[i])*(pCNewx[i]))+((pCNewy[i])*(pCNewy[i]))+((pCNewz[i])*(pCNewz[i])));	
 		if(pNew[i] > 0){
-			cout << "ALERT:Event #" << i << "has nonzero rest momentum when it should!! << endl;
+			cout << "ALERT:Event #" << i << "has nonzero rest momentum when it should!!" << endl;
 		}
 		//cout << pCNewx[i] << "..." << pCNewy[i] << "..." << pCNewz[i] << endl; 
 	}

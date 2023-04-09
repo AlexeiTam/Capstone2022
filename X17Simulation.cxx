@@ -141,7 +141,7 @@ float c = 1.0;
 	
 	//================================= GENERATING C2 =================================
 	cout << "GENERATING C2" << endl;
-	int mC1index = 0;
+	int mC2index = 0;
 	while(mC2index < N){
 
 

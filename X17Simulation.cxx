@@ -377,7 +377,7 @@ float c = 1.0;
 		for(int j = 0; j < 4; j++){
 		
 			for(int k = 0; k < 4; k++){
-			PCNew[i][j] = PCNEw[i][j] + ((L[i][j][k])*(PC[i][k]));
+			PCNew[i][j] = PCNew[i][j] + ((L[i][j][k])*(PC[i][k]));
 			}
 		}
 	}

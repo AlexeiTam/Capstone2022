@@ -136,7 +136,7 @@ float c = 1.0;
 
 		mC2placeholder = (mP[mC2index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
 	  								//now, enforce limit for 8Be to not go above 8Be*
-		if(mC2placeholder*c*c > c*c*mC1[mC2index]){
+		if(mC2placeholder > mP[mC2index]){
 		cout << "EVENT #" << mC2index <<": nonphysical mC2 rejected" << endl;
 			continue;
 		}

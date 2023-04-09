@@ -398,7 +398,7 @@ float c = 1.0;
 	
 	for(int i = 0; i < N; i++){
 	
-		if(EG[i] != EG[i]){
+		if(EG11[i] != EG11[i]){
 			cout << "EG[" << i <<"] is nonphysical!" << endl;
 		}
 		if(pG11x[i] != pG11x[i]){

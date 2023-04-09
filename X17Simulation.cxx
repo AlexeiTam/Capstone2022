@@ -122,9 +122,16 @@ float c = 1.0;
 		TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
 		BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
 
+	TCanvas *cBW = new TCanvas("cBW","",900,900);
+	cBW->Divide(3,1);
+		cBW->cd(1);
 		BWP->Draw();
+		cBW->cd(2);
 		BWC2->Draw();
+		cBW->cd(3);
 		BWC1->Draw();
+	
+	cBW->Draw();
 	
 
 	float C1prob, C1chance, C2prob, C2chance;

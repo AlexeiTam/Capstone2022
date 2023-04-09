@@ -122,18 +122,6 @@ float c = 1.0;
 		TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
 		BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
 
-	TCanvas *cBW = new TCanvas("cBW","",900,900);
-	cBW->Divide(3,1);
-		cBW->cd(1);
-		BWP->Draw();
-		cBW->cd(2);
-		BWC2->Draw();
-		cBW->cd(3);
-		BWC1->Draw();
-	
-	cBW->Draw();
-	
-
 	float C1prob, C1chance, C2prob, C2chance;
 	float mC1placeholder;
 	float mC2placeholder;
@@ -171,6 +159,10 @@ float c = 1.0;
 			
 	}
 	
+	for(int i = 0; i < N; i++){
+		EC2[i] = c*c*mC2[i];
+	}
+	
 	cout << "GENERATING C1" << endl;
 	int mC1index = 0;
 	while(mC1index < N){
@@ -201,77 +193,66 @@ float c = 1.0;
 		
 			
 	}
-	/*
-  int i = 0;
-	int Counter = 1;
 	
-  while(i < N){
-		
-		//progress printout
-		if( Counter != i) {
-			Counter = i;
-			cout << "EVENT:" << Counter << endl;
+	
+	//================================= CONTINUING GENERATION in P FRAME =================================
+	
+	//initialize L, LNew to 0
+	for(int i = 0; i < NEvents; i++){
+	
+		for(int j = 0; j < 4; j++){
+	
+			for(int k = 0; k < 4; k++){
+				L[i][j][k] = 0.0;
+				LNew[i][j][k] = 0.0;
+			}
 		}
-	//================================= P FRAME: GENERATING C1 & C2 =================================
-		
-		//-------------------------------- C2 --------------------------------
-		mC2placeholder = (mP[i])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
-	  							//now, enforce limit for 8Be to not go above 8Be*
 	
-		C2prob = gRandom->Rndm();		//U(x)
-		C2chance = BWC2->Eval(mC2placeholder);	//P(x)	
+	}
+	
+	
+  int i = 0;
+  while(i < N){
 	  
-	  cout << C2prob << "..." << C2chance << endl;
-		
-		if(mC2placeholder > mP[i]){
-			cout << "NONPHYSICAL mC2 rejected" << endl;
-			continue;
-		} //nonphysical C2 rejection condition: 8Be releases energy in transition; breaks down if 8Be gains energy by gaining mass
-	
-		if(C2prob > C2chance) {
-			 cout << C2prob << "..." << C2chance << "::IMPLAUSIBLE" << endl;
-			continue;
-		}	//mC2 rejection condition
-
-		else if(C2prob < C2chance) {
-			mC2[i] = mC2placeholder;
-		}		//mC2 acceptance condition
-		
-		//C2 ~ @ rest --> EC2 comes solely from mass
-		EC2[i] = c*c*mC2[i];
-		
-		//-------------------------------- C1 --------------------------------
-		mC1placeholder = (mP[i] - mC2[i])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
-	  								//enfore limit to not go over mass deficit btwn 8Be*, 8Be
-	
-		C1prob = gRandom->Rndm();		//U(x)
-		C1chance = BWC2->Eval(mC1placeholder);	//P(x)	
-		
-		if(mC1placeholder > (mP[i] - mC2[i]) ){
-			cout << "NONPHYSICAL mC1 rejected" << endl;
-			continue;
-		} //nonphysical C1 rejection condition: some mass deficit btwn P, C2 goes to momentum of C1; breaks down if C1 exceeds mass deficit
-	
-		if(C1prob > C1chance) {
-			cout << "IMPLAUSIBLE mC1 rejected" << endl;
-			continue;
-		}	//mC1 rejection condition
-
-		else if(C1prob < C1chance) {
-			mC1[i] = mC1placeholder;
-		}		//mC1 acceptance condition
-		
+	  pC1y[i] = 0.0;
+	  pC1z[i] = 0.0;
+	  pC2y[i] = 0.0;
+	  pC2z[i] = 0.0;
 	  
-	  //PROGRESS PRINTOUTS
-	if(i == 0.125*N) std::cout << "12.5%" << std::endl;
-	if(i == 0.250*N) std::cout << "25.0%" << std::endl;
-	if(i == 0.375*N) std::cout << "37.5%" << std::endl;
-	if(i == 0.500*N) std::cout << "50.0%" << std::endl;
-	if(i == 0.625*N) std::cout << "62.5%" << std::endl;
-	if(i == 0.750*N) std::cout << "75.0%" << std::endl;
-	if(i == 0.875*N) std::cout << "87.5%" << std::endl;
-	if(i == N-1) std::cout << "EVENT GENERATION COMPLETE" << std::endl;
+	  pC2x[i] = 0.0;
+	  pC1x[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c))-((mC1[i])*(mC1[i])*(c*c)));
+	  
+	  beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));
+		gamma[i] = (sqrt((1.0)/(1.0 - ((beta[i])*(beta[i])))));
 		
+		L[i][0][0] = gamma[i];
+		L[i][1][1] = gamma[i];
+		L[i][0][1] = (-1.0)*(gamma[i])*(beta[i]);
+		L[i][1][0] = (-1.0)*(gamma[i])*(beta[i]);
+		L[i][2][2] = 1.0;
+		L[i][3][3] = 1.0;
+		
+		//generate LNew, since it just goes the other way around
+		LNew[i][0][0] = gamma[i];
+		LNew[i][1][1] = gamma[i];
+		LNew[i][0][1] = (gamma[i])*(beta[i]);
+		LNew[i][1][0] = (gamma[i])*(beta[i]);
+		LNew[i][2][2] = 1.0;
+		LNew[i][3][3] = 1.0;
+		
+		if(beta[i] != beta[i]){
+			cout << "EVENT #" << i <<": beta is NaN!" << endl;
+		}
+		
+		if(gamma[i] != beta[i]){
+			cout << "EVENT #" << i <<": gamma is NaN!" << endl;
+		}
+	
+		//fill 4-vectors of C1 in P Frame
+		PC[i][0] = EC1[i];
+		PC[i][1] = pC1x[i];
+		PC[i][2] = pC1y[i];
+		PC[i][3] = pC1z[i];
 		
     i++;	//on to next event
   }	//end of event generation
@@ -319,7 +300,7 @@ float c = 1.0;
 	c1->Draw();
 	
 	
-	*/
+
     
     
 }

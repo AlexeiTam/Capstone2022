@@ -190,7 +190,7 @@ float c = 1.0;
 			mC1[i] = mC1placeholder;
 		}		//mC1 acceptance condition
 		
-	  /*
+	  
 	  //PROGRESS PRINTOUTS
 	if(i == 0.125*N) std::cout << "12.5%" << std::endl;
 	if(i == 0.250*N) std::cout << "25.0%" << std::endl;
@@ -200,7 +200,7 @@ float c = 1.0;
 	if(i == 0.750*N) std::cout << "75.0%" << std::endl;
 	if(i == 0.875*N) std::cout << "87.5%" << std::endl;
 	if(i == N-1) std::cout << "EVENT GENERATION COMPLETE" << std::endl;
-		*/
+		
 		
     i++;	//on to next event
   }	//end of event generation

@@ -46,7 +46,7 @@ float c = 1.0;
   float EG11New[N], EG12New[N];
   float pG11Newx[N], pG11Newy[N], pG11Newz[N];
   float pG12Newx[N], pG12Newy[N], pG12Newz[N];
-  float dot[N], cosine[N], pG11New[N], pG11New[N], pG12New[N];
+  float dot[N], cosine[N], pG11New[N], pG12New[N];
   float mTotal[N], pTotal[N];
   
   
@@ -67,7 +67,7 @@ float c = 1.0;
 	
 	float mPNorm = (2*mPSigma*mPSigma)/((fabs(mPSigma))*(fabs(mPSigma))*(fabs(mPSigma)));
 	float cutoff = 0.10; 	//not taking values less probable than cutoff
-	float mPMax = mPMean + (sqrt(((mPNorm*mPSigma)/(pi*cutoff))-(mPSigma*mPSigma)));
+	mPMax = mPMean + (sqrt(((mPNorm*mPSigma)/(pi*cutoff))-(mPSigma*mPSigma)));
 
 		TF1 *BWP = new TF1("BWP","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mPMax);
 		BWP->SetParameters(pi, mPMean, mPSigma, mPNorm);

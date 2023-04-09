@@ -77,9 +77,8 @@ float c = 1.0;
 
 	float mPplaceholder;
 		
-	while(mPindex < N + 1){
-	
-		mPindex++;
+	while(mPindex < N){
+
 
 		mPplaceholder = mPMax*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
 	
@@ -87,13 +86,12 @@ float c = 1.0;
 		chance = BWP->Eval(mPplaceholder);	//P(x)	
 	
 		if(prob > chance) {
-			mPindex = mPindex - 1;
 			continue;
 		}
 
 		else if(prob < chance) {
 			mP[mPindex] = mPplaceholder;
-			
+			mPindex++;
 			if(mPindex == 0.125*N) std::cout << "12.5%" << std::endl;
 			if(mPindex == 0.250*N) std::cout << "25.0%" << std::endl;
 			if(mPindex == 0.375*N) std::cout << "37.5%" << std::endl;

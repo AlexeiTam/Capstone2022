@@ -77,26 +77,8 @@ float c = 1.0;
 	int mPindex = 0;
 
 	float mPplaceholder;
-	while(mPindex < N){
 	
-		mP[mPindex] = BWP->GetRandom();
 		
-		if(mP[mPindex] > mP[mPindex]) {
-		continue;	
-		}
-		   
-		   
-		   	if(mPindex == 0.125*N) std::cout << "12.5%" << std::endl;
-			if(mPindex == 0.250*N) std::cout << "25.0%" << std::endl;
-			if(mPindex == 0.375*N) std::cout << "37.5%" << std::endl;
-			if(mPindex == 0.500*N) std::cout << "50.0%" << std::endl;
-			if(mPindex == 0.625*N) std::cout << "62.5%" << std::endl;
-			if(mPindex == 0.750*N) std::cout << "75.0%" << std::endl;
-			if(mPindex == 0.875*N) std::cout << "87.5%" << std::endl;
-			if(mPindex == N-1) std::cout << "P GENERATION COMPLETE" << std::endl;
-		mPindex++;
-	}
-		/*
 	while(mPindex < N){
 
 
@@ -124,7 +106,7 @@ float c = 1.0;
 		
 			
 	}
-*/
+
 	for(int i = 0; i < N; i++){
 		EP[i] = c*c*mP[i];
 	}
@@ -150,26 +132,8 @@ float c = 1.0;
 	//================================= GENERATING C2 =================================
 	cout << "GENERATING C2" << endl;
 	int mC2index = 0;
-	while(mC2index < N){
 	
-		mC2[mC2index] = BWC2->GetRandom();
-		
-		if(mC2[mC2index] > mP[mC2index]) {
-		continue;	
-		}
-		   
-		   
-		   	if(mC2index == 0.125*N) std::cout << "12.5%" << std::endl;
-			if(mC2index == 0.250*N) std::cout << "25.0%" << std::endl;
-			if(mC2index == 0.375*N) std::cout << "37.5%" << std::endl;
-			if(mC2index == 0.500*N) std::cout << "50.0%" << std::endl;
-			if(mC2index == 0.625*N) std::cout << "62.5%" << std::endl;
-			if(mC2index == 0.750*N) std::cout << "75.0%" << std::endl;
-			if(mC2index == 0.875*N) std::cout << "87.5%" << std::endl;
-			if(mC2index == N-1) std::cout << "C2 GENERATION COMPLETE" << std::endl;
-		mC2index++;
-	}
-	/*
+	
 	while(mC2index < N){
 
 
@@ -202,7 +166,7 @@ float c = 1.0;
 		
 			
 	}
-	*/
+	
 	for(int i = 0; i < N; i++){
 		EC2[i] = c*c*mC2[i];
 		dmPC2[i] = mP[i] - mC2[i];

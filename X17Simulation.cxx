@@ -138,7 +138,7 @@ float c = 1.0;
 	float mC1placeholder;
 	float mC2placeholder;
 	
-	/*
+	
 	//================================= GENERATING EVENTS =================================
   int i = 0;
 	int Counter = 1;
@@ -153,7 +153,8 @@ float c = 1.0;
 	//================================= P FRAME: GENERATING C1 & C2 =================================
 		
 		//-------------------------------- C2 --------------------------------
-		mC2placeholder = mC2Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+		mC2placeholder = (mP[i])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
+	  							//now, enforce limit for 8Be to not go above 8Be*
 	
 		C2prob = gRandom->Rndm();		//U(x)
 		C2chance = BWC2->Eval(mC2placeholder);	//P(x)	
@@ -178,7 +179,8 @@ float c = 1.0;
 		EC2[i] = c*c*mC2[i];
 		
 		//-------------------------------- C1 --------------------------------
-		mC1placeholder = mC1Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+		mC1placeholder = (mP[i] - mC2[i])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
+	  								//enfore limit to not go over mass deficit btwn 8Be*, 8Be
 	
 		C1prob = gRandom->Rndm();		//U(x)
 		C1chance = BWC2->Eval(mC1placeholder);	//P(x)	
@@ -212,9 +214,9 @@ float c = 1.0;
     i++;	//on to next event
   }	//end of event generation
   
-	*/
+	
 	//=================TEST VISUALIZATION/=================
-	/*
+	
 	TCanvas *c1 = new TCanvas("c1","",900,900);
 	c1->Divide(6,1);
 	
@@ -253,7 +255,7 @@ float c = 1.0;
 	hEC2->Draw();
 	
 	c1->Draw();
-	*/
+	
 	
 	
     

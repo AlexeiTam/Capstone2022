@@ -136,8 +136,8 @@ float c = 1.0;
 
 		mC2placeholder = (mP[mC2index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
 	  								//now, enforce limit for 8Be to not go above 8Be*
-		if(mC2placeholder*c*c > c*c*mC1[i]){
-		cout << "EVENT #" << i <<": nonphysical mC1 rejected" << endl;
+		if(mC2placeholder*c*c > c*c*mC1[mC2index]){
+		cout << "EVENT #" << mC2index <<": nonphysical mC1 rejected" << endl;
 			continue;
 		}
 	
@@ -183,7 +183,7 @@ float c = 1.0;
 	  										//now, enforce limit for 8Be to not go above 8Be*
 		
 		if(mC1placeholder*c*c > EC1[i]){
-		cout << "EVENT #" << i <<": nonphysical mC1 rejected" << endl;
+		cout << "EVENT #" << mC1index <<": nonphysical mC1 rejected" << endl;
 			continue;
 		}
 	
@@ -239,7 +239,7 @@ float c = 1.0;
 	  
 	  pC2x[i] = 0.0;
 	  //pC1x[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c))-((mC1[i])*(mC1[i])*(c*c)));
-	  pC1x[i] = sqrt(((EC1[i])*(EC1[i]))-((mC1[i])*(mC1[i])))
+	  pC1x[i] = sqrt(((EC1[i])*(EC1[i]))-((mC1[i])*(mC1[i])));
 	  cout << pC1x[i] << endl;
 	  
 	  //beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));

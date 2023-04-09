@@ -64,12 +64,75 @@ float c = 1.0;
  
   
   //------------------------------------------------GENERATING P--------------------------------------------------------------------
-  
+	
+	float mPNorm = (2*mPSigma*mPSigma)/((fabs(mPSigma))*(fabs(mPSigma))*(fabs(mPSigma)));
+	float cutoff = 0.10; 	//not taking values less probable than cutoff
+	float mPMax = mPMean + (sqrt(((mPNorm*mPSigma)/(pi*cutoff))-(mPSigma*mPSigma)));
+
+		TF1 *BWP = new TF1("BWP","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mPMax);
+		BWP->SetParameters(pi, mPMean, mPSigma, mPNorm);
+
+	float chance, prob;
+	int mPindex = 0;
+
+	float mPplaceholder;
+		
+	while(mPindex < N + 1){
+	
+		mPindex++;
+
+		mPplaceholder = mPMax*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+	
+		prob = gRandom->Rndm();		//U(x)
+		chance = BWP->Eval(mPplaceholder);	//P(x)	
+	
+		if(prob > chance) {
+			mPindex = mPindex - 1;
+			continue;
+		}
+
+		else if(prob < chance) {
+			mP[mPindex] = mPplaceholder;
+			
+			if(mPindex == 0.125*N) std::cout << "12.5%" << std::endl;
+			if(mPindex == 0.250*N) std::cout << "25.0%" << std::endl;
+			if(mPindex == 0.375*N) std::cout << "37.5%" << std::endl;
+			if(mPindex == 0.500*N) std::cout << "50.0%" << std::endl;
+			if(mPindex == 0.625*N) std::cout << "62.5%" << std::endl;
+			if(mPindex == 0.750*N) std::cout << "75.0%" << std::endl;
+			if(mPindex == 0.875*N) std::cout << "87.5%" << std::endl;
+			if(mPindex == N-1) std::cout << "PARENT GENERATION COMPLETE" << std::endl;
+		}
+		
+			
+	}
+
+	for(int i = 0; i < N; i++){
+		EP[i] = c*c*mP[i];
+	}
+	
+	TCanvas *c1 = new TCanvas("c1","",900,900);
+	c1->Divide(2,1);
+	
+	TH1D *hmP = new TH1D("hmP","",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
+	TH1D *hEP = new TH1D("hEP","",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);
+	
+	c1->cd(1);
+	hmP->Draw();
+	
+	c1->cd(2);
+	hEP->Draw();
+	
+	c1->Draw();
+
+
+
+	/*
   int i = 0;
   while(i < N){
     i++;
   }
-  
+  */
     
     
 }

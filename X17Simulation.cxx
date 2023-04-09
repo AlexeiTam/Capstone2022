@@ -27,6 +27,7 @@ float c = 1.0;
   float EC1[N];
   float mC1[N];
   float pC1x[N], pC1y[N], pC1z[N];
+	float pC2x[N], pC2y[N], pC2z[N];
   float beta[N], gamma[N];
   float L[N][4][4];
   float PC[N][4];

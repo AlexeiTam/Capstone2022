@@ -22,7 +22,7 @@ float c = 1.0;
   
 //================================ REST FRAME: 8Be* ================================
   
-  float mP[N], mC2[N];
+  float mP[N], mC2[N], dmPC2[N];
   float EP[N], EC2[N];
   float EC1[N];
   float mC1[N];
@@ -137,7 +137,7 @@ float c = 1.0;
 		mC2placeholder = (mP[mC2index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
 	  								//now, enforce limit for 8Be to not go above 8Be*
 		if(mC2placeholder*c*c > c*c*mC1[mC2index]){
-		cout << "EVENT #" << mC2index <<": nonphysical mC1 rejected" << endl;
+		cout << "EVENT #" << mC2index <<": nonphysical mC2 rejected" << endl;
 			continue;
 		}
 	
@@ -166,6 +166,7 @@ float c = 1.0;
 	
 	for(int i = 0; i < N; i++){
 		EC2[i] = c*c*mC2[i];
+		dmPC2[i] = mP[i] - mC2[i];
 	}
 	
 	cout << "GENERATING C1" << endl;
@@ -179,13 +180,8 @@ float c = 1.0;
 	while(mC1index < N){
 
 
-		mC1placeholder = (mP[mC1index] - mC2[mC1index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
+		mC1placeholder = (dmPC2[i])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
 	  										//now, enforce limit for 8Be to not go above 8Be*
-		
-		if(mC1placeholder*c*c > EC1[mC1index]){
-		cout << "EVENT #" << mC1index <<": nonphysical mC1 rejected" << endl;
-			continue;
-		}
 	
 		C1prob = gRandom->Rndm();		//U(x)
 		C1chance = BWC1->Eval(mC1placeholder);	//P(x)	
@@ -280,6 +276,16 @@ float c = 1.0;
     i++;	//on to next event
   }	//end of event generation
   
+	//PRINTING OUT NAN CASES
+	for(int i = 0; i < N; i++){
+	
+		if(pC1x[i] != pC1x[i]){
+		cout << "NAN EVENT #" << i << "mP(" << mP[i] << ")...mC2(" << mC2[i] << ")...mC1(" << mC1[i] << ")" << endl;	
+		}
+	}
+	
+	
+	
 	
 	//=================TEST VISUALIZATION/=================
 	

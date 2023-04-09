@@ -227,6 +227,7 @@ float c = 1.0;
 	  
 	  pC2x[i] = 0.0;
 	  pC1x[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c))-((mC1[i])*(mC1[i])*(c*c)));
+	  cout << pC1x[i] << endl;
 	  
 	  //beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));
 		beta[i] = ((c*pC1x[i])/(EC1[i]));// use p = gamma*mv + E = gamma*m*c^2 --> beta = v/c = pc/E
@@ -247,7 +248,7 @@ float c = 1.0;
 		LNew[i][2][2] = 1.0;
 		LNew[i][3][3] = 1.0;
 		
-	  
+	  /*
 		if(beta[i] != beta[i]){
 			cout << "EVENT #" << i <<": beta is NaN!" << endl;
 		}
@@ -255,7 +256,7 @@ float c = 1.0;
 		if(gamma[i] != gamma[i]){
 			cout << "EVENT #" << i <<": gamma is NaN!" << endl;
 		}
-		
+		*/
 	
 		//fill 4-vectors of C1 in P Frame
 		PC[i][0] = EC1[i];

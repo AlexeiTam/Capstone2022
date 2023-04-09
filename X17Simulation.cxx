@@ -369,6 +369,28 @@ float c = 1.0;
 		pCNewx[i] = PCNew[i][1];
 		pCNewy[i] = PCNew[i][2];
 		pCNewz[i] = PCNew[i][3];
+		
+		//!!!scan for nonzero momentum of C1 in its own rest frame
+		if( pCNewx[i] > 0){
+			cout << "nonzero C1 momentum in its own rest frame...." << pCNewx[i] << endl;
+		}
+		if( pCNewy[i] > 0){
+			cout << "nonzero C1 momentum in its own rest frame...." << pCNewy[i] << endl;
+		}
+		if( pCNewz[i] > 0){
+			cout << "nonzero C1 momentum in its own rest frame...." << pCNewz[i] << endl;
+		}
+		if( pCNewx[i] < 0){
+			cout << "nonzero C1 momentum in its own rest frame...." << pCNewx[i] << endl;
+		}
+		if( pCNewy[i] < 0){
+			cout << "nonzero C1 momentum in its own rest frame...." << pCNewy[i] << endl;
+		}
+		if( pCNewz[i] < 0){
+			cout << "nonzero C1 momentum in its own rest frame...." << pCNewz[i] << endl;
+		}
+		
+		
 	}
 	
 	
@@ -431,7 +453,52 @@ float c = 1.0;
 	}
 	
 	
+	//fill 4-vectors of G11, G12
 	
+	for(int i = 0; i < N; i++){
+	
+		PG11[i][0] = EG11[i];
+		PG11[i][1] = pG11x[i];
+		PG11[i][2] = pG11y[i];
+		PG11[i][3] = pG11z[i];
+		
+		PG12[i][0] = EG12[i];
+		PG12[i][1] = pG12x[i];
+		PG12[i][2] = pG12y[i];
+		PG12[i][3] = pG12z[i];
+		
+	}
+	
+	
+	//======================================= BOOST: C1-->P ======================================= 
+	
+	//initialize PG11New, PG12New at 0
+	
+	for(int i = 0; i < N; i++){
+		
+		for(int j = 0; j < 4; j++){
+			PG11New[i][j] = 0.0;
+			PG12New[i][j] = 0.0;
+		}
+		
+	}
+	
+	
+	//perform boost
+	for(int i = 0; i < N; i++){
+		
+		for(int j = 0; j < 4; j++){
+			
+			for(int k = 0; k < 4; k++){
+				
+				PG11New[i][j] = PG11New[i][j] + ((LNew[i][j][k])*(PG11[i][k]));
+				PG12New[i][j] = PG12New[i][j] + ((LNew[i][j][k])*(PG12[i][k]));
+				
+			}
+			
+		}
+		
+	}
 	
 	
 	

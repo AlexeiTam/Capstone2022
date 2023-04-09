@@ -156,7 +156,7 @@ float c = 1.0;
 		} //nonphysical C2 rejection condition: 8Be releases energy in transition; breaks down if 8Be gains energy by gaining mass
 	
 		if(C2prob > C2chance) {
-			cout << "IMPLAUSIBLE mC2 rejected" << endl;
+			 cout << C2prob << "..." << C2chance << "::IMPLAUSIBLE" << endl;
 			continue;
 		}	//mC2 rejection condition
 

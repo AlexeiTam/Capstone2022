@@ -234,6 +234,17 @@ float c = 1.0;
 	*/
 	
 	
+	cout<< "SCANNING FOR NONPHYSICAL (mP, mC1, mC2)" << endl;
+	for(int i = 0; i < N; i++){
+	
+		if(mC2[i] > mP[i]){
+			cout<<"i:"<<i<<"...mP("<<mP[i]<<")...mC2("<<mC2[i]<<")...mC1("<<mC1[i]<<")"<<endl;	
+		}
+		if(mC1[i] > dmPC2[i]){
+			cout<<"i:"<<i<<"...mP("<<mP[i]<<")...mC2("<<mC2[i]<<")...mC1("<<mC1[i]<<")"<<endl;	
+		}
+	}
+	
 	//================================= CONTINUING GENERATION in P FRAME =================================
 	
 	//initialize L, LNew to 0
@@ -261,7 +272,7 @@ float c = 1.0;
 	  pC2x[i] = 0.0;
 	  //pC1x[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c))-((mC1[i])*(mC1[i])*(c*c)));
 	  pC1x[i] = sqrt(((EC1[i])*(EC1[i]))-((mC1[i])*(mC1[i])));
-	  cout << pC1x[i] << endl;
+	  //cout << pC1x[i] << endl;
 	  
 	  //beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));
 		beta[i] = ((c*pC1x[i])/(EC1[i]));// use p = gamma*mv + E = gamma*m*c^2 --> beta = v/c = pc/E

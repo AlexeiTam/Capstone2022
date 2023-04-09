@@ -195,6 +195,11 @@ float c = 1.0;
 			
 	}
 	
+	for(int i = 0; i < N; i++){
+		
+		EC1[i] = EP[i] - EC2[i];
+	}
+	
 	
 	//================================= CONTINUING GENERATION in P FRAME =================================
 	
@@ -242,13 +247,15 @@ float c = 1.0;
 		LNew[i][2][2] = 1.0;
 		LNew[i][3][3] = 1.0;
 		
+	  
 		if(beta[i] != beta[i]){
 			cout << "EVENT #" << i <<": beta is NaN!" << endl;
 		}
 		
-		if(gamma[i] != beta[i]){
+		if(gamma[i] != gamma[i]){
 			cout << "EVENT #" << i <<": gamma is NaN!" << endl;
 		}
+		
 	
 		//fill 4-vectors of C1 in P Frame
 		PC[i][0] = EC1[i];

@@ -136,6 +136,10 @@ float c = 1.0;
 
 		mC2placeholder = (mP[mC2index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
 	  								//now, enforce limit for 8Be to not go above 8Be*
+		if(mC2placeholder*c*c > c*c*mC1[i]){
+		cout << "EVENT #" << i <<": nonphysical mC1 rejected" << endl;
+			continue;
+		}
 	
 		C2prob = gRandom->Rndm();		//U(x)
 		C2chance = BWC2->Eval(mC2placeholder);	//P(x)	
@@ -165,12 +169,23 @@ float c = 1.0;
 	}
 	
 	cout << "GENERATING C1" << endl;
+	
+	for(int i = 0; i < N; i++){
+		
+		EC1[i] = EP[i] - EC2[i];
+	}
+	
 	int mC1index = 0;
 	while(mC1index < N){
 
 
 		mC1placeholder = (mP[mC1index] - mC2[mC1index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
-	  								//now, enforce limit for 8Be to not go above 8Be*
+	  										//now, enforce limit for 8Be to not go above 8Be*
+		
+		if(mC1placeholder*c*c > EC1[i]){
+		cout << "EVENT #" << i <<": nonphysical mC1 rejected" << endl;
+			continue;
+		}
 	
 		C1prob = gRandom->Rndm();		//U(x)
 		C1chance = BWC1->Eval(mC1placeholder);	//P(x)	
@@ -195,10 +210,7 @@ float c = 1.0;
 			
 	}
 	
-	for(int i = 0; i < N; i++){
-		
-		EC1[i] = EP[i] - EC2[i];
-	}
+	
 	
 	
 	//================================= CONTINUING GENERATION in P FRAME =================================
@@ -226,7 +238,8 @@ float c = 1.0;
 	  pC2z[i] = 0.0;
 	  
 	  pC2x[i] = 0.0;
-	  pC1x[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c))-((mC1[i])*(mC1[i])*(c*c)));
+	  //pC1x[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c))-((mC1[i])*(mC1[i])*(c*c)));
+	  pC1x[i] = sqrt(((EC1[i])*(EC1[i]))-((mC1[i])*(mC1[i])))
 	  cout << pC1x[i] << endl;
 	  
 	  //beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));

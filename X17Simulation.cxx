@@ -223,7 +223,8 @@ float c = 1.0;
 	  pC2x[i] = 0.0;
 	  pC1x[i] = sqrt((((EC1[i])*(EC1[i]))/(c*c))-((mC1[i])*(mC1[i])*(c*c)));
 	  
-	  beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));
+	  //beta[i] = (((pC1x[i])/(c))/(sqrt(((mC1[i])*(mC1[i]))+(((pC1x[i])*(pC1x[i]))/(c*c)))));
+		beta[i] = ((c*pC1x[i])/(EC1[i]));// use p = gamma*mv + E = gamma*m*c^2 --> beta = v/c = pc/E
 		gamma[i] = (sqrt((1.0)/(1.0 - ((beta[i])*(beta[i])))));
 		
 		L[i][0][0] = gamma[i];

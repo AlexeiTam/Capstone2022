@@ -119,7 +119,7 @@ float c = 1.0;
 	mC1Max = mC1Mean + (sqrt(((mC1Norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
 	mC2Max = mC2Mean + (sqrt(((mC2Norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
 
-		TF1 *BWC1 = new TF1("BWC1","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 2.0*me, mC1Max);
+		TF1 *BWC1 = new TF1("BWC1","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 1.022, mC1Max);
 		BWC1->SetParameters(pi, mC1Mean, mC1Sigma, mC1Norm);
 	
 		TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
@@ -388,6 +388,7 @@ float c = 1.0;
 		pG11x[i] = 0.0;
 		pG12z[i] = 0.0;
 		
+		
 		pG11y[i] = sqrt((((EG11[i])*(EG11[i]))/(c*c))-(me*me*c*c));
 		pG12y[i] = (-1.0)*(pG11y[i]);
 	}
@@ -405,7 +406,7 @@ float c = 1.0;
 			cout << "pG11x[" << i <<"] is nonphysical!" << endl;
 		}
 		if(pG11y[i] != pG11y[i]){
-			cout << "pG11y[" << i <<"] is nonphysical!" << endl;
+			cout << "pG11y[" << i <<"] is nonphysical....EG11 = "<< EG11[i] << endl;
 		}
 		if(pG11z[i] != pG11z[i]){
 			cout << "pG11z[" << i <<"] is nonphysical!" << endl;

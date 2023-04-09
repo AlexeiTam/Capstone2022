@@ -79,7 +79,7 @@ float c = 1.0;
 	float mPplaceholder;
 	while(mPindex < N){
 	
-		mP[mC2index] = BWP->GetRandom();
+		mP[mPindex] = BWP->GetRandom();
 		
 		if(mP[mPindex] > mP[mPindex]) {
 		continue;	
@@ -94,7 +94,7 @@ float c = 1.0;
 			if(mPindex == 0.750*N) std::cout << "75.0%" << std::endl;
 			if(mPindex == 0.875*N) std::cout << "87.5%" << std::endl;
 			if(mPindex == N-1) std::cout << "P GENERATION COMPLETE" << std::endl;
-		index++;
+		mPindex++;
 	}
 		/*
 	while(mPindex < N){
@@ -167,7 +167,7 @@ float c = 1.0;
 			if(mC2index == 0.750*N) std::cout << "75.0%" << std::endl;
 			if(mC2index == 0.875*N) std::cout << "87.5%" << std::endl;
 			if(mC2index == N-1) std::cout << "C2 GENERATION COMPLETE" << std::endl;
-		index++;
+		mC2index++;
 	}
 	/*
 	while(mC2index < N){

@@ -24,7 +24,7 @@ float c = 1.0;
   
   float mP[N], mC2[N];
   float EP[N], EC2[N];
-  float EC[N];
+  float EC1[N];
   float mC1[N];
   float pC1x[N], pC1y[N], pC1z[N];
   float beta[N], gamma[N];
@@ -61,7 +61,7 @@ float c = 1.0;
   float pG11Min, pG11Max;
   float mTotalMin, mTotalMax;
   
- 
+ float mC2Max;
   
   //------------------------------------------------GENERATING P--------------------------------------------------------------------
 	
@@ -112,7 +112,7 @@ float c = 1.0;
 //================================= C1,C2 MASS PARAMETERS ==================================================
 	
 	float mC1Norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
-	float mC1Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
+	float mC2Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
 	mC1Max = mC2Mean + (sqrt(((mC1Norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
 	mC2Max = mC2Mean + (sqrt(((mC2Norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
 

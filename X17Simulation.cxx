@@ -188,14 +188,14 @@ float c = 1.0;
 		}
 		   
 		   
-		   	if(mC1index == 0.125*N) std::cout << "12.5%" << std::endl;
-			if(mC1index == 0.250*N) std::cout << "25.0%" << std::endl;
-			if(mC1index == 0.375*N) std::cout << "37.5%" << std::endl;
-			if(mC1index == 0.500*N) std::cout << "50.0%" << std::endl;
-			if(mC1index == 0.625*N) std::cout << "62.5%" << std::endl;
-			if(mC1index == 0.750*N) std::cout << "75.0%" << std::endl;
-			if(mC1index == 0.875*N) std::cout << "87.5%" << std::endl;
-			if(mC1index == N-1) std::cout << "C1 GENERATION COMPLETE" << std::endl;
+		   	if(index == 0.125*N) std::cout << "12.5%" << std::endl;
+			if(index == 0.250*N) std::cout << "25.0%" << std::endl;
+			if(index == 0.375*N) std::cout << "37.5%" << std::endl;
+			if(index == 0.500*N) std::cout << "50.0%" << std::endl;
+			if(index == 0.625*N) std::cout << "62.5%" << std::endl;
+			if(index == 0.750*N) std::cout << "75.0%" << std::endl;
+			if(index == 0.875*N) std::cout << "87.5%" << std::endl;
+			if(index == N-1) std::cout << "C1 GENERATION COMPLETE" << std::endl;
 		index++;
 	}
 	

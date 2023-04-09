@@ -117,6 +117,11 @@ float c = 1.0;
 	TH1D *hmP = new TH1D("hmP","",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
 	TH1D *hEP = new TH1D("hEP","",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);
 	
+	for(int i = 0; i < N; i++){
+	hmP->Fill(mP[i]);
+	hEP->Fill(EP[i]);
+	}
+	
 	c1->cd(1);
 	hmP->Draw();
 	

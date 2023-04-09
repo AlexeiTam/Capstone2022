@@ -149,10 +149,12 @@ float c = 1.0;
 		C2chance = BWC2->Eval(mC2placeholder);	//P(x)	
 		
 		if(mC2placeholder > mP[i]){
+			cout << "NONPHYSICAL mC2 rejected" << endl;
 			continue;
 		} //nonphysical C2 rejection condition: 8Be releases energy in transition; breaks down if 8Be gains energy by gaining mass
 	
 		if(C2prob > C2chance) {
+			cout << "IMPLAUSIBLE mC2 rejected" << endl;
 			continue;
 		}	//mC2 rejection condition
 
@@ -170,10 +172,12 @@ float c = 1.0;
 		C1chance = BWC2->Eval(mC1placeholder);	//P(x)	
 		
 		if(mC1placeholder > (mP[i] - mC2[i]) ){
+			cout << "NONPHYSICAL mC1 rejected" << endl;
 			continue;
 		} //nonphysical C1 rejection condition: some mass deficit btwn P, C2 goes to momentum of C1; breaks down if C1 exceeds mass deficit
 	
 		if(C1prob > C1chance) {
+			cout << "IMPLAUSIBLE mC1 rejected" << endl;
 			continue;
 		}	//mC1 rejection condition
 

@@ -393,6 +393,22 @@ float c = 1.0;
 		pG12y[i] = (-1.0)*(pG11y[i]);
 	}
 	
+	//!!!!!!scan EG; if 0.5*ECNew < rest mass energy of e+ + e-, then no decay
+	for(int i = 0; i < N; i++){
+	
+		if(EG11[i] < (c*c*me) ){
+			EG11[i] = 0.0;
+			EG12[i] = 0.0;
+			pG11x[i] = 0.0;
+			pG11y[i] = 0.0;
+			pG11z[i] = 0.0;
+			pG12x[i] = 0.0;
+			pG12y[i] = 0.0;
+			pG12z[i] = 0.0;
+		}
+		
+	}
+	
 	//scan for nonphysical G values
 	
 	cout << "SCAN FOR NONPHYSICAL EG, PG:" << endl;

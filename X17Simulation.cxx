@@ -362,7 +362,7 @@ float c = 1.0;
 	//=================TEST VISUALIZATION/=================
 	
 	TCanvas *c1 = new TCanvas("c1","",900,900);
-	c1->Divide(6,1);
+	c1->Divide(3,2);
 	
 	TH1D *hmP = new TH1D("hmP","hmP",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
 	TH1D *hEP = new TH1D("hEP","hEP",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);

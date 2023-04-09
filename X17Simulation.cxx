@@ -370,6 +370,8 @@ float c = 1.0;
 		pCNewy[i] = PCNew[i][2];
 		pCNewz[i] = PCNew[i][3];
 		
+		//?? It seems that pC1 =/= 0. but so close to it that it doesn't matter
+		/*
 		//!!!scan for nonzero momentum of C1 in its own rest frame
 		if( pCNewx[i] > 0){
 			cout << "nonzero C1 momentum in its own rest frame...." << pCNewx[i] << endl;
@@ -389,7 +391,7 @@ float c = 1.0;
 		if( pCNewz[i] < 0){
 			cout << "nonzero C1 momentum in its own rest frame...." << pCNewz[i] << endl;
 		}
-		
+		*/
 		
 	}
 	

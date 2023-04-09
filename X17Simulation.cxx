@@ -147,6 +147,8 @@ float c = 1.0;
 	
 		C2prob = gRandom->Rndm();		//U(x)
 		C2chance = BWC2->Eval(mC2placeholder);	//P(x)	
+	  
+	  cout << C2prob << "..." << C2chance << endl;
 		
 		if(mC2placeholder > mP[i]){
 			cout << "NONPHYSICAL mC2 rejected" << endl;

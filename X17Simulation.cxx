@@ -47,6 +47,7 @@ float c = 1.0;
   float EG11New[N], EG12New[N];
   float pG11Newx[N], pG11Newy[N], pG11Newz[N];
   float pG12Newx[N], pG12Newy[N], pG12Newz[N];
+  float mG11New[N], mG12New[N];
   float dot[N], cosine[N], pG11New[N], pG12New[N];
   float mTotal[N], pTotal[N];
   
@@ -348,6 +349,7 @@ float c = 1.0;
 	
 	
 	//scan for NaN in PCNew
+	cout << "SCAN FOR NAN IN PCNEW:" << endl;
 	
 	for(int i = 0; i < N; i++){
 	
@@ -358,6 +360,64 @@ float c = 1.0;
 			}
 		}
 	}
+	
+	//========================================= READING PCNew =========================================
+	
+	for(int i = 0; i < N; i++){
+	
+		ECNew[i] = PCNew[i][0];
+		pCNewx[i] = PCNew[i][1];
+		pCNewy[i] = PCNew[i][2];
+		pCNewz[i] = PCNew[i][3];
+	}
+	
+	
+	//========================================= GENERATING G11, G12 =========================================
+	
+		//EG
+	for(int i = 0; i < N; i++){
+		EG11[i] = 0.5*ECNew[i];
+		EG12[i] = 0.5*ECNew[i];
+	}
+	
+		//pG: inly in y-dir. + conservation of momentum --> pG11 = - pG12
+	for(int i = 0; i < N; i++){
+	
+		pG11x[i] = 0.0;
+		pG11z[i] = 0.0;
+		pG11x[i] = 0.0;
+		pG12z[i] = 0.0;
+		
+		pG11y[i] = sqrt((((EG11[i])*(EG11[i]))/(c*c))-(me*me*c*c));
+		pG12y[i] = (-1.0)*(pG11y[i]);
+	}
+	
+	//scan for nonphysical G values
+	
+	cout << "SCAN FOR NONPHYSICAL EG, PG:" << endl;
+	
+	for(int i = 0; i < N; i++){
+	
+		if(EG[i] != EG[i]){
+			cout << "EG[" << i <<"] is nonphysical!" << endl;
+		}
+		if(pG11x[i] != pG11x[i]){
+			cout << "pG11x[" << i <<"] is nonphysical!" << endl;
+		}
+		if(pG11y[i] != pG11y[i]){
+			cout << "pG11y[" << i <<"] is nonphysical!" << endl;
+		}
+		if(pG11z[i] != pG11z[i]){
+			cout << "pG11z[" << i <<"] is nonphysical!" << endl;
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	//=================TEST VISUALIZATION/=================
 	

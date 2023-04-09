@@ -180,7 +180,7 @@ float c = 1.0;
 	while(mC1index < N){
 
 
-		mC1placeholder = (dmPC2[i])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
+		mC1placeholder = (dmPC2[mC1index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
 	  										//now, enforce limit for 8Be to not go above 8Be*
 	
 		C1prob = gRandom->Rndm();		//U(x)

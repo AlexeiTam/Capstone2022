@@ -122,13 +122,16 @@ float c = 1.0;
 		TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
 		BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
 
+		BWP->Draw();
+		BWC2->Draw();
+		BWC1->Draw();
 	
 
 	float C1prob, C1chance, C2prob, C2chance;
 	float mC1placeholder;
 	float mC2placeholder;
 	
-	
+	/*
 	//================================= GENERATING EVENTS =================================
   int i = 0;
 	int Counter = 1;
@@ -202,9 +205,9 @@ float c = 1.0;
     i++;	//on to next event
   }	//end of event generation
   
-	
+	*/
 	//=================TEST VISUALIZATION/=================
-	
+	/*
 	TCanvas *c1 = new TCanvas("c1","",900,900);
 	c1->Divide(6,1);
 	
@@ -243,7 +246,7 @@ float c = 1.0;
 	hEC2->Draw();
 	
 	c1->Draw();
-
+	*/
 	
 	
     

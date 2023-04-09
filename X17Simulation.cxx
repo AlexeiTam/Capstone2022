@@ -359,8 +359,41 @@ float c = 1.0;
 		}
 	}
 	
+	//======================================== BOOST: P-->C1 =========================================
+	//======================================== REST FRAME: C1 ========================================
+	//initialize PCNew to 0
+	
+	for(int i = 0; i < N; i++){
+		
+		for(int j = 0; j < 4; j++){
+			PCNew[i][j] = 0.0;
+		}
+			
+	}
+	
+	//do the boost
+	for(int i = 0; i < N; i++){
+	
+		for(int j = 0; j < 4; j++){
+		
+			for(int k = 0; k < 4; k++){
+			PCNew[i][j] = PCNEw[i][j] + ((L[i][j][k])*(PC[i][k]));
+			}
+		}
+	}
 	
 	
+	//scan for NaN in PCNew
+	
+	for(int i = 0; i < N; i++){
+	
+		for(int j = 0; j < 4; j++){
+		
+			if(PCNew[i][j] != PCNew[i][j]){
+			cout << "NaN in PCNew[" << i <<"][" << j <<"]:" << PCNew[i][0] << "..." << PCNew[i][1] << "..." <<  PCNew[i][2] << "..." <<  PCNew[i][3] << endl;	
+			}
+		}
+	}
 	
 	//=================TEST VISUALIZATION/=================
 	

@@ -139,7 +139,69 @@ float c = 1.0;
 	float mC2placeholder;
 	
 	
-	//================================= GENERATING EVENTS =================================
+	//================================= GENERATING C2 =================================
+	cout << "GENERATING C2" << endl;
+	
+	while(mC2index < N){
+
+
+		mC2placeholder = (mP[mC2index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
+	  								//now, enforce limit for 8Be to not go above 8Be*
+	
+		C2prob = gRandom->Rndm();		//U(x)
+		C2chance = BWC2->Eval(mC2placeholder);	//P(x)	
+	
+		if(C2prob > C2chance) {
+			continue;
+		}
+
+		else if(C2prob < C2chance) {
+			mC2[mC2index] = mC2placeholder;
+			mC2index++;
+			if(mC2index == 0.125*N) std::cout << "12.5%" << std::endl;
+			if(mC2index == 0.250*N) std::cout << "25.0%" << std::endl;
+			if(mC2index == 0.375*N) std::cout << "37.5%" << std::endl;
+			if(mC2index == 0.500*N) std::cout << "50.0%" << std::endl;
+			if(mC2index == 0.625*N) std::cout << "62.5%" << std::endl;
+			if(mC2index == 0.750*N) std::cout << "75.0%" << std::endl;
+			if(mC2index == 0.875*N) std::cout << "87.5%" << std::endl;
+			if(mC2index == N-1) std::cout << "C2 GENERATION COMPLETE" << std::endl;
+		}
+		
+			
+	}
+	
+	cout << "GENERATING C1" << endl;
+	
+	while(mC1index < N){
+
+
+		mC1placeholder = (mP[mC1index] - mC2[mC1index])*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax (ORIGINAL)
+	  								//now, enforce limit for 8Be to not go above 8Be*
+	
+		C1prob = gRandom->Rndm();		//U(x)
+		C1chance = BWC1->Eval(mC1placeholder);	//P(x)	
+	
+		if(C1prob > C1chance) {
+			continue;
+		}
+
+		else if(C1prob < C1chance) {
+			mC1[mC2index] = mC1placeholder;
+			mC1index++;
+			if(mC1index == 0.125*N) std::cout << "12.5%" << std::endl;
+			if(mC1index == 0.250*N) std::cout << "25.0%" << std::endl;
+			if(mC1index == 0.375*N) std::cout << "37.5%" << std::endl;
+			if(mC1index == 0.500*N) std::cout << "50.0%" << std::endl;
+			if(mC1index == 0.625*N) std::cout << "62.5%" << std::endl;
+			if(mC1index == 0.750*N) std::cout << "75.0%" << std::endl;
+			if(mC1index == 0.875*N) std::cout << "87.5%" << std::endl;
+			if(mC1index == N-1) std::cout << "C1 GENERATION COMPLETE" << std::endl;
+		}
+		
+			
+	}
+	/*
   int i = 0;
 	int Counter = 1;
 	
@@ -257,7 +319,7 @@ float c = 1.0;
 	c1->Draw();
 	
 	
-	
+	*/
     
     
 }

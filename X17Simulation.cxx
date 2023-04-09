@@ -199,7 +199,7 @@ float c = 1.0;
 	//================================= CONTINUING GENERATION in P FRAME =================================
 	
 	//initialize L, LNew to 0
-	for(int i = 0; i < NEvents; i++){
+	for(int i = 0; i < Ns; i++){
 	
 		for(int j = 0; j < 4; j++){
 	

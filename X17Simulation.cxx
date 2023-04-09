@@ -109,15 +109,96 @@ float c = 1.0;
 		EP[i] = c*c*mP[i];
 	}
 	
-	TCanvas *c1 = new TCanvas("c1","",900,900);
-	c1->Divide(2,1);
+//================================= C1,C2 MASS PARAMETERS ==================================================
 	
-	TH1D *hmP = new TH1D("hmP","",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
-	TH1D *hEP = new TH1D("hEP","",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);
+	float mC1Norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
+	float mC1Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
+	mC1Max = mC2Mean + (sqrt(((mC1Norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
+	mC2Max = mC2Mean + (sqrt(((mC2Norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
+
+		TF1 *BWC1 = new TF1("BWC1","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC1Max);
+		BWC1->SetParameters(pi, mC1Mean, mC1Sigma, mC1Norm);
+	
+		TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
+		BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
+
+	
+
+	float C1prob, C1chance, C2prob, C2chance;
+	float mC1placeholder;
+	float mC2placeholder;
+	
+	
+	//================================= GENERATING EVENTS =================================
+  int i = 0;
+  while(i < N){
+		
+	//================================= P FRAME: GENERATING C1 & C2 =================================
+		
+		//-------------------------------- C2 --------------------------------
+		mC2placeholder = mC2Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+	
+		C2prob = gRandom->Rndm();		//U(x)
+		C2chance = BWC2->Eval(mC2placeholder);	//P(x)	
+		
+		if(mC2placeholder > mP[i]){
+			continue;
+		} //nonphysical C2 rejection condition: 8Be releases energy in transition; breaks down if 8Be gains energy by gaining mass
+	
+		if(C2prob > C2chance) {
+			continue;
+		}	//mC2 rejection condition
+
+		else if(C2prob < C2chance) {
+			mC2[i] = mC2placeholder;
+		}		//mC2 acceptance condition
+		
+		//C2 ~ @ rest --> EC2 comes solely from mass
+		EC2[i] = c*c*mC2[i];
+		
+		//-------------------------------- C1 --------------------------------
+		mC1placeholder = mC1Max*(gRandom->Rndm());	//select a candidate for mP, from 0 < mP < mPMax
+	
+		C1prob = gRandom->Rndm();		//U(x)
+		C1chance = BWC2->Eval(mC1placeholder);	//P(x)	
+		
+		if(mC1placeholder > (mP[i] - mC2[i]) ){
+			continue;
+		} //nonphysical C1 rejection condition: some mass deficit btwn P, C2 goes to momentum of C1; breaks down if C1 exceeds mass deficit
+	
+		if(C1prob > C1chance) {
+			continue;
+		}	//mC1 rejection condition
+
+		else if(C1prob < C1chance) {
+			mC1[i] = mC1placeholder;
+		}		//mC1 acceptance condition
+		
+		
+		
+    i++;	//on to next event
+  }	//end of event generation
+  
+	
+	//=================TEST VISUALIZATION/=================
+	
+	TCanvas *c1 = new TCanvas("c1","",900,900);
+	c1->Divide(6,1);
+	
+	TH1D *hmP = new TH1D("hmP","hmP",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
+	TH1D *hEP = new TH1D("hEP","hEP",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);
+	TH1D *hmC2 = new TH1D("hmC2","hmC2",NBins, (*min_element(mC2,mC2+N)) - 100, (*max_element(mC2,mC2+N)) + 100);
+	TH1D *hEC2 = new TH1D("hEC2","hEC2",NBins, (*min_element(EC2,EP+N)) - 100, (*max_element(EC2,EC2+N)) + 100);
+	TH1D *hmC1 = new TH1D("hmC1","hmC1",NBins, (*min_element(mC1,mC1+N)) - 10, (*max_element(mC1,mC1+N)) + 100);
+	TH1D *hEC1 = new TH1D("hEC1","hEC1",NBins, (*min_element(EC1,EC1+N)) - 10, (*max_element(EC1,EC1+N)) + 10);
 	
 	for(int i = 0; i < N; i++){
 	hmP->Fill(mP[i]);
 	hEP->Fill(EP[i]);
+	hmC1>Fill(mC1[i]);
+	hEC1->Fill(EC1[i]);
+	hmC2->Fill(mC2[i]);
+	hEC2->Fill(EC2[i]);
 	}
 	
 	c1->cd(1);
@@ -126,16 +207,22 @@ float c = 1.0;
 	c1->cd(2);
 	hEP->Draw();
 	
+	c1->cd(3);
+	hmC1->Draw();
+	
+	c1->cd(4);
+	hEC1->Draw();
+	
+	c1->cd(5);
+	hmC2->Draw();
+	
+	c1->cd(6);
+	hEC2->Draw();
+	
 	c1->Draw();
 
-
-
-	/*
-  int i = 0;
-  while(i < N){
-    i++;
-  }
-  */
+	
+	
     
     
 }

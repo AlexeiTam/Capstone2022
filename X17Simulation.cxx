@@ -195,7 +195,7 @@ float c = 1.0;
 	for(int i = 0; i < N; i++){
 	hmP->Fill(mP[i]);
 	hEP->Fill(EP[i]);
-	hmC1>Fill(mC1[i]);
+	hmC1->Fill(mC1[i]);
 	hEC1->Fill(EC1[i]);
 	hmC2->Fill(mC2[i]);
 	hEC2->Fill(EC2[i]);

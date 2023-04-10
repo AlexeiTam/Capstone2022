@@ -502,49 +502,129 @@ float c = 1.0;
 		
 	}
 	
+	//summing up 4-vectors in P FRAME
+	for(int i = 0; i < N; i++){
+	
+		for(int j = 0; j < 4; j++){
+		PGNewTotal[i][j] = PG11New[i][j] + PG12New[i][j];	
+		}
+		
+	}
+	
+	//------------------------------------------------- finding pTotal, mTotal -------------------------------------------------
+	for(int i = 0; i < N; i++){
+	
+		pTotal[i] = sqrt(((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
+		
+	}
+	
+	for(int i = 0; i < N; i++){
+		
+		mTotal[i] = sqrt((((PGNewTotal[i][0])*(PGNewTotal[i][0]))/(c*c*c*c))-(((pTotal[i])*(pTotal[i]))/(c*c)));
+		
+	}
+	
+	
+	//------------------------------------------------- finding theta -------------------------------------------------
+	
+	for(int i = 0; i < NEvents; i++) {
+
+			dot[i] = (((PG11New[i][1])*(PG21New[i][1]))+((PG11New[i][2])*(PG21New[i][2]))+((PG11New[i][3])*(PG21New[i][3])));
+			pG11[i] = sqrt(((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
+			pG21[i] = sqrt(((PG21New[i][1])*(PG21New[i][1]))+((PG21New[i][2])*(PG21New[i][2]))+((PG21New[i][3])*(PG11New[i][3])));
+
+			cosine[i] = (dot[i])/(pG11[i]*pG21[i]);
+			theta[i] = acos(cosine[i]);	//in radians
+			theta[i] = (theta[i])*((180.0)/(TMath::Pi()));	//conversion: radians -- degrees
+		}
+
 	
 	
 	
 	//=================TEST VISUALIZATION/=================
 	
-	TCanvas *c1 = new TCanvas("c1","",900,900);
-	c1->Divide(3,2);
+	TCanvas *cP = new TCanvas("cP","8Be* FRAME",900,900);
+	cP->Divide(3,2);
 	
+	TCanvas *cC1 = new TCanvas("cC1","X17 FRAME",900,900);
+	cP->Divide(2,2);
+	
+	TCanvas *cP2 = new TCanvas("cP2","8Be* FRAME (BACK)",900,900);
+	cP2->Divide(2,1);
+	
+	//rest frame P
 	TH1D *hmP = new TH1D("hmP","hmP",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
 	TH1D *hEP = new TH1D("hEP","hEP",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);
-	TH1D *hmC2 = new TH1D("hmC2","hmC2",NBins, (*min_element(mC2,mC2+N)) - 100, (*max_element(mC2,mC2+N)) + 100);
+	//TH1D *hmC2 = new TH1D("hmC2","hmC2",NBins, (*min_element(mC2,mC2+N)) - 100, (*max_element(mC2,mC2+N)) + 100);
 	TH1D *hEC2 = new TH1D("hEC2","hEC2",NBins, (*min_element(EC2,EP+N)) - 100, (*max_element(EC2,EC2+N)) + 100);
 	TH1D *hmC1 = new TH1D("hmC1","hmC1",NBins, (*min_element(mC1,mC1+N)) - 10, (*max_element(mC1,mC1+N)) + 100);
 	TH1D *hEC1 = new TH1D("hEC1","hEC1",NBins, (*min_element(EC1,EC1+N)) - 10, (*max_element(EC1,EC1+N)) + 10);
+	TH1D *hpC1x = new TH1D("hpC1x","hpC1x",NBins, (*min_element(pC1x,pC1x+N)) - 10, (*max_element(pC1x,pC1x+N)) + 10);
+	
+	//rest frame C1
+	TH1D *hmCNew = new TH1D("hmCNew","hmCNew",NBins, (*min_element(mCNew,mCNew+N)) - 100, (*max_element(mCNew,mCNew+N)) + 100);
+	TH1D *hECNew = new TH1D("hECNew","hECNew",NBins, (*min_element(ECNew,ECNew+N)) - 100, (*max_element(ECNew,ECNew+N)) + 100);
+	TH1D *hEG11 = new TH1D("hEG11","hEG11",NBins, (*min_element(EG11,EG11+N)) - 100, (*max_element(EG11,EG11+N)) + 100);
+	TH1D *hpG11y = new TH1D("hpG11y","hv",NBins, (*min_element(pG11y,pG11y+N)) - 100, (*max_element(pG11y,pG11y+N)) + 100);
+	
+	//back to rest frame P
+	TH1D *hmTotal = new TH1D("hmTotal","hmTotal",NBins, (*min_element(mTotal,mTotal+N)) - 5, (*max_element(mTotal,mTotal+N)) + 5);
+	TH1D *htheta = new TH1D("htheta","htheta",NBins, 0.0 , 180.0 );
+	
 	
 	for(int i = 0; i < N; i++){
 	hmP->Fill(mP[i]);
 	hEP->Fill(EP[i]);
 	hmC1->Fill(mC1[i]);
 	hEC1->Fill(EC1[i]);
-	hmC2->Fill(mC2[i]);
-	hEC2->Fill(EC2[i]);
+	//hmC2->Fill(mC2[i]);
+	//hEC2->Fill(EC2[i]);
+	hpC1x->Fill(pC1x[i]);
 	}
 	
-	c1->cd(1);
+	cP->cd(1);
 	hmP->Draw();
 	
-	c1->cd(2);
+	cP->cd(2);
 	hEP->Draw();
 	
-	c1->cd(3);
+	cP->cd(3);
 	hmC1->Draw();
 	
-	c1->cd(4);
+	cP->cd(4);
 	hEC1->Draw();
 	
-	c1->cd(5);
-	hmC2->Draw();
+	cP->cd(5);
+	hpC1x->Draw();
 	
-	c1->cd(6);
+	//c1->cd(5);
+	//hmC2->Draw();
+	
+	cP->cd(6);
 	hEC2->Draw();
 	
-	c1->Draw();
+	cC1->cd(1);
+	hmCNew->Draw();
+	
+	cC1->cd(2);
+	hECNew->Draw();
+	
+	cC1->cd(3);
+	hEG11->Draw();
+	
+	cC1->cd(4);
+	hpG11y->Draw();
+	
+	cP2->cd(1);
+	hmTotal->Draw();
+	
+	cP2->cd(2);
+	htheta->Draw();
+	
+	
+	cP->Draw();
+	cC1->Draw();
+	cP2->Draw();
 	
 	
 

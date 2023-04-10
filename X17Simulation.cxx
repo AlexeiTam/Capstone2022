@@ -620,8 +620,8 @@ float c = 1.0;
 	hpG11y->GetXaxis()->SetTitle("Momentum [#frac{MeV}{c}]");
 	hpG11y->GetYaxis()->SetTitle("Counts");
 
-	hTheta->GetXaxis()->SetTitle("#Theta [^{#circ}]");
-	hTheta->GetYaxis()->SetTitle("Counts");
+	htheta->GetXaxis()->SetTitle("#Theta [^{#circ}]");
+	htheta->GetYaxis()->SetTitle("Counts");
 		
 	hmTotal->GetXaxis()->SetTitle("m_{e^{+}e^{-}} [#frac{MeV}{c^2}]");
 	hmTotal->GetYaxis()->SetTitle("Counts");
@@ -646,8 +646,8 @@ float c = 1.0;
 	hpG11y->SetFillColor(9);
 	hpG11y->SetLineWidth(2);
 
-	hTheta->SetFillColor(10);
-	hTheta->SetLineWidth(2);
+	htheta->SetFillColor(10);
+	htheta->SetLineWidth(2);
 		
 	hmTotal->SetFillColor(11);
 	hmTotal->SetLineWidth(2);

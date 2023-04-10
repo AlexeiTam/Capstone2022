@@ -600,7 +600,7 @@ float c = 1.0;
 	}
 	
 	
-	hmP->GetXaxis()->SetTitle("Mass [MeV/c^2]");
+	hmP->GetXaxis()->SetTitle("Mass [#frac{MeV}{c^2}]");
 	hmP->GetYaxis()->SetTitle("Counts");
 	hEP->GetXaxis()->SetTitle("Energy [MeV]");
 	hEP->GetYaxis()->SetTitle("Counts");

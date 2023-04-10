@@ -553,7 +553,7 @@ float c = 1.0;
 	cP->Divide(3,2);
 	
 	TCanvas *cC1 = new TCanvas("cC1","X17 FRAME",2000,2000);
-	cP->Divide(2,2);
+	cC1->Divide(2,2);
 	
 	TCanvas *cP2 = new TCanvas("cP2","8Be* FRAME (BACK)",2000,2000);
 	cP2->Divide(2,1);

@@ -549,13 +549,13 @@ float c = 1.0;
 	
 	//=================TEST VISUALIZATION/=================
 	
-	TCanvas *cP = new TCanvas("cP","8Be* FRAME",900,900);
+	TCanvas *cP = new TCanvas("cP","8Be* FRAME",2000,2000);
 	cP->Divide(3,2);
 	
-	TCanvas *cC1 = new TCanvas("cC1","X17 FRAME",900,900);
+	TCanvas *cC1 = new TCanvas("cC1","X17 FRAME",2000,2000);
 	cP->Divide(2,2);
 	
-	TCanvas *cP2 = new TCanvas("cP2","8Be* FRAME (BACK)",900,900);
+	TCanvas *cP2 = new TCanvas("cP2","8Be* FRAME (BACK)",2000,2000);
 	cP2->Divide(2,1);
 	
 	//rest frame P

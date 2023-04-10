@@ -559,26 +559,26 @@ float c = 1.0;
 	cP2->Divide(2,1);
 	
 	//rest frame P
-	TH1D *hmP = new TH1D("hmP","hmP",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
-	TH1D *hEP = new TH1D("hEP","hEP",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);
+	TH1D *hmP = new TH1D("hmP","8Be* Mass",NBins, (*min_element(mP,mP+N)) - 100, (*max_element(mP,mP+N)) + 100);
+	TH1D *hEP = new TH1D("hEP","8Be* Energy",NBins, (*min_element(EP,EP+N)) - 100, (*max_element(EP,EP+N)) + 100);
 	//TH1D *hmC2 = new TH1D("hmC2","hmC2",NBins, (*min_element(mC2,mC2+N)) - 100, (*max_element(mC2,mC2+N)) + 100);
 	//TH1D *hEC2 = new TH1D("hEC2","hEC2",NBins, (*min_element(EC2,EP+N)) - 100, (*max_element(EC2,EC2+N)) + 100);
-	TH1D *hmC1 = new TH1D("hmC1","hmC1",NBins, (*min_element(mC1,mC1+N)) - 10, (*max_element(mC1,mC1+N)) + 100);
-	TH1D *hEC1 = new TH1D("hEC1","hEC1",NBins, (*min_element(EC1,EC1+N)) - 10, (*max_element(EC1,EC1+N)) + 10);
-	TH1D *hpC1x = new TH1D("hpC1x","hpC1x",NBins, (*min_element(pC1x,pC1x+N)) - 10, (*max_element(pC1x,pC1x+N)) + 10);
+	TH1D *hmC1 = new TH1D("hmC1","X17 Mass",NBins, (*min_element(mC1,mC1+N)) - 10, (*max_element(mC1,mC1+N)) + 100);
+	TH1D *hEC1 = new TH1D("hEC1","X17 Energy",NBins, (*min_element(EC1,EC1+N)) - 10, (*max_element(EC1,EC1+N)) + 10);
+	TH1D *hpC1x = new TH1D("hpC1x","X17 Momentum",NBins, (*min_element(pC1x,pC1x+N)) - 10, (*max_element(pC1x,pC1x+N)) + 10);
 	
 	//rest frame C1
-	TH1D *hmCNew = new TH1D("hmCNew","hmCNew",NBins, (*min_element(mCNew,mCNew+N)) - 100, (*max_element(mCNew,mCNew+N)) + 100);
-	TH1D *hECNew = new TH1D("hECNew","hECNew",NBins, (*min_element(ECNew,ECNew+N)) - 100, (*max_element(ECNew,ECNew+N)) + 100);
-	TH1D *hEG11 = new TH1D("hEG11","hEG11",NBins, (*min_element(EG11,EG11+N)) - 100, (*max_element(EG11,EG11+N)) + 100);
-	TH1D *hpG11y = new TH1D("hpG11y","hv",NBins, (*min_element(pG11y,pG11y+N)) - 100, (*max_element(pG11y,pG11y+N)) + 100);
+	TH1D *hmCNew = new TH1D("hmCNew","X17 Mass",NBins, (*min_element(mCNew,mCNew+N)) - 100, (*max_element(mCNew,mCNew+N)) + 100);
+	TH1D *hECNew = new TH1D("hECNew","X17 Energy",NBins, (*min_element(ECNew,ECNew+N)) - 100, (*max_element(ECNew,ECNew+N)) + 100);
+	TH1D *hEG11 = new TH1D("hEG11","e^{+},e^{-} Energy",NBins, (*min_element(EG11,EG11+N)) - 100, (*max_element(EG11,EG11+N)) + 100);
+	TH1D *hpG11y = new TH1D("hpG11y","e^{+},e^{-} Momentum",NBins, (*min_element(pG11y,pG11y+N)) - 100, (*max_element(pG11y,pG11y+N)) + 100);
 	
 	//back to rest frame P
-	TH1D *hmTotal = new TH1D("hmTotal","hmTotal",NBins, (*min_element(mTotal,mTotal+N)) - 5, (*max_element(mTotal,mTotal+N)) + 5);
-	TH1D *htheta = new TH1D("htheta","htheta",NBins, 0.0 , 180.0 );
+	TH1D *hmTotal = new TH1D("hmTotal","m_{e^{+}e^{-}}",NBins, (*min_element(mTotal,mTotal+N)) - 5, (*max_element(mTotal,mTotal+N)) + 5);
+	TH1D *htheta = new TH1D("htheta","Angular Deflection",NBins, 0.0 , 180.0 );
 	
 	
-	for(int i = 0; i < N-1; i++){
+	for(int i = 0; i < N; i++){
 	hmP->Fill(mP[i]);
 	hEP->Fill(EP[i]);
 	hmC1->Fill(mC1[i]);
@@ -588,7 +588,7 @@ float c = 1.0;
 	hpC1x->Fill(pC1x[i]);
 	}
 	
-	for(int i = 0; i < N-1; i++){
+	for(int i = 0; i < N; i++){
 	hmCNew->Fill(mCNew[i]);
 	hECNew->Fill(ECNew[i]);
 	hEG11->Fill(EG11[i]);
@@ -598,6 +598,59 @@ float c = 1.0;
 	hmTotal->Fill(mTotal[i]);
 	htheta->Fill(theta[i]);
 	}
+	
+	
+	hmP->GetXaxis()->SetTitle("Mass [MeV/c^2]");
+	hmP->GetYaxis()->SetTitle("Counts");
+	hEP->GetXaxis()->SetTitle("Energy [MeV]");
+	hEP->GetYaxis()->SetTitle("Counts");
+	hmC1->GetXaxis()->SetTitle("Mass [#frac{MeV}{c^2}]");
+	hmC1->GetYaxis()->SetTitle("Counts");
+	hEC1->GetXaxis()->SetTitle("Energy [MeV]");
+	hEC1->GetYaxis()->SetTitle("Counts");
+	hpC1x->GetXaxis()->SetTitle("Momentum [#frac{MeV}{c}]");
+	hpC1x->GetYaxis()->SetTitle("Counts");
+	
+	hmCNew->GetXaxis()->SetTitle("Mass [#frac{MeV}{c^2}]");
+	hmCNew->GetYaxis()->SetTitle("Counts");
+	hECNew->GetXaxis()->SetTitle("Energy [MeV]");
+	hECNew->GetYaxis()->SetTitle("Counts");
+	hEG11->GetXaxis()->SetTitle("Energy [MeV]");
+	hEG11->GetYaxis()->SetTitle("Counts");
+	hpG11y->GetXaxis()->SetTitle("Momentum [#frac{MeV}{c}]");
+	hpG11y->GetYaxis()->SetTitle("Counts");
+
+	hTheta->GetXaxis()->SetTitle("#Theta [^{#circ}]");
+	hTheta->GetYaxis()->SetTitle("Counts");
+		
+	hmTotal->GetXaxis()->SetTitle("m_{e^{+}e^{-}} [#frac{MeV}{c^2}]");
+	hmTotal->GetYaxis()->SetTitle("Counts");
+	
+	hmP->SetFillColor(0);
+	hmP->SetLineWidth(2);
+	hEP->SetFillColor(1);
+	hEP->SetLineWidth(2);
+	hmC1->SetFillColor(2);
+	hmC1->SetLineWidth(2);
+	hEC1->SetFillColor(3);
+	hEC1->SetLineWidth(2);
+	hpC1x->SetFillColor(4);
+	hpC1x->SetLineWidth(2);
+
+	hmCNew->SetFillColor(5);
+	hmCNew->SetLineWidth(2);
+	hECNew->SetFillColor(6);
+	hECNew->SetLineWidth(2);
+	hEG11->SetFillColor(8);
+	hEG11->SetLineWidth(2);
+	hpG11y->SetFillColor(9);
+	hpG11y->SetLineWidth(2);
+
+	hTheta->SetFillColor(10);
+	hTheta->SetLineWidth(2);
+		
+	hmTotal->SetFillColor(11);
+	hmTotal->SetLineWidth(2);
 	
 	cP->cd(1);
 	hmP->Draw();

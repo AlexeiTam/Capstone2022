@@ -578,7 +578,7 @@ float c = 1.0;
 	TH1D *htheta = new TH1D("htheta","htheta",NBins, 0.0 , 180.0 );
 	
 	
-	for(int i = 0; i < N; i++){
+	for(int i = 0; i < N-1; i++){
 	hmP->Fill(mP[i]);
 	hEP->Fill(EP[i]);
 	hmC1->Fill(mC1[i]);
@@ -588,7 +588,7 @@ float c = 1.0;
 	hpC1x->Fill(pC1x[i]);
 	}
 	
-	for(int i = 0; i < N; i++){
+	for(int i = 0; i < N-1; i++){
 	hmCNew->Fill(mCNew[i]);
 	hECNew->Fill(ECNew[i]);
 	hEG11->Fill(EG11[i]);

@@ -617,8 +617,8 @@ float c = 1.0;
 	//c1->cd(5);
 	//hmC2->Draw();
 	
-	cP->cd(6);
-	hEC2->Draw();
+	//cP->cd(6);
+	//hEC2->Draw();
 	
 	cC1->cd(1);
 	hmCNew->Draw();

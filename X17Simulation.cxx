@@ -574,7 +574,7 @@ float c = 1.0;
 	TH1D *hpG11y = new TH1D("hpG11y","e^{+},e^{-} Momentum",NBins, (*min_element(pG11y,pG11y+N)) - 100, (*max_element(pG11y,pG11y+N)) + 100);
 	
 	//back to rest frame P
-	TH1D *hmTotal = new TH1D("hmTotal","m_{e^{+}e^{-}}",NBins, (*min_element(mTotal,mTotal+N)) - 5, (*max_element(mTotal,mTotal+N)) + 5);
+	TH1D *hmTotal = new TH1D("hmTotal","m_{e^{+}e^{-}}",72, (*min_element(mTotal,mTotal+N)) - 5, (*max_element(mTotal,mTotal+N)) + 5);
 	TH1D *htheta = new TH1D("htheta","Angular Deflection",NBins, 0.0 , 180.0 );
 	
 	

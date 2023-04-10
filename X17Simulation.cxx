@@ -588,6 +588,17 @@ float c = 1.0;
 	hpC1x->Fill(pC1x[i]);
 	}
 	
+	for(int i = 0; i < N; i++){
+	hmCNew->Fill(mCNew[i]);
+	hECNew->Fill(ECNew[i]);
+	hEG11->Fill(EG11[i]);
+	hpG11y->Fill(pG11y[i]);
+	//hmC2->Fill(mC2[i]);
+	//hEC2->Fill(EC2[i]);
+	hmTotal->Fill(mTotal[i]);
+	htheta->Fill(theta[i]);
+	}
+	
 	cP->cd(1);
 	hmP->Draw();
 	

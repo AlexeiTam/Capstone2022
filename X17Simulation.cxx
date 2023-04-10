@@ -35,6 +35,7 @@ float c = 1.0;
 //================================ REST FRAME: X17 ================================
   float PCNew[N][4];
   float ECNew[N], pCNewx[N], pCNewy[N], pCNewz[N];
+	float mCNew[N];
   float EG11[N], EG12[N];
   float pG11x[N], pG11y[N], pG11z[N]; 
   float pG12x[N], pG12y[N], pG12z[N];
@@ -50,6 +51,7 @@ float c = 1.0;
   float mG11New[N], mG12New[N];
   float dot[N], cosine[N], pG11New[N], pG12New[N];
   float mTotal[N], pTotal[N];
+	float theta[N];
   
   
   float mPMin, mPMax;
@@ -395,6 +397,10 @@ float c = 1.0;
 		
 	}
 	
+	//mCNew
+	for(int i = 0; i < N; i++){
+		mCNew[i] = ((ECNew[i])/(c*c));
+	}
 	
 	//========================================= GENERATING G11, G12 =========================================
 	
@@ -527,13 +533,13 @@ float c = 1.0;
 	
 	//------------------------------------------------- finding theta -------------------------------------------------
 	
-	for(int i = 0; i < NEvents; i++) {
+	for(int i = 0; i < N; i++) {
 
-			dot[i] = (((PG11New[i][1])*(PG21New[i][1]))+((PG11New[i][2])*(PG21New[i][2]))+((PG11New[i][3])*(PG21New[i][3])));
-			pG11[i] = sqrt(((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
-			pG21[i] = sqrt(((PG21New[i][1])*(PG21New[i][1]))+((PG21New[i][2])*(PG21New[i][2]))+((PG21New[i][3])*(PG11New[i][3])));
+			dot[i] = (((PG11New[i][1])*(PG12New[i][1]))+((PG11New[i][2])*(PG12New[i][2]))+((PG11New[i][3])*(PG12New[i][3])));
+			pG11New[i] = sqrt(((PG11New[i][1])*(PG11New[i][1]))+((PG11New[i][2])*(PG11New[i][2]))+((PG11New[i][3])*(PG11New[i][3])));
+			pG12New[i] = sqrt(((PG12New[i][1])*(PG12New[i][1]))+((PG12New[i][2])*(PG12New[i][2]))+((PG12New[i][3])*(PG12New[i][3])));
 
-			cosine[i] = (dot[i])/(pG11[i]*pG21[i]);
+			cosine[i] = (dot[i])/((pG11New[i])*(pG12New[i]));
 			theta[i] = acos(cosine[i]);	//in radians
 			theta[i] = (theta[i])*((180.0)/(TMath::Pi()));	//conversion: radians -- degrees
 		}

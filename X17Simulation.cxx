@@ -4,7 +4,7 @@ void X17Simulation(){
 //==================================================================================================================
 
 const Int_t N = 10000;	//Number of events = 1,000
-const Int_t NBins = 1000;	//for histograms
+const Int_t NBins = 10000;	//for histograms
 float pi = TMath::Pi();
 float c = 1.0;
   
@@ -591,14 +591,25 @@ float c = 1.0;
 	for(int i = 0; i < N; i++){
 	hmCNew->Fill(mCNew[i]);
 	hECNew->Fill(ECNew[i]);
-	hEG11->Fill(EG11[i]);
-	hpG11y->Fill(pG11y[i]);
+	//hEG11->Fill(EG11[i]);
+	//hpG11y->Fill(pG11y[i]);
 	//hmC2->Fill(mC2[i]);
 	//hEC2->Fill(EC2[i]);
-	hmTotal->Fill(mTotal[i]);
-	htheta->Fill(theta[i]);
+	//hmTotal->Fill(mTotal[i]);
+	//htheta->Fill(theta[i]);
 	}
 	
+	for(int i = 0; i < N; i++){
+
+		//reject events where E(e-,e+) = 0 ; i.e., where X17 mass-energy insufficient
+		//to make e-,e+ pair
+		if(EG11[i] == 0) continue;
+		hEG11->Fill(EG11[i]);
+		hpG11y->Fill(pG11y[i]);
+		hmTotal->Fill(mTotal[i]);
+		htheta->Fill(theta[i]);
+		
+	}
 	
 	hmP->GetXaxis()->SetTitle("Mass [#frac{MeV}{c^2}]");
 	hmP->GetYaxis()->SetTitle("Counts");

@@ -1,9 +1,9 @@
-void X17Simulation(){
+void PlayX17(const Int_t N = 1000, float mC1Mean = 16.98, float mC1Sigma = 1.0){
 
 //===================== INITIALIZING VARIABLES, ARRAYS, CONSTANTS ==================================================
 //==================================================================================================================
 
-const Int_t N = 10000;	//Number of events = 1,000
+//const Int_t N = 10000;	//Number of events = 1,000
 const Int_t NBins = 1000;	//for histograms
 float pi = TMath::Pi();
 float c = 1.0;
@@ -15,8 +15,8 @@ float c = 1.0;
 	  float mC2Mean = 8005.30510;	//given base value of 8Be isotope
 	  float mC2Sigma = 3.9E-11;	//8Be also stable
 
-	  float mC1Mean = 16.98;	//X17 ==>invariant mass approx. 17 MeV
-	  float mC1Sigma = 1.0; 	//will play with later?
+	  //float mC1Mean = 16.98;	//X17 ==>invariant mass approx. 17 MeV
+	  //float mC1Sigma = 1.0; 	//will play with later?
 
 	  float me = 0.511;	//mass of electron/positron = 0.511 MeV
   
@@ -548,7 +548,8 @@ float c = 1.0;
 	
 	
 	//=================TEST VISUALIZATION/=================
-	
+
+
 	TCanvas *cP = new TCanvas("cP","8Be* FRAME",2000,2000);
 	cP->Divide(3,2);
 	

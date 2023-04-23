@@ -69,15 +69,12 @@ float c = 1.0;
   
   //------------------------------------------------GENERATING P--------------------------------------------------------------------
 	
-	float mPNorm = 1.0;
-	//float mPNorm = (2*mPSigma*mPSigma)/((fabs(mPSigma))*(fabs(mPSigma))*(fabs(mPSigma)));
+	float mPNorm = (2*mPSigma*mPSigma)/((fabs(mPSigma))*(fabs(mPSigma))*(fabs(mPSigma)));
 	float cutoff = 0.10; 	//not taking values less probable than cutoff
 	mPMax = mPMean + (sqrt(((mPNorm*mPSigma)/(pi*cutoff))-(mPSigma*mPSigma)));
 
-		TF1 *BWP = new TF1("BWP","(((1.0)/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mPMax);
-		//TF1 *BWP = new TF1("BWP","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mPMax);
-		BWP->SetParameters(pi, mPMean, mPSigma);
-		//BWP->SetParameters(pi, mPMean, mPSigma, mPNorm);
+		TF1 *BWP = new TF1("BWP","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mPMax);
+		BWP->SetParameters(pi, mPMean, mPSigma, mPNorm);
 
 	float chance, prob;
 	int mPindex = 0;
@@ -119,22 +116,16 @@ float c = 1.0;
 	
 //================================= C1,C2 MASS PARAMETERS ==================================================
 	
-	float mC1Norm = 1.0;
-//	float mC1Norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
-	float mC2Norm = 1.0;
-//	float mC2Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
+	float mC1Norm = (2*mC1Sigma*mC1Sigma)/((fabs(mC1Sigma))*(fabs(mC1Sigma))*(fabs(mC1Sigma)));
+	float mC2Norm = (2*mC2Sigma*mC2Sigma)/((fabs(mC2Sigma))*(fabs(mC2Sigma))*(fabs(mC2Sigma)));
 	mC1Max = mC1Mean + (sqrt(((mC1Norm*mC1Sigma)/(pi*cutoff))-(mC1Sigma*mC1Sigma)));
 	mC2Max = mC2Mean + (sqrt(((mC2Norm*mC2Sigma)/(pi*cutoff))-(mC2Sigma*mC2Sigma)));
 
-		TF1 *BWC1 = new TF1("BWC1","(((1.0)/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC1Max);
-		//TF1 *BWC1 = new TF1("BWC1","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC1Max);
-		BWC1->SetParameters(pi, mC1Mean, mC1Sigma);
-		//BWC1->SetParameters(pi, mC1Mean, mC1Sigma, mC1Norm);
+		TF1 *BWC1 = new TF1("BWC1","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC1Max);
+		BWC1->SetParameters(pi, mC1Mean, mC1Sigma, mC1Norm);
 	
-		TF1 *BWC2 = new TF1("BWC2","(((1.0)/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
-		//TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
-		BWC2->SetParameters(pi, mC2Mean, mC2Sigma);
-		//BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
+		TF1 *BWC2 = new TF1("BWC2","((([3])/[0])*(([2])/(((x-[1])*(x-[1]))+([2]*[2]))))", 0.0, mC2Max);
+		BWC2->SetParameters(pi, mC2Mean, mC2Sigma, mC2Norm);
 
 	float C1prob, C1chance, C2prob, C2chance;
 	float mC1placeholder;

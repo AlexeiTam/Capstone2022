@@ -69,7 +69,7 @@ float c = 1.0;
   
   //------------------------------------------------GENERATING P--------------------------------------------------------------------
 	
-	float mPNorm = (2*mPSigma*mPSigma)/((fabs(mPSigma))*(fabs(mPSigma))*(fabs(mPSigma)));
+	float mPNorm = (2.0*mPSigma*mPSigma)/((fabs(mPSigma))*(fabs(mPSigma)));
 	float cutoff = 0.10; 	//not taking values less probable than cutoff
 	mPMax = mPMean + (sqrt(((mPNorm*mPSigma)/(pi*cutoff))-(mPSigma*mPSigma)));
 
